@@ -270,6 +270,37 @@ i.sw, i.sc, i.mk, i.mk-i, i.sl, i.lw {
 
 
 /* ============================================================
+   04b. SCROLL-SCRUBBED ENTRANCES  (Apple-style)
+   animations.js writes --sp (0 -> 1) on every [data-scrub] element
+   from its scroll position, so the motion follows the scrollbar:
+   scroll down and the card glides in, scroll up and it glides out.
+   Uses the individual `translate` / `scale` properties so card
+   hover transforms keep working untouched.
+============================================================ */
+.js [data-scrub] {
+  opacity: calc(var(--sp, 1) * 1.7);
+  translate:
+    calc((1 - var(--sp, 1)) * var(--sx, 0px))
+    calc((1 - var(--sp, 1)) * var(--sy, 0px));
+  scale: calc(var(--s0, 1) + (1 - var(--s0, 1)) * var(--sp, 1));
+  will-change: translate, scale, opacity;
+}
+
+/* Skills: cards start up in the top-left / top-right corners and drift
+   diagonally down into place */
+[data-scrub="left"]  { --sx: -22vw; --sy: -130px; }
+[data-scrub="right"] { --sx:  22vw; --sy: -130px; }
+
+/* Projects: cards rise and grow into place */
+[data-scrub="grow"]  { --sy: 64px; --s0: 0.93; }
+
+@media (max-width: 680px) {
+  [data-scrub="left"]  { --sx: -34vw; --sy: -90px; }
+  [data-scrub="right"] { --sx:  34vw; --sy: -90px; }
+}
+
+
+/* ============================================================
    05. SECTION EYEBROW — a red line draws after the label
 ============================================================ */
 .js .section-eyebrow::after {
@@ -426,14 +457,13 @@ i.sw, i.sc, i.mk, i.mk-i, i.sl, i.lw {
   translate: 0 calc(var(--ip, 0) * -6%);
 }
 
-/* …and settles from a zoomed-in state as the curtain lifts */
+/* …and settles from a soft zoom (no curtain, so no dark flash) */
 .js .project-image.in-view img {
-  animation: img-settle 1600ms cubic-bezier(0.2, 0.8, 0.2, 1)
-    var(--d, 0ms) backwards;
+  animation: img-settle 1400ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
 }
 
 @keyframes img-settle {
-  from { transform: scale(1.4); }
+  from { transform: scale(1.18); }
   to   { transform: scale(1); }
 }
 
@@ -533,7 +563,7 @@ i.sw, i.sc, i.mk, i.mk-i, i.sl, i.lw {
 
 @keyframes ping {
   0%   { transform: scale(1);        opacity: 0.7; }
-  80%, 100% { transform: scale(1.14, 1.55); opacity: 0; }
+  80%, 100% { transform: scale(1.07, 1.45); opacity: 0; }
 }
 
 

@@ -112,6 +112,7 @@
 
   // Letters decode from random glyphs into the real text (contact title)
   function scramble(el) {
+    if (el.classList.contains("scrambling")) return;   // already running
     const nodes = textNodes(el);
     const originals = nodes.map((n) => n.textContent);
     const total = originals.reduce((s, t) => s + t.length, 0);
@@ -154,8 +155,10 @@
       (comma ? Math.round(v).toLocaleString("en-US") : Math.round(v)) + suffix;
     const start = performance.now();
     const duration = 1700;
+    const run = (el._run = {});          // token: leaving the screen cancels it
 
     (function step(now) {
+      if (el._run !== run) return;
       const p = clamp((now - start) / duration, 0, 1);
       el.textContent = format(to * (1 - Math.pow(1 - p, 3)));
       if (p < 1) requestAnimationFrame(step);
@@ -264,11 +267,8 @@
     [".about-card", "flip", "col"],
 
     // Skills
-    [".skill-card", "wipe", "col"],
 
     // Projects
-    [".project-card", "pside", "none"],
-    [".project-image", "imgwipe", "img"],
 
     // Services
     [".services-title", "track", "none"],
@@ -313,6 +313,54 @@
     });
   });
 
+  /* ---------- Scroll-scrubbed entrances (Apple-style) ----------
+     Skills slide in from both sides, projects rise and grow.
+     They are still observed once so tag pops and icon drawing fire. */
+  const scrubs = [];
+  const addScrub = (el, type) => {
+    el.dataset.scrub = type;
+    el.style.setProperty("--sp", "0");
+    scrubs.push({ el, cur: 0, last: -1 });
+    observe(el);
+  };
+  $$(".skill-card").forEach((el, i) => addScrub(el, i % 2 ? "right" : "left"));
+  $$(".project-card").forEach((el) => addScrub(el, "grow"));
+  // Project screenshots: no curtain (it exposed the dark frame behind it);
+  // they are visible with the card and just settle from a soft zoom.
+  $$(".project-image").forEach((el) => observe(el));
+
+  // offsetTop ignores transforms, so the animation never feeds back into
+  // the position it is measured from.
+  const layoutTop = (el) => {
+    let y = 0;
+    for (; el; el = el.offsetParent) y += el.offsetTop;
+    return y;
+  };
+
+  let scrubTime = performance.now();
+  let scrubFirst = true;
+
+  function scrubWork(now) {
+    const dt = Math.min(now - scrubTime, 64);
+    scrubTime = now;
+    const k = 1 - Math.exp(-dt / 150);          // glide: ~150ms time constant
+    const vh = window.innerHeight;
+    const y = window.scrollY;
+
+    scrubs.forEach((s) => {
+      const top = layoutTop(s.el) - y;
+      const raw = clamp((vh - top) / (vh * 0.38), 0, 1);
+      const target = raw * raw * (3 - 2 * raw);  // smoothstep
+      s.cur = scrubFirst ? target : s.cur + (target - s.cur) * k;
+      if (Math.abs(target - s.cur) < 0.001) s.cur = target;
+      if (Math.abs(s.cur - s.last) > 0.0004) {
+        s.el.style.setProperty("--sp", s.cur.toFixed(4));
+        s.last = s.cur;
+      }
+    });
+    scrubFirst = false;
+  }
+
   const contactTitle = $(".contact-title");
   if (contactTitle) contactTitle.dataset.scramble = "1";
 
@@ -322,19 +370,32 @@
     io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
           const el = entry.target;
-          io.unobserve(el);
+          const isCount = el.classList.contains("count");
 
-          if (el.classList.contains("count")) {
-            countUp(el);
+          // Scrolled into view -> play the animation (every time)
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.12) {
+            if (isCount) {
+              if (!el._run) countUp(el);
+            } else if (!el.classList.contains("in-view")) {
+              el.classList.add("in-view");
+              if (el.dataset.scramble) scramble(el);
+            }
             return;
           }
-          el.classList.add("in-view");
-          if (el.dataset.scramble) scramble(el);
+
+          // Fully scrolled out -> reset, so it can play again next time
+          if (!entry.isIntersecting) {
+            if (isCount) {
+              el._run = null;
+              el.textContent = "0" + (el.dataset.suf || "");
+            } else {
+              el.classList.remove("in-view");
+            }
+          }
         });
       },
-      { threshold: 0.12, rootMargin: "0px 0px -6% 0px" }
+      { threshold: [0, 0.12], rootMargin: "0px 0px -6% 0px" }
     );
     watched.forEach((el) => io.observe(el));
   } else {
@@ -357,7 +418,6 @@
   document.body.prepend(progress);
 
   const header = $(".site-header");
-  const toTop = $(".back-to-top");
   const hero = $(".hero");
   const timeline = $$(".timeline-item");
   const projectImages = $$(".project-image");
@@ -384,7 +444,6 @@
     // Progress bar, header shadow, back-to-top
     progress.style.transform = `scaleX(${max > 0 ? Math.min(y / max, 1) : 0})`;
     if (header) header.classList.toggle("is-scrolled", y > 20);
-    if (toTop) toTop.classList.toggle("is-visible", y > 500);
 
     // Hero parallax amount (0 → 1 while the hero scrolls away)
     if (hero) {
@@ -424,7 +483,8 @@
   // Cursor state (filled in by initPointer on desktop)
   const cursor = { on: false, x: 0, y: 0, rx: 0, ry: 0, dot: null, ring: null };
 
-  function loop() {
+  function loop(now = performance.now()) {
+    scrubWork(now);
     const y = window.scrollY;
     const dy = lastY < 0 ? 0 : y - lastY;
     if (y !== lastY) scrollWork(y);
@@ -489,12 +549,6 @@
     cursor.dot.className = "cursor-dot";
     cursor.ring = document.createElement("div");
     cursor.ring.className = "cursor-ring";
-    
-    // NEW: Add the "View" text inside the ring
-    const cursorText = document.createElement("span");
-    cursorText.className = "cursor-text";
-    cursorText.textContent = "View";
-    cursor.ring.appendChild(cursorText);
 
     [cursor.dot, cursor.ring].forEach((n) => n.setAttribute("aria-hidden", "true"));
     document.body.append(cursor.dot, cursor.ring);
@@ -523,16 +577,10 @@
     document.addEventListener("pointerover", (e) => {
       if (!(e.target instanceof Element)) return; 
       const link = e.target.closest("a, button");
-      const card = e.target.closest(".project-card");
-      
-      // Reset states
-      cursor.ring.classList.remove("is-link", "is-card");
-      
-      if (card) {
-        cursor.ring.classList.add("is-card");
-      } else if (link) {
-        cursor.ring.classList.add("is-link");
-      }
+
+      // Ring grows only over real links and buttons; project cards
+      // are not clickable, so they keep the normal cursor.
+      cursor.ring.classList.toggle("is-link", Boolean(link));
     });
     document.addEventListener("pointerdown", () => cursor.ring.classList.add("is-down"));
     document.addEventListener("pointerup", () => cursor.ring.classList.remove("is-down"));
@@ -579,8 +627,9 @@
     $$(".button, .nav-cta, .contact-email, .contact-phone").forEach((btn) => {
       btn.addEventListener("pointermove", (e) => {
         const r = btn.getBoundingClientRect();
-        const dx = (e.clientX - (r.left + r.width / 2)) * 0.22;
-        const dy = (e.clientY - (r.top + r.height / 2)) * 0.28;
+        // Capped so a button can never drift into its neighbour
+        const dx = clamp((e.clientX - (r.left + r.width / 2)) * 0.22, -8, 8);
+        const dy = clamp((e.clientY - (r.top + r.height / 2)) * 0.28, -6, 6);
         btn.style.translate = `${dx}px ${dy}px`;
       });
       btn.addEventListener("pointerleave", () => {

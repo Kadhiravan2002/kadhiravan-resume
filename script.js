@@ -42,3 +42,20 @@ window.addEventListener("resize", () => {
     closeMenu();
   }
 });
+
+// Back-to-top button: appears after scrolling, scrolls smoothly to the top.
+const backToTop = document.querySelector(".back-to-top");
+
+if (backToTop) {
+  const updateBackToTop = () => {
+    backToTop.classList.toggle("is-visible", window.scrollY > 400);
+  };
+
+  window.addEventListener("scroll", updateBackToTop, { passive: true });
+  updateBackToTop();
+
+  backToTop.addEventListener("click", () => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+  });
+}
