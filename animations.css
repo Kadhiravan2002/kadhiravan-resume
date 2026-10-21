@@ -1,0 +1,749 @@
+/* ============================================================
+   ANIMATIONS v2 — load AFTER style.css
+   Every section gets its own signature effect.
+   Everything is gated behind the .js class (added by animations.js),
+   so the site stays fully visible if JS fails or the visitor
+   prefers reduced motion.
+   ------------------------------------------------------------
+   01. Global: progress bar, header, nav, back-to-top
+   02. Split-text helpers
+   03. Hero (letter rise, glow, scroll parallax, marquee)
+   04. Scroll-reveal keyframes (one per effect type)
+   05. Section eyebrow line
+   06. About   (word mask, scroll-fill lead, flip cards, line draw)
+   07. Skills  (alternating lines, wipe cards, SVG draw, tag pop)
+   08. Projects(3D letter flip, side-in cards, image wipe + parallax)
+   09. Services(tracking-in title, flip-up cards, icon spin)
+   10. Experience (wipe title, scroll-filled timeline, counters)
+   11. Contact (scramble title, pulsing button)
+   12. Hover micro-interactions
+   13. Pointer effects: custom cursor, spotlight, tilt, magnetic
+   14. Mobile menu stagger
+============================================================ */
+
+
+/* ============================================================
+   01. GLOBAL
+============================================================ */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1100;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--red), var(--red-bright));
+  transform: scaleX(0);
+  transform-origin: left;
+  pointer-events: none;
+}
+
+.site-header {
+  transition: background 250ms ease, box-shadow 250ms ease;
+}
+
+.site-header.is-scrolled {
+  background: rgba(249, 249, 249, 0.98); /* Light background */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Soft shadow */
+}
+
+.nav-links a.is-active {
+  color: var(--white);
+}
+
+.nav-links a.is-active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.js .back-to-top:not(.is-visible) {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(18px);
+  pointer-events: none;
+}
+
+.js .back-to-top {
+  transition:
+    transform 260ms ease,
+    background 220ms ease,
+    opacity 260ms ease,
+    visibility 260ms ease;
+}
+
+.js .back-to-top.is-visible:hover {
+  background: var(--red-bright);
+  transform: translateY(-4px);
+  opacity: 1;
+}
+
+
+/* ============================================================
+   02. SPLIT-TEXT HELPERS (created by animations.js)
+   Built with <i> tags on purpose: style.css has rules like
+   ".hero-title span { display:block }" that would break <span>s.
+============================================================ */
+i.sw, i.sc, i.mk, i.mk-i, i.sl, i.lw {
+  font-style: normal;
+}
+
+.sw { display: inline-block; white-space: nowrap; }  /* one word   */
+.sc { display: inline-block; }                       /* one letter */
+
+.mk {                                                /* word mask  */
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding: 0 0.06em 0.14em 0;
+  margin: 0 -0.06em -0.14em 0;
+}
+
+.mk-i { display: inline-block; }
+.sl   { display: block; }                            /* one line   */
+
+
+/* ============================================================
+   03. HERO
+============================================================ */
+
+/* Letters rise out of a mask, one after another */
+.hero-title .sw {
+  overflow: hidden;
+  vertical-align: top;
+  padding: 0 0.1em 0.12em 0;
+  margin: 0 -0.1em -0.12em 0;
+}
+
+.js .hero-title .sc {
+  transform: translateY(118%) rotate(7deg);
+  transform-origin: 0 100%;
+}
+
+.js.hero-in .hero-title .sc {
+  transform: none;
+  transition: transform 1000ms cubic-bezier(0.2, 0.9, 0.2, 1)
+    calc(var(--ci, 0) * 50ms + 380ms);
+}
+
+/* The accent name breathes with a soft red glow */
+.js .hero-title .accent-text {
+  animation: accent-glow 4.5s ease-in-out 2.4s infinite;
+}
+
+@keyframes accent-glow {
+  0%, 100% { text-shadow: 0 0 0 rgba(40, 233, 140, 0); }
+  50%      { text-shadow: 0 0 34px rgba(40, 233, 140, 0.5); }
+}
+
+/* Scroll parallax: text drifts up and fades, portrait lags behind */
+.js .hero-content {
+  translate: 0 calc(var(--hs, 0) * -60px);
+  opacity: calc(1 - var(--hs, 0) * 0.85);
+}
+
+.js .hero-visual {
+  translate: 0 calc(var(--hs, 0) * -34px);
+  scale: calc(1 - var(--hs, 0) * 0.08);
+}
+
+/* Mouse parallax (uses `translate`, never fights existing transforms) */
+.hero-glow {
+  translate: calc(var(--px, 0) * 36px) calc(var(--py, 0) * 28px);
+  transition: translate 600ms ease-out;
+}
+
+.portrait-orbit {
+  translate: calc(var(--px, 0) * -16px) calc(var(--py, 0) * -16px);
+  transition: translate 500ms ease-out;
+}
+
+.hero-decoration {
+  translate: calc(var(--px, 0) * 22px) calc(var(--py, 0) * 22px);
+  transition: translate 500ms ease-out;
+}
+
+
+/* ============================================================
+   04. SCROLL-REVEAL — one keyframe per effect type
+   CSS animations with `backwards` fill (not transitions), so each
+   element's own hover transforms keep working after it appears.
+============================================================ */
+.js [data-reveal]:not(.in-view) {
+  opacity: 0;
+}
+
+.js [data-reveal].in-view {
+  animation: var(--anim, rv-up) var(--dur, 850ms)
+    cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0ms) backwards;
+}
+
+[data-reveal="up"]      { --anim: rv-up; }
+[data-reveal="left"]    { --anim: rv-left; }
+[data-reveal="right"]   { --anim: rv-right; }
+[data-reveal="fade"]    { --anim: rv-fade; }
+[data-reveal="flip"]    { --anim: rv-flip;    --dur: 1000ms; }
+[data-reveal="wipe"]    { --anim: rv-wipe;    --dur: 1000ms; }
+[data-reveal="pleft"]   { --anim: rv-pleft;   --dur: 1000ms; }
+[data-reveal="pright"]  { --anim: rv-pright;  --dur: 1000ms; }
+[data-reveal="imgwipe"] { --anim: rv-imgwipe; --dur: 1200ms; }
+[data-reveal="flipx"]   { --anim: rv-flipx;   --dur: 1000ms; }
+[data-reveal="track"]   { --anim: rv-track;   --dur: 1300ms; }
+[data-reveal="wipet"]   { --anim: rv-wipet;   --dur: 1100ms; }
+[data-reveal="line"]    { --anim: rv-line;    --dur: 1100ms; transform-origin: left; }
+
+@keyframes rv-up {
+  from { opacity: 0; transform: translateY(36px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes rv-left {
+  from { opacity: 0; transform: translateX(-44px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes rv-right {
+  from { opacity: 0; transform: translateX(44px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes rv-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* About cards: swing in like a door */
+@keyframes rv-flip {
+  from { opacity: 0; transform: perspective(900px) rotateY(-24deg) translateX(46px); }
+  to   { opacity: 1; transform: perspective(900px) rotateY(0) translateX(0); }
+}
+
+/* Skill cards: uncovered left → right */
+@keyframes rv-wipe {
+  from { clip-path: inset(0 100% 0 0 round 16px); transform: translateY(22px); }
+  to   { clip-path: inset(0 0 0 0 round 16px);    transform: translateY(0); }
+}
+
+/* Project cards: slide in from their own side, slightly tilted */
+@keyframes rv-pleft {
+  from { opacity: 0; transform: translateX(-80px) rotate(-2.5deg); }
+  to   { opacity: 1; transform: translateX(0) rotate(0); }
+}
+
+@keyframes rv-pright {
+  from { opacity: 0; transform: translateX(80px) rotate(2.5deg); }
+  to   { opacity: 1; transform: translateX(0) rotate(0); }
+}
+
+/* Project screenshots: curtain lifts from the top */
+@keyframes rv-imgwipe {
+  from { clip-path: inset(0 0 100% 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+
+/* Service cards: flip up from below */
+@keyframes rv-flipx {
+  from { opacity: 0; transform: perspective(900px) rotateX(-32deg) translateY(46px); }
+  to   { opacity: 1; transform: perspective(900px) rotateX(0) translateY(0); }
+}
+
+/* Services title: letters tighten from wide tracking */
+@keyframes rv-track {
+  from { opacity: 0; letter-spacing: 0.07em; filter: blur(10px); }
+  to   { opacity: 1; letter-spacing: -0.05em; filter: blur(0); }
+}
+
+/* Experience title: swept in by a clip */
+@keyframes rv-wipet {
+  from { clip-path: inset(-10% 100% -10% 0); transform: translateX(-26px); }
+  to   { clip-path: inset(-10% 0 -10% 0);    transform: translateX(0); }
+}
+
+@keyframes rv-line {
+  from { opacity: 1; transform: scaleX(0); }
+  to   { opacity: 1; transform: scaleX(1); }
+}
+
+@keyframes line-x {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+
+/* ============================================================
+   05. SECTION EYEBROW — a red line draws after the label
+============================================================ */
+.js .section-eyebrow::after {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 1px;
+  background: var(--red-bright);
+  opacity: 0.7;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.js .section-eyebrow.in-view::after {
+  animation: line-x 900ms cubic-bezier(0.2, 0.8, 0.2, 1) 350ms both;
+}
+
+
+/* ============================================================
+   06. ABOUT
+============================================================ */
+
+/* Title: each word rises out of its own mask */
+.js .t-words:not(.in-view) .mk-i {
+  transform: translateY(118%);
+}
+
+.js .t-words.in-view .mk-i {
+  transform: none;
+  transition: transform 900ms cubic-bezier(0.2, 0.8, 0.2, 1)
+    calc(var(--wi, 0) * 80ms);
+}
+
+/* Lead paragraph: words light up as you scroll */
+.js .lw {
+  opacity: 0.22;
+  transition: opacity 350ms ease;
+}
+
+.js .lw.on {
+  opacity: 1;
+}
+
+/* "How I work": red underline draws under each step */
+.approach-item {
+  position: relative;
+}
+
+.js .approach-item::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--red-bright), rgba(40, 233, 140, 0));
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.js .approach-item.in-view::after {
+  animation: line-x 1100ms cubic-bezier(0.2, 0.8, 0.2, 1)
+    calc(var(--d, 0ms) + 350ms) both;
+}
+
+
+/* ============================================================
+   07. SKILLS
+============================================================ */
+
+/* Title: line one from the left, line two from the right */
+.js .t-lines:not(.in-view) .sl-l { opacity: 0; transform: translateX(-80px); }
+.js .t-lines:not(.in-view) .sl-r { opacity: 0; transform: translateX(80px); }
+
+.js .t-lines.in-view .sl-l,
+.js .t-lines.in-view .sl-r {
+  transition:
+    transform 1000ms cubic-bezier(0.2, 0.8, 0.2, 1) calc(var(--li, 0) * 170ms),
+    opacity 800ms ease calc(var(--li, 0) * 170ms);
+}
+
+/* Tags pop in one by one (skills, projects, experience) */
+.js .skill-card:not(.in-view) .skill-tags span,
+.js .project-card:not(.in-view) .project-tags span,
+.js .timeline-item:not(.in-view) .experience-tags span {
+  opacity: 0;
+}
+
+.js .skill-card.in-view .skill-tags span,
+.js .project-card.in-view .project-tags span,
+.js .timeline-item.in-view .experience-tags span {
+  animation: tag-pop 600ms cubic-bezier(0.3, 1.6, 0.5, 1)
+    calc(var(--d, 0ms) + 450ms + var(--ti, 0) * 80ms) backwards;
+}
+
+@keyframes tag-pop {
+  from { opacity: 0; transform: scale(0.55) translateY(10px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Icons draw themselves (about, skills, services) */
+.js .about-icon svg *,
+.js .skill-icon svg *,
+.js .service-icon svg * {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+.js .about-card:not(.in-view) .about-icon svg *,
+.js .skill-card:not(.in-view) .skill-icon svg *,
+.js .service-card:not(.in-view) .service-icon svg * {
+  stroke-dashoffset: 1;
+}
+
+.js .about-card.in-view .about-icon svg *,
+.js .skill-card.in-view .skill-icon svg *,
+.js .service-card.in-view .service-icon svg * {
+  animation: svg-draw 1300ms cubic-bezier(0.5, 0, 0.2, 1)
+    calc(var(--d, 0ms) + 300ms) backwards;
+}
+
+@keyframes svg-draw {
+  from { stroke-dashoffset: 1; opacity: 0; }
+  6%   { opacity: 1; }
+  to   { stroke-dashoffset: 0; opacity: 1; }
+}
+
+
+/* ============================================================
+   08. PROJECTS
+============================================================ */
+
+/* Title: letters flip up from the baseline in 3D */
+.js .t-flip:not(.in-view) .sc {
+  opacity: 0;
+  transform: perspective(500px) rotateX(-95deg);
+  transform-origin: 50% 100%;
+}
+
+.js .t-flip.in-view .sc {
+  transform-origin: 50% 100%;
+  transition:
+    transform 800ms cubic-bezier(0.2, 0.9, 0.2, 1) calc(var(--ci, 0) * 38ms),
+    opacity 400ms ease calc(var(--ci, 0) * 38ms);
+}
+
+/* Screenshot sits slightly oversized so it can drift (parallax) */
+.js .project-image img {
+  position: absolute;
+  top: -8%;
+  left: 0;
+  width: 100%;
+  height: 116%;
+  translate: 0 calc(var(--ip, 0) * -6%);
+}
+
+/* …and settles from a zoomed-in state as the curtain lifts */
+.js .project-image.in-view img {
+  animation: img-settle 1600ms cubic-bezier(0.2, 0.8, 0.2, 1)
+    var(--d, 0ms) backwards;
+}
+
+@keyframes img-settle {
+  from { transform: scale(1.4); }
+  to   { transform: scale(1); }
+}
+
+
+/* ============================================================
+   09. SERVICES
+============================================================ */
+.js .service-card.in-view .service-icon {
+  animation: icon-spin 1000ms cubic-bezier(0.3, 1.4, 0.5, 1)
+    calc(var(--d, 0ms) + 250ms) backwards;
+}
+
+@keyframes icon-spin {
+  from { opacity: 0; transform: rotate(-200deg) scale(0); }
+  to   { opacity: 1; transform: rotate(0) scale(1); }
+}
+
+.js .service-card.in-view .service-link {
+  animation: rv-left 700ms cubic-bezier(0.2, 0.8, 0.2, 1)
+    calc(var(--d, 0ms) + 600ms) backwards;
+}
+
+.js .service-card.in-view .service-number {
+  animation: rv-fade 800ms ease calc(var(--d, 0ms) + 500ms) backwards;
+}
+
+
+/* ============================================================
+   10. EXPERIENCE
+============================================================ */
+
+/* Timeline: a red line fills as you scroll, lighting each marker */
+.js .timeline-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 13px;
+  bottom: 0;
+  left: 5px;
+  width: 1px;
+  background: linear-gradient(var(--red-bright), var(--red));
+  transform-origin: top;
+  transform: scaleY(var(--fill, 0));
+}
+
+.js .timeline-marker {
+  transition:
+    background 300ms ease,
+    box-shadow 300ms ease;
+}
+
+.js .timeline-item.in-view .timeline-marker {
+  animation: marker-pop 600ms cubic-bezier(0.3, 1.6, 0.5, 1)
+    calc(var(--d, 0ms) + 150ms) backwards;
+}
+
+.js .timeline-item.is-lit .timeline-marker {
+  background: var(--red-bright);
+  box-shadow:
+  0 0 0 5px rgba(40, 233, 140, 0.15),
+  0 0 16px rgba(40, 233, 140, 0.55);
+}
+
+@keyframes marker-pop {
+  from { transform: scale(0); }
+  to   { transform: scale(1); }
+}
+
+/* Numbers inside descriptions count up (10,000+ and 85%) */
+.count {
+  color: var(--red-bright);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+
+/* ============================================================
+   11. CONTACT
+============================================================ */
+.contact-title.scrambling {
+  white-space: nowrap;
+}
+
+/* Email button sends out a soft ping to invite the click */
+.js .contact-email {
+  position: relative;
+}
+
+.js .contact-email::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--red-bright);
+  border-radius: inherit;
+  pointer-events: none;
+  animation: ping 2.6s ease-out infinite;
+}
+
+@keyframes ping {
+  0%   { transform: scale(1);        opacity: 0.7; }
+  80%, 100% { transform: scale(1.14, 1.55); opacity: 0; }
+}
+
+
+/* ============================================================
+   12. HOVER MICRO-INTERACTIONS
+============================================================ */
+.about-icon,
+.skill-icon,
+.service-icon,
+.contact-option-icon {
+  transition:
+    transform 350ms cubic-bezier(0.3, 1.5, 0.5, 1),
+    background 250ms ease;
+}
+
+.about-card:hover .about-icon,
+.skill-card:hover .skill-icon,
+.service-card:hover .service-icon {
+  transform: rotate(-8deg) scale(1.1);
+  background: rgba(40, 233, 140, 0.22);
+}
+
+.contact-option:hover .contact-option-icon {
+  transform: rotate(8deg) scale(1.1);
+}
+
+/* ============================================================
+   NEW: CONTEXTUAL NEON PILL CURSOR
+============================================================ */
+
+/* Hide default cursor on desktop */
+html.has-cursor,
+html.has-cursor a,
+html.has-cursor button {
+  cursor: none;
+}
+
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 8px;
+  height: 8px;
+  background: var(--red-bright); /* Neon Green */
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity 250ms ease, width 300ms ease, height 300ms ease, background 300ms ease;
+  box-shadow: 0 0 12px var(--red-bright);
+}
+
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9998;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid var(--red-bright); /* Neon Green */
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition:
+    opacity 250ms ease,
+    width 300ms ease,
+    height 300ms ease,
+    background 300ms ease,
+    border-color 300ms ease;
+  
+}
+
+.has-cursor .cursor-dot,
+.has-cursor .cursor-ring {
+  opacity: 1;
+}
+
+/* State: Hovering a link/button (Expands) */
+.cursor-ring.is-link {
+  width: 60px;
+  height: 60px;
+  background: rgba(40, 233, 140, 0.1);
+  border-color: var(--red-bright);
+}
+
+/* State: Hovering a project card (Morphs to a pill with text) */
+.cursor-ring.is-card {
+  width: 90px;
+  height: 90px;
+  background: var(--red-bright);
+  border-color: transparent;
+  box-shadow: 0 0 20px rgba(40, 233, 140, 0.4);
+}
+
+.cursor-ring.is-card .cursor-text {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* The text inside the pill */
+.cursor-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #1C1D20; /* Dark text on neon background */
+  opacity: 0;
+  transition: opacity 300ms ease, transform 300ms ease;
+  pointer-events: none;
+}
+
+/* Cursor-following spotlight on cards */
+.skill-card,
+.about-card,
+.service-card,
+.project-card {
+  position: relative;
+}
+
+.skill-card::after,
+.about-card::after,
+.service-card::after,
+.project-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    340px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(40, 233, 140, 0.12),
+    transparent 62%
+  );
+  transition: opacity 300ms ease;
+}
+
+.skill-card:hover::after,
+.about-card:hover::after,
+.service-card:hover::after,
+.project-card:hover::after {
+  opacity: 1;
+}
+
+/* 3D tilt on project cards */
+@media (hover: hover) and (pointer: fine) {
+  .project-card {
+    transform-style: preserve-3d;
+  }
+
+  .project-card:hover {
+    transform: perspective(900px) rotateX(var(--rx, 0deg))
+      rotateY(var(--ry, 0deg)) translateY(-6px);
+  }
+}
+
+/* Magnetic buttons (transition lists re-declared to add `translate`) */
+.button {
+  transition:
+    transform 220ms ease,
+    background 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    translate 300ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.nav-cta {
+  transition:
+    border-color 220ms ease,
+    background 220ms ease,
+    transform 220ms ease,
+    translate 300ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.contact-email {
+  transition:
+    background 220ms ease,
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    translate 300ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.contact-phone {
+  transition:
+    border-color 220ms ease,
+    background 220ms ease,
+    transform 220ms ease,
+    translate 300ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+
+/* ============================================================
+   14. MOBILE MENU — links slide in one by one
+============================================================ */
+@media (max-width: 680px) {
+  .nav-links.is-open a {
+    animation: menu-link-in 380ms cubic-bezier(0.2, 0.7, 0.2, 1)
+      calc(var(--i, 0) * 55ms + 60ms) backwards;
+  }
+
+  @keyframes menu-link-in {
+    from { opacity: 0; transform: translateX(-18px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+}

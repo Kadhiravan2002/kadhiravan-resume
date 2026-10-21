@@ -25,17 +25,22 @@
    01. DESIGN TOKENS
 ============================================================ */
 :root {
-  --bg: #0A0A0A;
-  --surface: #141414;
-  --surface-raised: #1C1C1C;
-
-  --red: #B42332;
-  --red-bright: #E53B4B;
-
-  --white: #F7F5F2;
-  --neutral: #E7E2DD;
-  --muted: #f0ecec;
-  --border: rgba(247, 245, 242, 0.10);
+  /* Inverted Colors for Light Theme */
+  --bg: #F9F9F9;               /* Off-white background */
+  --surface: #FFFFFF;          /* Pure white for cards */
+  --surface-raised: #F1F3F9;   /* Light gray for hovers */
+  
+  /* New Neon Green Accent */
+  --red: #28E98C;              
+  --red-bright: #1cc779;       
+  
+  /* Inverted Text Colors */
+  --white: #1C1D20;            /* Dark Charcoal (was white) */
+  --neutral: #333333;          /* Dark gray */
+  --muted: #666666;            /* Medium gray for body text */
+  
+  /* Borders and Shadows */
+  --border: rgba(0, 0, 0, 0.08); 
 
   --font-heading: "Space Grotesk", sans-serif;
   --font-body: "Inter", sans-serif;
@@ -67,12 +72,14 @@ html {
 
 body {
   margin: 0;
-  background: var(--bg);
+  /* A very subtle cool-toned gradient instead of flat white */
+  background: linear-gradient(135deg, #F8F9FA 0%, #F0F2F5 100%);
   color: var(--white);
   font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
 }
 
 body,
@@ -153,12 +160,11 @@ main > .hero {
   top: 0;
   z-index: 1000;
   height: var(--header-height);
-  background: rgba(10, 10, 10, 0.94);
+  background: rgba(249, 249, 249, 0.85); /* NEW: Light translucent */
   border-bottom: 1px solid var(--border);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
-
 .nav {
   height: 100%;
   display: flex;
@@ -234,7 +240,7 @@ main > .hero {
 
 .nav-cta:hover {
   border-color: var(--red);
-  background: rgba(180, 35, 50, 0.12);
+  background: rgba(40, 233, 140, 0.12);
   transform: translateY(-2px);
 }
 
@@ -284,12 +290,12 @@ main > .hero {
   min-height: calc(100svh - var(--header-height));
   overflow: clip;
   background:
-    radial-gradient(
-      ellipse at 78% 45%,
-      rgba(180, 35, 50, 0.10),
-      transparent 36%
-    ),
-    #0E0E0E;
+      radial-gradient(
+        ellipse at 78% 45%,
+        rgba(40, 233, 140, 0.08), /* NEW: Green glow */
+        transparent 36%
+      ),
+      var(--bg); /* NEW: Uses the light off-white variable */
 }
 
 .hero-glow {
@@ -302,20 +308,21 @@ main > .hero {
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(180, 35, 50, 0.14) 0%,
-    rgba(180, 35, 50, 0.05) 38%,
+    rgba(40, 233, 140, 0.15) 0%,   /* NEW: Green */
+    rgba(40, 233, 140, 0.05) 38%,  /* NEW: Green */
     transparent 70%
   );
   pointer-events: none;
+  animation: hero-glow-pulse 8s ease-in-out infinite;
 }
 
 .hero-layout {
   position: relative;
   flex: 1;
   display: grid;
-  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
   align-items: center;
-  gap: clamp(36px, 6vw, 90px);
+  gap: clamp(20px, 4vw, 50px);
   padding-top: clamp(28px, 4vh, 48px);
   padding-bottom: clamp(28px, 4vh, 48px);
 }
@@ -350,7 +357,7 @@ main > .hero {
 }
 
 .status-dot {
-  box-shadow: 0 0 12px rgba(229, 59, 75, 0.5);
+  box-shadow: 0 0 12px rgba(40, 233, 140, 0.5);
 }
 
 .eyebrow-divider {
@@ -358,14 +365,36 @@ main > .hero {
 }
 
 .hero-title {
+  display: block; /* Revert from flex */
   max-width: 680px;
   margin: 0;
   font-family: var(--font-heading);
-  font-size: clamp(3rem, 5.6vw, 5.5rem);
+  font-size: clamp(1.2rem, 2vw, 1.8rem); /* This makes "I AM" small */
   font-weight: 600;
-  line-height: 0.99;
-  letter-spacing: -0.065em;
-  text-wrap: balance;
+  letter-spacing: 0.05em;
+  color: var(--muted); /* Grey */
+  line-height: 1.2;
+}
+
+/* Fix the spacing between "I" and "AM" created by the JS */
+.hero-title .sw {
+  margin-right: 0.3em;
+}
+
+/* Hide that empty span that was throwing off the layout */
+.hero-title span:empty {
+  display: none;
+}
+
+/* The massive name */
+.hero-title .accent-text {
+  display: block; /* Forces KADHIRAVAN to drop to a new line */
+  font-size: clamp(3.5rem, 7vw, 6.5rem); /* Massive size */
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  color: var(--red-bright); /* Neon Green */
+  margin-top: 10px;
 }
 
 .hero-title span {
@@ -377,11 +406,11 @@ main > .hero {
 }
 
 .hero-description {
-  max-width: 490px;
+  max-width: 500px;
   margin: 28px 0 0;
-  color: var(--muted);
-  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
-  line-height: 1.85;
+  color: #333333; /* Darker than var(--muted) */
+  font-size: clamp(1rem, 1.3vw, 1.15rem); /* Slightly larger */
+  line-height: 1.8;
 }
 
 .hero-actions {
@@ -417,12 +446,12 @@ main > .hero {
 .button-primary {
   background: var(--red);
   color: var(--white);
-  box-shadow: 0 8px 28px rgba(180, 35, 50, 0.18);
+  box-shadow: 0 8px 28px rgba(40, 233, 140, 0.2);
 }
 
 .button-primary:hover {
   background: var(--red-bright);
-  box-shadow: 0 10px 34px rgba(180, 35, 50, 0.30);
+  box-shadow: 0 10px 34px rgba(40, 233, 140, 0.3);
 }
 
 .button-primary span {
@@ -436,12 +465,13 @@ main > .hero {
 
 .button-secondary {
   border-color: var(--border);
-  color: var(--white);
+  color: var(--white); /* This will now be dark charcoal */
+  background: var(--surface); /* NEW: Give it a white background */
 }
 
 .button-secondary:hover {
-  border-color: rgba(247, 245, 242, 0.35);
-  background: rgba(247, 245, 242, 0.04);
+  border-color: var(--red);
+  background: rgba(40, 233, 140, 0.05);
 }
 
 .hero-note {
@@ -461,38 +491,32 @@ main > .hero {
   justify-self: center;
   isolation: isolate;
 }
-
 .portrait-frame {
   position: relative;
   z-index: 1;
   width: min(100%, 370px);
   aspect-ratio: 1 / 1;
   overflow: hidden;
-  border: 1px solid rgba(229, 59, 75, 0.42);
-  border-radius: 50%;
-  background: var(--surface);
-  box-shadow:
-    0 0 0 8px rgba(180, 35, 50, 0.035),
-    0 0 60px rgba(180, 35, 50, 0.12);
-  transition:
-    border-radius 400ms ease,
-    box-shadow 400ms ease;
-  outline: 1px solid rgba(229, 59, 75, 0.18);
-  outline-offset: -14px;
+  
+  /* THIS MAKES IT A CIRCLE */
+  border-radius: 50%; 
+  
+  border: 4px solid var(--red); 
+  background: #D1D5DB; /* The grey background */
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  transition: border-radius 400ms ease, box-shadow 400ms ease;
+  animation: float-portrait 6s ease-in-out infinite;
 }
 
 .portrait-frame:hover {
   transform: scale(1.015);
-  box-shadow:
-    0 0 0 8px rgba(180, 35, 50, 0.05),
-    0 0 80px rgba(180, 35, 50, 0.22);
+  box-shadow: 0 25px 60px rgba(40, 233, 140, 0.25); /* Green glow on hover */
 }
-
 .hero-portrait {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 22%;
+  object-position: center 20%; /* Adjusts the face position inside the circle */
 }
 
 .portrait-orbit {
@@ -500,9 +524,11 @@ main > .hero {
   z-index: 0;
   width: 112%;
   aspect-ratio: 1;
-  border: 1px solid rgba(180, 35, 50, 0.17);
+  
   border-radius: 50%;
   transform: rotate(-15deg) scaleY(0.98);
+  border: 1px solid rgba(40, 233, 140, 0.3); /* NEW: Green border */
+
 }
 
 .hero-decoration {
@@ -516,6 +542,7 @@ main > .hero {
   opacity: 0.88;
   pointer-events: none;
   filter: saturate(0.9);
+  animation: drift-decoration 7s ease-in-out infinite;
 }
 
 /* Currently unused in HTML but kept for reuse */
@@ -528,12 +555,12 @@ main > .hero {
   padding: 11px 14px;
   border: 1px solid var(--border);
   border-radius: 999px;
-  background: rgba(20, 20, 20, 0.92);
+  background: rgba(255, 255, 255, 0.92);
   color: var(--neutral);
   font-size: 0.63rem;
   font-weight: 500;
   letter-spacing: 0.09em;
-  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
 }
 
@@ -558,9 +585,9 @@ main > .hero {
   position: relative;
   flex-shrink: 0;
   overflow: hidden;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  background: rgba(20, 20, 20, 0.45);
+  border-top: none;
+  border-bottom: none;
+  background: #1C1D20; /* Dark charcoal from the inspiration */
 }
 
 .marquee-track {
@@ -574,17 +601,17 @@ main > .hero {
   flex-shrink: 0;
   align-items: center;
   gap: clamp(24px, 4vw, 56px);
-  padding: 17px 28px;
-  color: #96918F;
-  font-size: 0.69rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
+  padding: 20px 28px; /* A bit more padding for height */
+  color: #FFFFFF; /* Pure white text */
+  font-size: 0.8rem; /* Slightly larger */
+  font-weight: 600; /* Bolder */
+  letter-spacing: 0.1em;
   white-space: nowrap;
 }
 
 .marquee-group i {
-  color: var(--red-bright);
-  font-size: 0.8rem;
+  color: var(--red-bright); /* Neon Green */
+  font-size: 1.2rem; /* Much larger stars */
   font-style: normal;
 }
 
@@ -722,8 +749,8 @@ main > .hero {
 
 .about-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(180, 35, 50, 0.48);
-  background: linear-gradient(145deg, #211719, var(--surface));
+  border-color: var(--red);
+  background: var(--surface);
 }
 
 .about-card-top {
@@ -739,9 +766,9 @@ main > .hero {
   width: 42px;
   height: 42px;
   place-items: center;
-  border: 1px solid rgba(180, 35, 50, 0.42);
+  border: 1px solid rgba(40, 233, 140, 0.42);
   border-radius: 12px;
-  background: rgba(180, 35, 50, 0.10);
+  background: rgba(40, 233, 140, 0.10);
   color: var(--red-bright);
 }
 
@@ -854,7 +881,7 @@ main > .hero {
   background:
     radial-gradient(
       ellipse at 85% 10%,
-      rgba(180, 35, 50, 0.055),
+      rgba(40, 233, 140, 0.055),
       transparent 38%
     ),
     var(--bg);
@@ -906,11 +933,7 @@ main > .hero {
   padding: 24px;
   border: 1px solid var(--border);
   border-radius: 16px;
-  background: linear-gradient(
-    145deg,
-    rgba(28, 28, 28, 0.96),
-    rgba(20, 20, 20, 0.96)
-  );
+  background: var(--surface);
   transition:
     transform 220ms ease,
     border-color 220ms ease,
@@ -919,12 +942,12 @@ main > .hero {
 
 .skill-card:hover {
   transform: translateY(-3px);
-  border-color: rgba(180, 35, 50, 0.45);
+  border-color: var(--red);
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
 }
 
 .skill-card-primary {
-  border-color: rgba(180, 35, 50, 0.3);
+  border-color: rgba(40, 233, 140, 0.3);
 }
 
 .skill-card-top {
@@ -941,9 +964,9 @@ main > .hero {
   height: 42px;
   flex-shrink: 0;
   place-items: center;
-  border: 1px solid rgba(180, 35, 50, 0.35);
+  border: 1px solid rgba(40, 233, 140, 0.35);
   border-radius: 12px;
-  background: rgba(180, 35, 50, 0.10);
+  background: rgba(40, 233, 140, 0.10);
   color: var(--red-bright);
 }
 
@@ -990,9 +1013,9 @@ main > .hero {
   align-items: center;
   min-height: 29px;
   padding: 5px 10px;
-  border: 1px solid rgba(247, 245, 242, 0.10);
+  border: 1px solid var(--border);
   border-radius: 999px;
-  background: rgba(247, 245, 242, 0.035);
+  background: var(--surface-raised);
   color: var(--neutral);
   font-size: 0.72rem;
   line-height: 1.4;
@@ -1004,8 +1027,8 @@ main > .hero {
 }
 
 .skill-tags span:hover {
-  border-color: rgba(229, 59, 75, 0.5);
-  background: rgba(180, 35, 50, 0.10);
+  border-color: rgba(40, 233, 140, 0.5);
+  background: rgba(40, 233, 140, 0.10);
   color: var(--white);
 }
 
@@ -1018,7 +1041,7 @@ main > .hero {
   background:
     radial-gradient(
       ellipse at 10% 15%,
-      rgba(180, 35, 50, 0.045),
+      rgba(40, 233, 140, 0.045),
       transparent 36%
     ),
     var(--bg);
@@ -1075,20 +1098,20 @@ main > .hero {
 
 .project-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(180, 35, 50, 0.45);
+  border-color: var(--red);
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.2);
 }
 
 .project-card-primary {
-  border-color: rgba(180, 35, 50, 0.3);
+  border-color: rgba(40, 233, 140, 0.3);
 }
 
 .project-preview {
   margin: 12px;
   overflow: hidden;
-  border: 1px solid rgba(247, 245, 242, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  background: #101010;
+  background: var(--surface);
 }
 
 .browser-bar {
@@ -1098,7 +1121,7 @@ main > .hero {
   min-height: 36px;
   padding: 0 12px;
   border-bottom: 1px solid var(--border);
-  background: #181818;
+  background: var(--surface-raised);
 }
 
 .browser-dots {
@@ -1197,7 +1220,7 @@ main > .hero {
   padding: 5px 10px;
   border: 1px solid var(--border);
   border-radius: 999px;
-  background: rgba(247, 245, 242, 0.025);
+  background: var(--surface-raised);
   color: var(--neutral);
   font-size: 0.7rem;
   line-height: 1.4;
@@ -1281,8 +1304,7 @@ main > .hero {
 
 .service-card:hover {
   transform: translateY(-3px);
-  border-color: rgba(180, 35, 50, 0.4);
-}
+  border-color: var(--red);}
 
 .service-card:hover::before {
   width: 100%;
@@ -1303,10 +1325,12 @@ main > .hero {
   height: 44px;
   margin-bottom: 22px;
   place-items: center;
-  border: 1px solid rgba(180, 35, 50, 0.35);
+  
   border-radius: 12px;
-  background: rgba(180, 35, 50, 0.1);
+  
   color: var(--red-bright);
+  border: 1px solid rgba(40, 233, 140, 0.35);
+  background: rgba(40, 233, 140, 0.1);
 }
 
 .service-icon svg {
@@ -1348,6 +1372,7 @@ main > .hero {
 
 .service-card:hover .service-link span {
   transform: translate(2px, -2px);
+  
 }
 
 .services-cta {
@@ -1360,7 +1385,7 @@ main > .hero {
   padding: 20px 24px;
   border: 1px solid var(--border);
   border-radius: 14px;
-  background: rgba(247, 245, 242, 0.025);
+  background: var(--surface);
 }
 
 .services-cta p {
@@ -1397,7 +1422,7 @@ main > .hero {
   background:
     radial-gradient(
       ellipse at 90% 15%,
-      rgba(180, 35, 50, 0.045),
+      rgba(40, 233, 140, 0.045),
       transparent 38%
     ),
     var(--bg);
@@ -1465,7 +1490,7 @@ main > .hero {
   height: 8px;
   border-radius: 50%;
   background: var(--red-bright);
-  box-shadow: 0 0 12px rgba(229, 59, 75, 0.3);
+  box-shadow: 0 0 12px rgba(40, 233, 140, 0.3);
 }
 
 /* Timeline */
@@ -1562,7 +1587,7 @@ main > .hero {
 
 .credential-card:hover {
   transform: translateX(3px);
-  border-color: rgba(180, 35, 50, 0.4);
+  border-color: var(--red);
 }
 
 .credential-number {
@@ -1588,7 +1613,7 @@ main > .hero {
 }
 
 .credential-card div p:first-of-type {
-  color: #C8666F;
+  color: var(--red-bright);
   font-weight: 500;
 }
 /* Learning note */
@@ -1598,9 +1623,11 @@ main > .hero {
   gap: 12px;
   margin-top: 18px;
   padding: 14px 16px;
-  border: 1px solid rgba(180, 35, 50, 0.22);
+  
   border-radius: 12px;
-  background: rgba(180, 35, 50, 0.055);
+  
+  border: 1px solid rgba(40, 233, 140, 0.22);
+  background: rgba(40, 233, 140, 0.055);
 }
 
 .experience-column .learning-note {
@@ -1666,7 +1693,7 @@ main > .hero {
   background:
     radial-gradient(
       ellipse at 10% 20%,
-      rgba(180, 35, 50, 0.07),
+      rgba(40, 233, 140, 0.07),
       transparent 40%
     ),
     var(--bg);
@@ -1723,7 +1750,7 @@ main > .hero {
   font-weight: 600;
   text-decoration: none;
   overflow-wrap: anywhere;
-  box-shadow: 0 8px 24px rgba(180, 35, 50, 0.20);
+  box-shadow: 0 8px 24px rgba(40, 233, 140, 0.20);
   transition:
     background 220ms ease,
     transform 220ms ease,
@@ -1739,7 +1766,7 @@ main > .hero {
 .contact-email:hover {
   background: var(--red-bright);
   transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(180, 35, 50, 0.30);
+  box-shadow: 0 12px 32px rgba(40, 233, 140, 0.30);
 }
 
 .contact-email:hover span {
@@ -1752,7 +1779,7 @@ main > .hero {
   gap: 12px;
   margin-top: 12px;
   padding: 13px 22px;
-  border: 1px solid rgba(247, 245, 242, 0.18);
+  border: 1px solid var(--border);
   border-radius: 999px;
   background: transparent;
   color: var(--white);
@@ -1767,8 +1794,8 @@ main > .hero {
 }
 
 .contact-phone:hover {
-  border-color: rgba(247, 245, 242, 0.45);
-  background: rgba(247, 245, 242, 0.05);
+  border-color: var(--red);
+  background: rgba(40, 233, 140, 0.05);
   transform: translateY(-2px);
 }
 
@@ -1787,7 +1814,7 @@ main > .hero {
   padding: 17px;
   border: 1px solid var(--border);
   border-radius: 13px;
-  background: rgba(20, 20, 20, 0.9);
+  background: var(--surface);
   color: var(--white);
   text-decoration: none;
   transition:
@@ -1798,7 +1825,7 @@ main > .hero {
 
 .contact-option:hover {
   transform: translateX(3px);
-  border-color: rgba(180, 35, 50, 0.45);
+  border-color: var(--red);
   background: var(--surface-raised);
 }
 
@@ -1808,9 +1835,11 @@ main > .hero {
   height: 42px;
   flex-shrink: 0;
   place-items: center;
-  border: 1px solid rgba(180, 35, 50, 0.3);
+  
   border-radius: 12px;
-  background: rgba(180, 35, 50, 0.1);
+  
+  border: 1px solid rgba(40, 233, 140, 0.3);
+  background: rgba(40, 233, 140, 0.1);
   color: var(--red-bright);
   font-size: 1rem;
   font-weight: 600;
@@ -1852,7 +1881,7 @@ main > .hero {
 .site-footer {
   padding-block: 22px;
   border-top: 1px solid var(--border);
-  background: #080808;
+  background: var(--surface);
 }
 
 .footer-layout {
@@ -1903,7 +1932,7 @@ main > .hero {
   place-items: center;
   width: 48px;
   height: 48px;
-  border: 1px solid rgba(247, 245, 242, 0.15);
+  border: 1px solid var(--border);
   border-radius: 50%;
   background: var(--red);
   color: var(--white);
@@ -2000,6 +2029,8 @@ main > .hero {
   .portrait-frame {
     width: 100%;
     max-width: 320px;
+    border: 4px solid var(--red); /* NEW: Green border */
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.08); /* NEW: Soft light shadow */
   }
 
   .hero-decoration {
@@ -2297,7 +2328,7 @@ main > .hero {
     margin: 0;
     padding: 10px var(--page-padding) 20px;
     border-bottom: 1px solid var(--border);
-    background: rgba(10, 10, 10, 0.98);
+    background: rgba(249, 249, 249, 0.98);
     opacity: 0;
     visibility: hidden;
     transform: translateY(-8px);
@@ -2734,6 +2765,52 @@ main > .hero {
     width: 44px;
     height: 44px;
   }
+  
+  /* ============================================================
+     UNIFIED MOBILE TYPOGRAPHY — 4 sizes for better hierarchy
+     Heading   → section titles
+     Sub-head  → every h3 and h4
+     Lead      → intro paragraphs under titles
+     Body      → card descriptions and smaller details
+  ============================================================ */
+
+  /* 2. Sub-headings — one size */
+  .about-card h3,
+  .skill-card h3,
+  .service-card h3,
+  .project-info h3,
+  .timeline-content h4,
+  .approach-item h4,
+  .credential-card h4,
+  .experience-column-title {
+    font-size: 1.15rem; /* Bumped up slightly from 1.1rem */
+  }
+
+  /* 3. Lead / Intro paragraphs — one size */
+  .hero-description,
+  .about-lead,
+  .about-description,
+  .skills-intro,
+  .projects-intro,
+  .services-intro,
+  .experience-intro,
+  .contact-description {
+    font-size: 1rem; /* NEW TIER - makes intros stand out */
+    line-height: 1.8;
+  }
+
+  /* 4. Body paragraphs — one size */
+  .approach-item p,
+  .skill-description,
+  .project-info > p,
+  .service-card > p,
+  .timeline-description,
+  .credential-card p,
+  .about-card p {
+    font-size: 0.85rem; /* Dropped slightly from 0.88rem to create contrast */
+    line-height: 1.7;
+  }
+
 }
 
 
@@ -2842,49 +2919,44 @@ main > .hero {
     padding-left: 0;
   }
 
-
-  /* ============================================================
-     UNIFIED MOBILE TYPOGRAPHY — 4 sizes for better hierarchy
-     Heading   → section titles
-     Sub-head  → every h3 and h4
-     Lead      → intro paragraphs under titles
-     Body      → card descriptions and smaller details
-  ============================================================ */
-
-  /* 2. Sub-headings — one size */
-  .about-card h3,
-  .skill-card h3,
-  .service-card h3,
-  .project-info h3,
-  .timeline-content h4,
-  .approach-item h4,
-  .credential-card h4,
-  .experience-column-title {
-    font-size: 1.15rem; /* Bumped up slightly from 1.1rem */
+  .hero-glow,
+  .portrait-frame,
+  .hero-decoration {
+    animation: none !important;
   }
 
-  /* 3. Lead / Intro paragraphs — one size */
-  .hero-description,
-  .about-lead,
-  .about-description,
-  .skills-intro,
-  .projects-intro,
-  .services-intro,
-  .experience-intro,
-  .contact-description {
-    font-size: 1rem; /* NEW TIER - makes intros stand out */
-    line-height: 1.8;
-  }
 
-  /* 4. Body paragraphs — one size */
-  .approach-item p,
-  .skill-description,
-  .project-info > p,
-  .service-card > p,
-  .timeline-description,
-  .credential-card p,
-  .about-card p {
-    font-size: 0.85rem; /* Dropped slightly from 0.88rem to create contrast */
-    line-height: 1.7;
+/* Animations */
+
+/* 1. The background glow slowly pulses */
+@keyframes hero-glow-pulse {
+  0%, 100% { 
+    transform: scale(1); 
+    opacity: 0.8; 
   }
+  50% { 
+    transform: scale(1.15); 
+    opacity: 1; 
+  }
+}
+
+/* 2. The portrait gently floats up and down */
+@keyframes float-portrait {
+  0%, 100% { 
+    transform: translateY(0); 
+  }
+  50% { 
+    transform: translateY(-12px); 
+  }
+}
+
+/* 3. The red abstract decoration drifts slightly */
+@keyframes drift-decoration {
+  0%, 100% { 
+    transform: translate(0, 0) rotate(0deg); 
+  }
+  50% { 
+    transform: translate(-8px, 8px) rotate(3deg); 
+  }
+}
 }
