@@ -2050,6 +2050,15 @@ body .site-header.is-scrolled {
     padding-block: 1.75rem 2.5rem;
   }
 
+  /* Eyebrow: keep "WEB DEVELOPER · CREATIVE BUILDER" on one line */
+  .eyebrow {
+    flex-wrap: nowrap;
+    gap: 7px;
+    font-size: clamp(0.56rem, 2.9vw, 0.72rem);
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
   .hero-description {
     line-height: 1.75;
   }

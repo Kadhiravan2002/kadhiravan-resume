@@ -776,4 +776,15 @@ html.has-cursor button {
     from { opacity: 0; transform: translateX(-18px); }
     to   { opacity: 1; transform: translateX(0); }
   }
+
+  /* "Three teams. Three stacks." — on phones the clip-path wipe made the
+     title flicker and stay blank, so it is simply always visible here. */
+  .js .experience-title[data-reveal],
+  .js .experience-title[data-reveal].in-view,
+  .js .experience-title[data-reveal]:not(.in-view) {
+    opacity: 1;
+    animation: none;
+    clip-path: none;
+    transform: none;
+  }
 }
