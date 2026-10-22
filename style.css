@@ -6,7 +6,7 @@
    03. Typography — the 4-tier system
    04. Utilities (container, sections, eyebrows)
    05. Header and navigation
-   06. Hero (+ tilted marquee)
+   06. Hero (+ chip marquee)
    07. About
    08. Skills
    09. Projects
@@ -25,18 +25,30 @@
    01. DESIGN TOKENS AND SECTION THEMES
 ============================================================ */
 :root {
-  /* Brand */
-  --accent: #28E98C;            /* Neon green: buttons, glows, dark-section highlights */
-  --accent-strong: #1fd67e;     /* Hover state */
-  --accent-text: #0a8f4e;       /* Same green, deepened so text stays readable on white */
-  --night: #0A0A0A;
-  --charcoal: #17181B;
-  --snow: #F4F4F0;
+  /* ---------- PALETTE: the one place the whole site's colour lives ----------
+     Ink + paper give the light/dark rhythm. Orange is the brand accent.
+     Sun, teal and violet are supporting hues: they tint the cards and the
+     marquee so the page reads as a palette, not a single colour.
+     Components never use raw colour values, only these tokens. To re-colour
+     the site, change the RGB triples below. */
+  --ink-rgb: 20, 18, 15;              /* warm near-black   #14120F */
+  --paper: #F6F3EC;                   /* warm off-white */
 
-  /* Legacy aliases — animations.css still reads these names */
-  --red: var(--accent);
-  --red-bright: var(--accent);
-  --white: var(--snow);
+  --accent-rgb: 255, 122, 26;         /* orange            #FF7A1A */
+  --sun-rgb: 255, 197, 61;            /* sun yellow        #FFC53D */
+  --teal-rgb: 20, 184, 166;           /* teal              #14B8A6 */
+  --violet-rgb: 124, 108, 255;        /* violet            #7C6CFF */
+  --mail-rgb: 234, 67, 53;            /* email red         #EA4335 */
+  --linkedin-rgb: 10, 102, 194;       /* LinkedIn blue     #0A66C2 */
+
+  --ink: rgb(var(--ink-rgb));
+  --accent: rgb(var(--accent-rgb));
+  --accent-strong: #F26A00;           /* hover state */
+  --accent-ink: #B84A00;              /* accent as small text on paper (4.7:1) */
+  --accent-display: #DE5F00;          /* accent for LARGE display type on paper (3.3:1) */
+  --sun: rgb(var(--sun-rgb));
+  --on-accent: var(--ink);            /* text/icons on any accent or tint fill */
+  --dark-muted: #A8A298;              /* muted text on ink */
 
   --font-heading: "Space Grotesk", sans-serif;
   --font-body: "Inter", sans-serif;
@@ -54,34 +66,34 @@
   --section-pad: clamp(5rem, 8vw, 8rem);
   --heading-gap: clamp(2.5rem, 4vw, 3.5rem);
 
-  --rule: rgba(40, 233, 140, 0.3);
+  --rule: rgba(var(--accent-rgb), 0.3);
 }
 
-/* WHITE sections */
+/* LIGHT sections (hero, skills, services, contact) */
 .theme-light {
-  --bg: #FFFFFF;
-  --fg: #17181B;
-  --fg-muted: #5B5F66;
-  --card: #F5F6F8;
-  --card-hover: #FFFFFF;
-  --line: rgba(23, 24, 27, 0.1);
-  --line-strong: rgba(23, 24, 27, 0.24);
-  --accent-fg: var(--accent-text);
-  --edge: rgba(10, 10, 10, 0.055);
-  --shadow: 0 16px 36px rgba(0, 0, 0, 0.09);
+  --bg: var(--paper);
+  --fg: var(--ink);
+  --fg-muted: #5E5A52;
+  --card: #FFFDF8;
+  --card-hover: var(--card-hover);
+  --line: rgba(var(--ink-rgb), 0.1);
+  --line-strong: rgba(var(--ink-rgb), 0.24);
+  --accent-fg: var(--accent-ink);
+  --edge: rgba(var(--ink-rgb), 0.05);
+  --shadow: 0 16px 36px rgba(var(--ink-rgb), 0.1);
 }
 
-/* BLACK sections */
+/* DARK sections (about, projects, experience, footer) */
 .theme-dark {
-  --bg: #0A0A0A;
-  --fg: #F4F4F0;
-  --fg-muted: #A3A7AD;
-  --card: #131416;
-  --card-hover: #1A1C1F;
+  --bg: var(--ink);
+  --fg: var(--paper);
+  --fg-muted: var(--dark-muted);
+  --card: #1D1A16;
+  --card-hover: #27231D;
   --line: rgba(255, 255, 255, 0.1);
   --line-strong: rgba(255, 255, 255, 0.26);
   --accent-fg: var(--accent);
-  --edge: rgba(40, 233, 140, 0.09);
+  --edge: rgba(var(--accent-rgb), 0.14);
   --shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
 }
 
@@ -109,8 +121,8 @@ html {
 
 body {
   margin: 0;
-  background: #FFFFFF;
-  color: var(--charcoal);
+  background: var(--paper);
+  color: var(--ink);
   font-family: var(--font-body);
   font-size: var(--fs-4);
   line-height: 1.6;
@@ -297,16 +309,16 @@ p,
   top: 0;
   z-index: 1000;
   height: var(--header-height);
-  background: rgba(10, 10, 10, 0.82);
-  color: var(--snow);
+  background: rgba(var(--ink-rgb), 0.97);
+  color: var(--paper);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
 
-/* beats animations.css (.site-header.is-scrolled) on specificity */
+/* scrolled state: slightly denser dark glass */
 body .site-header.is-scrolled {
-  background: rgba(10, 10, 10, 0.94);
+  background: rgba(var(--ink-rgb), 0.94);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
 }
 
@@ -335,7 +347,7 @@ body .site-header.is-scrolled {
 
 .nav-links a {
   position: relative;
-  color: #A3A7AD;
+  color: var(--dark-muted);
   transition: color 220ms ease;
 }
 
@@ -353,7 +365,7 @@ body .site-header.is-scrolled {
 }
 
 .nav-links a:hover {
-  color: var(--snow);
+  color: var(--paper);
 }
 
 .nav-links a:hover::after {
@@ -378,7 +390,7 @@ body .site-header.is-scrolled {
 
 .nav-cta:hover {
   border-color: var(--accent);
-  background: rgba(40, 233, 140, 0.14);
+  background: rgba(var(--accent-rgb), 0.14);
   transform: translateY(-2px);
 }
 
@@ -403,7 +415,7 @@ body .site-header.is-scrolled {
   width: 100%;
   height: 2px;
   margin-block: 5px;
-  background: var(--snow);
+  background: var(--paper);
   transition: transform 220ms ease;
 }
 
@@ -421,7 +433,7 @@ body .site-header.is-scrolled {
 ============================================================ */
 .hero {
   position: relative;
-  z-index: 2;                 /* lets the tilted marquee overlap the next section */
+  z-index: 2;                 /* keeps the hero above the next section */
   isolation: isolate;
   display: flex;
   flex-direction: column;
@@ -430,8 +442,9 @@ body .site-header.is-scrolled {
   overflow-x: clip;
   overflow-y: visible;
   background:
-    radial-gradient(ellipse at 78% 42%, rgba(40, 233, 140, 0.13), transparent 42%),
-    #FFFFFF;
+    radial-gradient(ellipse at 78% 42%, rgba(var(--accent-rgb), 0.16), transparent 46%),
+    radial-gradient(ellipse at 8% 100%, rgba(var(--sun-rgb), 0.2), transparent 40%),
+    var(--bg);
 }
 
 .hero-glow {
@@ -444,8 +457,8 @@ body .site-header.is-scrolled {
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(40, 233, 140, 0.18) 0%,
-    rgba(40, 233, 140, 0.06) 38%,
+    rgba(var(--accent-rgb), 0.18) 0%,
+    rgba(var(--accent-rgb), 0.06) 38%,
     transparent 70%
   );
   pointer-events: none;
@@ -459,7 +472,7 @@ body .site-header.is-scrolled {
   grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
   align-items: center;
   gap: clamp(20px, 4vw, 50px);
-  padding-block: clamp(1.25rem, 4vh, 3rem);   /* slim, so hero + marquee fit one screen */
+  padding-block: clamp(1.5rem, 6vh, 4.5rem);   /* same space above and below the content */
 }
 
 .hero-content {
@@ -485,14 +498,15 @@ body .site-header.is-scrolled {
   flex: 0 0 7px;
   border-radius: 50%;
   background: var(--accent);
-  box-shadow: 0 0 12px rgba(40, 233, 140, 0.7);
+  box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.7);
 }
 
 .eyebrow-divider {
-  color: var(--accent-text);
+  color: var(--accent-fg);
 }
 
-/* Tier 1 — both lines at full size, name in green */
+/* Tier 1 — both lines at full size. "I AM" is outlined (quiet); the name is
+   solid accent (loud). Same solid / outline language as the marquee below. */
 .hero-title {
   display: block;
   margin: 0;
@@ -501,7 +515,12 @@ body .site-header.is-scrolled {
   line-height: 0.95;
   letter-spacing: -0.05em;
   text-transform: uppercase;
-  color: var(--charcoal);
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ink);
+}
+
+@supports not (-webkit-text-stroke: 1px red) {
+  .hero-title { color: var(--fg-muted); }
 }
 
 .hero-title span {
@@ -513,7 +532,8 @@ body .site-header.is-scrolled {
 }
 
 .hero-title .accent-text {
-  color: var(--accent-text);
+  color: var(--accent-display);
+  -webkit-text-stroke: 0;
 }
 
 .hero-description {
@@ -554,13 +574,13 @@ body .site-header.is-scrolled {
 
 .button-primary {
   background: var(--accent);
-  color: #0A0A0A;
-  box-shadow: 0 8px 28px rgba(40, 233, 140, 0.32);
+  color: var(--on-accent);
+  box-shadow: 0 8px 28px rgba(var(--accent-rgb), 0.32);
 }
 
 .button-primary:hover {
   background: var(--accent-strong);
-  box-shadow: 0 10px 34px rgba(40, 233, 140, 0.45);
+  box-shadow: 0 10px 34px rgba(var(--accent-rgb), 0.45);
 }
 
 .button-primary span {
@@ -579,7 +599,7 @@ body .site-header.is-scrolled {
 
 .button-secondary:hover {
   border-color: var(--accent);
-  background: rgba(40, 233, 140, 0.1);
+  background: rgba(var(--accent-rgb), 0.1);
 }
 
 /* Portrait */
@@ -610,13 +630,13 @@ body .site-header.is-scrolled {
   overflow: hidden;
   border-radius: 50%;
   border: 4px solid var(--accent);
-  background: #D1D5DB;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.16);
+  background: rgba(var(--ink-rgb), 0.12);
+  box-shadow: 0 20px 50px rgba(var(--ink-rgb), 0.22);
   transition: box-shadow 400ms ease;
 }
 
 .portrait-frame:hover {
-  box-shadow: 0 25px 60px rgba(40, 233, 140, 0.4);
+  box-shadow: 0 25px 60px rgba(var(--accent-rgb), 0.4);
 }
 
 .hero-portrait {
@@ -632,7 +652,7 @@ body .site-header.is-scrolled {
   inset: -16px;
   z-index: 0;
   border-radius: 50%;
-  border: 1px solid rgba(10, 160, 90, 0.2);
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
   animation: orbit-spin 6s linear infinite;
 }
 
@@ -642,7 +662,7 @@ body .site-header.is-scrolled {
   inset: -2px;
   border-radius: 50%;
   padding: 2px;
-  background: conic-gradient(from 0deg, transparent 0 62%, #12c277 100%);
+  background: conic-gradient(from 0deg, transparent 0 62%, var(--accent) 100%);
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
@@ -665,56 +685,72 @@ body .site-header.is-scrolled {
   animation: drift-decoration 7s ease-in-out infinite;
 }
 
-/* Marquee — green strip, slight tilt, solid / outlined words alternate */
+/* Marquee — slim ticker. Each skill is a pill chip with one dot from the palette
+   (orange / teal / sun / violet), so the strip previews the colours used further
+   down the page. Edges fade out instead of hard-cutting. Pauses on hover. */
 .hero-marquee {
   position: relative;
   z-index: 3;
   flex-shrink: 0;
-  width: 106%;
-  margin-inline: -3%;
+  width: 100%;
   overflow: hidden;
-  background: var(--accent);
-  color: #0A0A0A;
-  transform: rotate(-1.6deg);
-  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.22);
+  padding-block: 14px;
+  border-top: 1px solid var(--line-strong);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
 }
 
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee-scroll 36s linear infinite;
+  animation: marquee-scroll 45s linear infinite;
 }
 
 .marquee-group {
   display: flex;
   flex-shrink: 0;
   align-items: center;
-  gap: clamp(24px, 4vw, 56px);
-  padding: 1.1rem clamp(12px, 2vw, 28px);
+  gap: 12px;
+  padding-right: 12px;          /* equals the gap, so the loop seam is invisible */
   font-family: var(--font-heading);
-  font-size: var(--fs-2);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
+  font-size: var(--fs-4);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
   text-transform: uppercase;
   white-space: nowrap;
 }
 
-.marquee-group span:nth-of-type(odd) {
-  color: #0A0A0A;
+.marquee-group span {
+  --chip: var(--accent-rgb);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px 8px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--card-hover);
+  color: var(--ink);
+  transition: border-color 200ms ease, background 200ms ease;
 }
 
-.marquee-group span:nth-of-type(even) {
-  color: transparent;
-  -webkit-text-stroke: 1.5px #0A0A0A;
+.marquee-group span::before {
+  content: "";
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgb(var(--chip));
+  box-shadow: 0 0 0 3px rgba(var(--chip), 0.22);
 }
 
-.marquee-group i {
-  display: inline-block;
-  color: #0A0A0A;
-  font-size: inherit;
-  font-style: normal;
-  animation: spin-slow 9s linear infinite;
+.marquee-group span:nth-of-type(4n+2) { --chip: var(--teal-rgb); }
+.marquee-group span:nth-of-type(4n+3) { --chip: var(--sun-rgb); }
+.marquee-group span:nth-of-type(4n+4) { --chip: var(--violet-rgb); }
+
+.marquee-group span:hover {
+  border-color: rgb(var(--chip));
+  background: rgba(var(--chip), 0.14);
 }
 
 .hero-marquee:hover .marquee-track {
@@ -820,9 +856,9 @@ body .site-header.is-scrolled {
   place-items: center;
   width: 44px;
   height: 44px;
-  border: 1px solid rgba(40, 233, 140, 0.4);
+  border: 1px solid rgba(var(--accent-rgb), 0.4);
   border-radius: 12px;
-  background: rgba(40, 233, 140, 0.1);
+  background: rgba(var(--accent-rgb), 0.1);
   color: var(--accent-fg);
 }
 
@@ -929,7 +965,7 @@ body .site-header.is-scrolled {
 }
 
 .skill-card-primary {
-  border-color: rgba(40, 233, 140, 0.5);
+  border-color: rgba(var(--accent-rgb), 0.5);
 }
 
 .skill-card-top {
@@ -985,7 +1021,7 @@ body .site-header.is-scrolled {
 .project-tags span:hover,
 .experience-tags span:hover {
   border-color: var(--accent);
-  background: rgba(40, 233, 140, 0.12);
+  background: rgba(var(--accent-rgb), 0.12);
 }
 
 
@@ -1017,7 +1053,7 @@ body .site-header.is-scrolled {
 }
 
 .project-card-primary {
-  border-color: rgba(40, 233, 140, 0.4);
+  border-color: rgba(var(--accent-rgb), 0.4);
 }
 
 .project-preview {
@@ -1225,6 +1261,83 @@ body .site-header.is-scrolled {
 
 
 /* ============================================================
+   10b. SERVICES — HOVER IMAGE REVEAL
+   Each card holds a .service-media layer (image in images/services/).
+   On hover it opens like an iris from the exact point the pointer
+   entered (--ex / --ey, set in animations.js), the image settles from
+   a soft zoom, and the card text flips to light. If an image is
+   missing, the layer shows an ink-to-tint gradient instead.
+   Touch devices have no hover, so they keep the plain card.
+============================================================ */
+.service-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(var(--ink-rgb), 0.92), rgb(var(--tint)));
+  clip-path: circle(0 at var(--ex, 50%) var(--ey, 50%));
+  transition: clip-path 650ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.service-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.14);
+  transition: transform 1100ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* scrim keeps the light text readable on any image */
+.service-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(var(--ink-rgb), 0.5), rgba(var(--ink-rgb), 0.88));
+}
+
+/* content sits above the image layer */
+.service-card > :not(.service-media):not(.service-number) {
+  position: relative;
+  z-index: 2;
+}
+
+.service-number {
+  z-index: 2;
+}
+
+.service-card::before {
+  z-index: 3;
+}
+
+.service-card h3,
+.service-card > p,
+.service-number,
+.service-link {
+  transition: color 350ms ease 150ms;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .service-card:hover .service-media {
+    clip-path: circle(150% at var(--ex, 50%) var(--ey, 50%));
+  }
+
+  .service-card:hover .service-media img {
+    transform: scale(1.02);
+  }
+
+  .service-card:hover {
+    color: var(--paper);
+    --fg: var(--paper);
+    --fg-muted: rgba(246, 243, 236, 0.84);
+    --accent-fg: rgb(var(--tint));
+  }
+}
+
+
+/* ============================================================
    11. EXPERIENCE AND CREDENTIALS  (black)
    Deliberately sparse: one sentence per role, no certificate blurbs.
 ============================================================ */
@@ -1258,7 +1371,7 @@ body .site-header.is-scrolled {
   height: 8px;
   border-radius: 50%;
   background: var(--accent);
-  box-shadow: 0 0 12px rgba(40, 233, 140, 0.5);
+  box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.5);
 }
 
 /* Timeline */
@@ -1320,9 +1433,9 @@ body .site-header.is-scrolled {
   gap: 12px;
   margin-top: 0.5rem;
   padding: 0.9rem 1rem;
-  border: 1px solid rgba(40, 233, 140, 0.28);
+  border: 1px solid rgba(var(--accent-rgb), 0.28);
   border-radius: 12px;
-  background: rgba(40, 233, 140, 0.06);
+  background: rgba(var(--accent-rgb), 0.06);
 }
 
 .learning-indicator {
@@ -1435,11 +1548,11 @@ body .site-header.is-scrolled {
   padding: 14px 20px;
   border-radius: 999px;
   background: var(--accent);
-  color: #0A0A0A;
+  color: var(--on-accent);
   font-size: var(--fs-4);
   font-weight: 600;
   overflow-wrap: anywhere;
-  box-shadow: 0 8px 28px rgba(40, 233, 140, 0.32);
+  box-shadow: 0 8px 28px rgba(var(--accent-rgb), 0.32);
   transition:
     background 220ms ease,
     transform 220ms ease,
@@ -1454,7 +1567,7 @@ body .site-header.is-scrolled {
 .contact-email:hover {
   background: var(--accent-strong);
   transform: translateY(-2px);
-  box-shadow: 0 12px 34px rgba(40, 233, 140, 0.45);
+  box-shadow: 0 12px 34px rgba(var(--accent-rgb), 0.45);
 }
 
 .contact-email:hover span {
@@ -1481,7 +1594,7 @@ body .site-header.is-scrolled {
 
 .contact-phone:hover {
   border-color: var(--accent);
-  background: rgba(40, 233, 140, 0.1);
+  background: rgba(var(--accent-rgb), 0.1);
   transform: translateY(-2px);
 }
 
@@ -1605,11 +1718,11 @@ body .site-header.is-scrolled {
   border: 0;
   border-radius: 50%;
   background: var(--accent);
-  color: #0A0A0A;
+  color: var(--on-accent);
   cursor: pointer;
   box-shadow:
-    0 8px 24px rgba(40, 233, 140, 0.4),
-    0 0 0 1px rgba(10, 10, 10, 0.1);
+    0 8px 24px rgba(var(--accent-rgb), 0.4),
+    0 0 0 1px rgba(var(--ink-rgb), 0.1);
   opacity: 0;
   visibility: hidden;
   transform: translateY(18px);
@@ -1646,32 +1759,39 @@ body .site-header.is-scrolled {
 /* Cursor ring stays visible on both white and black sections */
 .cursor-ring {
   box-shadow:
-    0 0 0 1px rgba(10, 10, 10, 0.14),
-    0 0 14px rgba(40, 233, 140, 0.3);
+    0 0 0 1px rgba(var(--ink-rgb), 0.14),
+    0 0 14px rgba(var(--accent-rgb), 0.3);
 }
 
 
 /* ============================================================
    13b. WHITE-SECTION CARD COLOUR + MOTION
    Skills, Services and Contact get tinted cards (green / blue /
-   violet / amber), glowing corners, a spinning border on hover,
+   violet / sun), glowing corners, a spinning border on hover,
    pulsing icon rings and a colour-fill sweep on contact links.
 ============================================================ */
 @property --ang  { syntax: "<angle>";      inherits: false; initial-value: 0deg; }
 @property --blob { syntax: "<percentage>"; inherits: false; initial-value: 34%; }
 
-/* One tint per card, repeating */
-.skill-card:nth-child(4n+1), .service-card:nth-child(4n+1), .contact-option:nth-child(4n+1) { --tint: 40, 233, 140; }
-.skill-card:nth-child(4n+2), .service-card:nth-child(4n+2), .contact-option:nth-child(4n+2) { --tint: 80, 160, 255; }
-.skill-card:nth-child(4n+3), .service-card:nth-child(4n+3), .contact-option:nth-child(4n+3) { --tint: 160, 124, 255; }
-.skill-card:nth-child(4n+4), .service-card:nth-child(4n+4), .contact-option:nth-child(4n+4) { --tint: 255, 160, 80; }
+/* One tint per card, repeating. In the 2x2 grids this lays out as a warm / cool
+   checkerboard: orange, teal / sun, violet. */
+.skill-card:nth-child(4n+1), .service-card:nth-child(4n+1), .contact-option:nth-child(4n+1) { --tint: var(--accent-rgb); }
+.skill-card:nth-child(4n+2), .service-card:nth-child(4n+2), .contact-option:nth-child(4n+2) { --tint: var(--teal-rgb); }
+.skill-card:nth-child(4n+3), .service-card:nth-child(4n+3), .contact-option:nth-child(4n+3) { --tint: var(--sun-rgb); }
+.skill-card:nth-child(4n+4), .service-card:nth-child(4n+4), .contact-option:nth-child(4n+4) { --tint: var(--violet-rgb); }
+
+/* Contact options: each icon wears the colour of what it links to */
+.contact-option.is-email    { --tint: var(--mail-rgb); }
+.contact-option.is-whatsapp { --tint: var(--teal-rgb); }
+.contact-option.is-linkedin { --tint: var(--linkedin-rgb); --icon-fg: var(--paper); }
+.contact-option.is-github   { --tint: var(--violet-rgb); }
 
 /* Soft colour blobs drifting behind the white sections */
 .theme-light.section {
   overflow: hidden;
   background:
-    radial-gradient(circle at 6% 88%, rgba(80, 160, 255, 0.13), transparent 34%),
-    radial-gradient(circle at 96% 12%, rgba(160, 124, 255, 0.1), transparent 30%),
+    radial-gradient(circle at 6% 88%, rgba(var(--teal-rgb), 0.14), transparent 34%),
+    radial-gradient(circle at 96% 12%, rgba(var(--violet-rgb), 0.1), transparent 30%),
     var(--bg);
 }
 
@@ -1683,7 +1803,7 @@ body .site-header.is-scrolled {
   width: 440px;
   height: 440px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(40, 233, 140, 0.26), transparent 68%);
+  background: radial-gradient(circle, rgba(var(--accent-rgb), 0.2), transparent 68%);
   filter: blur(40px);
   pointer-events: none;
   z-index: 0;
@@ -1698,7 +1818,7 @@ body .site-header.is-scrolled {
   border-color: rgba(var(--tint), 0.38);
   background:
     radial-gradient(circle at 100% 0%, rgba(var(--tint), 0.28) var(--blob), transparent calc(var(--blob) + 44%)),
-    linear-gradient(160deg, rgba(var(--tint), 0.1), #FFFFFF 62%);
+    linear-gradient(160deg, rgba(var(--tint), 0.1), var(--card-hover) 62%);
   transition:
     transform 260ms ease,
     border-color 260ms ease,
@@ -1758,7 +1878,7 @@ body .site-header.is-scrolled {
   position: relative;
   border-color: transparent;
   background: rgb(var(--tint));
-  color: #0A0A0A;
+  color: var(--icon-fg, var(--on-accent));
 }
 
 .theme-light .skill-card:hover .skill-icon,
@@ -1781,7 +1901,7 @@ body .site-header.is-scrolled {
 
 /* Tags pick up the card colour */
 .theme-light .skill-tags span {
-  background: #FFFFFF;
+  background: var(--card-hover);
   border-color: rgba(var(--tint), 0.45);
 }
 
@@ -1792,7 +1912,7 @@ body .site-header.is-scrolled {
 
 .theme-light .skill-index,
 .theme-light .service-number {
-  color: #3B3F46;
+  color: var(--fg-muted);
 }
 
 /* Contact options: colour floods in from the left on hover */
@@ -1800,7 +1920,7 @@ body .site-header.is-scrolled {
   border-color: rgba(var(--tint), 0.38);
   background:
     linear-gradient(90deg, rgba(var(--tint), 0.24), rgba(var(--tint), 0.24)) no-repeat left center / 0% 100%,
-    #FFFFFF;
+    var(--card-hover);
   transition:
     transform 240ms ease,
     border-color 240ms ease,
@@ -1816,8 +1936,8 @@ body .site-header.is-scrolled {
 
 /* Call-to-action strip */
 .theme-light .services-cta {
-  border-color: rgba(40, 233, 140, 0.45);
-  background: linear-gradient(100deg, rgba(40, 233, 140, 0.2), rgba(80, 160, 255, 0.14), rgba(160, 124, 255, 0.14));
+  border-color: rgba(var(--accent-rgb), 0.45);
+  background: linear-gradient(100deg, rgba(var(--accent-rgb), 0.16), rgba(var(--sun-rgb), 0.2), rgba(var(--teal-rgb), 0.14));
   background-size: 200% 100%;
   animation: cta-shift 8s ease-in-out infinite alternate;
 }
@@ -1915,11 +2035,6 @@ body .site-header.is-scrolled {
   to   { background-position: 100% 0; }
 }
 
-@keyframes spin-slow {
-  to { transform: rotate(360deg); }
-}
-
-
 /* ============================================================
    15. MEDIA — TABLET  (max-width: 900px)
    Hero and About stay two-column; Experience and Contact stack.
@@ -2015,7 +2130,7 @@ body .site-header.is-scrolled {
     margin: 0;
     padding: 10px var(--page-padding) 20px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(10, 10, 10, 0.98);
+    background: rgba(var(--ink-rgb), 0.98);
     opacity: 0;
     visibility: hidden;
     transform: translateY(-8px);
@@ -2036,7 +2151,7 @@ body .site-header.is-scrolled {
   .nav-links a {
     padding: 13px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--snow);
+    color: var(--paper);
   }
 
   .nav-links a::after {
@@ -2047,7 +2162,7 @@ body .site-header.is-scrolled {
   .hero-layout {
     grid-template-columns: 1fr;
     gap: 2.25rem;
-    padding-block: 1.75rem 2.5rem;
+    padding-block: 2.25rem;                     /* equal top and bottom */
   }
 
   /* Eyebrow: keep "WEB DEVELOPER · CREATIVE BUILDER" on one line */
@@ -2093,12 +2208,12 @@ body .site-header.is-scrolled {
   }
 
   .hero-marquee {
-    transform: rotate(-1.3deg);
+    padding-block: 12px;
   }
 
   .marquee-group {
-    gap: 22px;
-    padding-block: 0.9rem;
+    gap: 10px;
+    padding-right: 10px;
   }
 
   /* Everything else — single column */
@@ -2204,8 +2319,7 @@ body .site-header.is-scrolled {
   .hero-glow,
   .portrait-wrap,
   .portrait-orbit,
-  .hero-decoration,
-  .marquee-group i {
+  .hero-decoration {
     animation: none !important;
   }
 

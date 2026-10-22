@@ -32,7 +32,7 @@
   z-index: 1100;
   width: 100%;
   height: 3px;
-  background: linear-gradient(90deg, var(--red), var(--red-bright));
+  background: linear-gradient(90deg, var(--accent), var(--sun));
   transform: scaleX(0);
   transform-origin: left;
   pointer-events: none;
@@ -42,13 +42,8 @@
   transition: background 250ms ease, box-shadow 250ms ease;
 }
 
-.site-header.is-scrolled {
-  background: rgba(249, 249, 249, 0.98); /* Light background */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Soft shadow */
-}
-
 .nav-links a.is-active {
-  color: var(--white);
+  color: var(--paper);
 }
 
 .nav-links a.is-active::after {
@@ -72,7 +67,7 @@
 }
 
 .js .back-to-top.is-visible:hover {
-  background: var(--red-bright);
+  background: var(--accent);
   transform: translateY(-4px);
   opacity: 1;
 }
@@ -125,14 +120,14 @@ i.sw, i.sc, i.mk, i.mk-i, i.sl, i.lw {
     calc(var(--ci, 0) * 50ms + 380ms);
 }
 
-/* The accent name breathes with a soft red glow */
+/* The accent name breathes with a soft accent glow */
 .js .hero-title .accent-text {
   animation: accent-glow 4.5s ease-in-out 2.4s infinite;
 }
 
 @keyframes accent-glow {
-  0%, 100% { text-shadow: 0 0 0 rgba(40, 233, 140, 0); }
-  50%      { text-shadow: 0 0 34px rgba(40, 233, 140, 0.5); }
+  0%, 100% { text-shadow: 0 0 0 rgba(var(--accent-rgb), 0); }
+  50%      { text-shadow: 0 0 34px rgba(var(--accent-rgb), 0.4); }
 }
 
 /* Scroll parallax: text drifts up and fades, portrait lags behind */
@@ -301,14 +296,14 @@ i.sw, i.sc, i.mk, i.mk-i, i.sl, i.lw {
 
 
 /* ============================================================
-   05. SECTION EYEBROW — a red line draws after the label
+   05. SECTION EYEBROW — an accent line draws after the label
 ============================================================ */
 .js .section-eyebrow::after {
   content: "";
   display: block;
   width: 56px;
   height: 1px;
-  background: var(--red-bright);
+  background: var(--accent);
   opacity: 0.7;
   transform: scaleX(0);
   transform-origin: left;
@@ -344,7 +339,7 @@ i.sw, i.sc, i.mk, i.mk-i, i.sl, i.lw {
   opacity: 1;
 }
 
-/* "How I work": red underline draws under each step */
+/* "How I work": accent underline draws under each step */
 .approach-item {
   position: relative;
 }
@@ -356,7 +351,7 @@ i.sw, i.sc, i.mk, i.mk-i, i.sl, i.lw {
   bottom: -1px;
   width: 100%;
   height: 1px;
-  background: linear-gradient(90deg, var(--red-bright), rgba(40, 233, 140, 0));
+  background: linear-gradient(90deg, var(--accent), rgba(var(--accent-rgb), 0));
   transform: scaleX(0);
   transform-origin: left;
 }
@@ -495,7 +490,7 @@ i.sw, i.sc, i.mk, i.mk-i, i.sl, i.lw {
    10. EXPERIENCE
 ============================================================ */
 
-/* Timeline: a red line fills as you scroll, lighting each marker */
+/* Timeline: an accent line fills as you scroll, lighting each marker */
 .js .timeline-item:not(:last-child)::after {
   content: "";
   position: absolute;
@@ -503,7 +498,7 @@ i.sw, i.sc, i.mk, i.mk-i, i.sl, i.lw {
   bottom: 0;
   left: 5px;
   width: 1px;
-  background: linear-gradient(var(--red-bright), var(--red));
+  background: linear-gradient(var(--accent), var(--sun));
   transform-origin: top;
   transform: scaleY(var(--fill, 0));
 }
@@ -520,10 +515,10 @@ i.sw, i.sc, i.mk, i.mk-i, i.sl, i.lw {
 }
 
 .js .timeline-item.is-lit .timeline-marker {
-  background: var(--red-bright);
+  background: var(--accent);
   box-shadow:
-  0 0 0 5px rgba(40, 233, 140, 0.15),
-  0 0 16px rgba(40, 233, 140, 0.55);
+  0 0 0 5px rgba(var(--accent-rgb), 0.15),
+  0 0 16px rgba(var(--accent-rgb), 0.55);
 }
 
 @keyframes marker-pop {
@@ -533,7 +528,7 @@ i.sw, i.sc, i.mk, i.mk-i, i.sl, i.lw {
 
 /* Numbers inside descriptions count up (10,000+ and 85%) */
 .count {
-  color: var(--red-bright);
+  color: var(--accent-fg);
   font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
@@ -555,7 +550,7 @@ i.sw, i.sc, i.mk, i.mk-i, i.sl, i.lw {
   content: "";
   position: absolute;
   inset: 0;
-  border: 1px solid var(--red-bright);
+  border: 1px solid var(--accent);
   border-radius: inherit;
   pointer-events: none;
   animation: ping 2.6s ease-out infinite;
@@ -583,7 +578,7 @@ i.sw, i.sc, i.mk, i.mk-i, i.sl, i.lw {
 .skill-card:hover .skill-icon,
 .service-card:hover .service-icon {
   transform: rotate(-8deg) scale(1.1);
-  background: rgba(40, 233, 140, 0.22);
+  background: rgba(var(--accent-rgb), 0.22);
 }
 
 .contact-option:hover .contact-option-icon {
@@ -591,7 +586,7 @@ i.sw, i.sc, i.mk, i.mk-i, i.sl, i.lw {
 }
 
 /* ============================================================
-   NEW: CONTEXTUAL NEON PILL CURSOR
+   CONTEXTUAL PILL CURSOR
 ============================================================ */
 
 /* Hide default cursor on desktop */
@@ -608,13 +603,13 @@ html.has-cursor button {
   z-index: 9999;
   width: 8px;
   height: 8px;
-  background: var(--red-bright); /* Neon Green */
+  background: var(--accent);
   border-radius: 50%;
   pointer-events: none;
   opacity: 0;
   transform: translate(-50%, -50%);
   transition: opacity 250ms ease, width 300ms ease, height 300ms ease, background 300ms ease;
-  box-shadow: 0 0 12px var(--red-bright);
+  box-shadow: 0 0 12px var(--accent);
 }
 
 .cursor-ring {
@@ -624,7 +619,7 @@ html.has-cursor button {
   z-index: 9998;
   width: 36px;
   height: 36px;
-  border: 1.5px solid var(--red-bright); /* Neon Green */
+  border: 1.5px solid var(--accent);
   border-radius: 50%;
   pointer-events: none;
   opacity: 0;
@@ -647,17 +642,17 @@ html.has-cursor button {
 .cursor-ring.is-link {
   width: 60px;
   height: 60px;
-  background: rgba(40, 233, 140, 0.1);
-  border-color: var(--red-bright);
+  background: rgba(var(--accent-rgb), 0.1);
+  border-color: var(--accent);
 }
 
 /* State: Hovering a project card (Morphs to a pill with text) */
 .cursor-ring.is-card {
   width: 90px;
   height: 90px;
-  background: var(--red-bright);
+  background: var(--accent);
   border-color: transparent;
-  box-shadow: 0 0 20px rgba(40, 233, 140, 0.4);
+  box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.4);
 }
 
 .cursor-ring.is-card .cursor-text {
@@ -676,7 +671,7 @@ html.has-cursor button {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #1C1D20; /* Dark text on neon background */
+  color: var(--on-accent); /* Ink text on the accent pill */
   opacity: 0;
   transition: opacity 300ms ease, transform 300ms ease;
   pointer-events: none;
@@ -703,7 +698,7 @@ html.has-cursor button {
   opacity: 0;
   background: radial-gradient(
     340px circle at var(--mx, 50%) var(--my, 50%),
-    rgba(40, 233, 140, 0.12),
+    rgba(var(--accent-rgb), 0.12),
     transparent 62%
   );
   transition: opacity 300ms ease;

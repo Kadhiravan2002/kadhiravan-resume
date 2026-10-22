@@ -585,7 +585,7 @@
     document.addEventListener("pointerdown", () => cursor.ring.classList.add("is-down"));
     document.addEventListener("pointerup", () => cursor.ring.classList.remove("is-down"));
 
-    // Hero mouse parallax (glow, orbit, red abstract shape)
+    // Hero mouse parallax (glow, orbit, abstract shape)
     if (hero) {
       hero.addEventListener("pointermove", (e) => {
         const r = hero.getBoundingClientRect();
@@ -614,6 +614,18 @@
           card.style.setProperty("--rx", `${(y / r.height - 0.5) * -7}deg`);
         }
       });
+
+      // Services: remember where the pointer enters and leaves, so the image
+      // reveal opens from (and closes towards) that exact point.
+      if (card.classList.contains("service-card")) {
+        const mark = (e) => {
+          const r = card.getBoundingClientRect();
+          card.style.setProperty("--ex", `${e.clientX - r.left}px`);
+          card.style.setProperty("--ey", `${e.clientY - r.top}px`);
+        };
+        card.addEventListener("pointerenter", mark);
+        card.addEventListener("pointerleave", mark);
+      }
 
       card.addEventListener("pointerleave", () => {
         if (isProject) {
