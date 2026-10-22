@@ -34,7 +34,7 @@
   --ink-rgb: 20, 18, 15;              /* warm near-black   #14120F */
   --paper: #F6F3EC;                   /* warm off-white */
 
-  --accent-rgb: 255, 122, 26;         /* orange            #FF7A1A */
+  --accent-rgb: 253, 76, 31;         /* orange            #FF7A1A */
   --sun-rgb: 255, 197, 61;            /* sun yellow        #FFC53D */
   --teal-rgb: 20, 184, 166;           /* teal              #14B8A6 */
   --violet-rgb: 124, 108, 255;        /* violet            #7C6CFF */
@@ -43,9 +43,9 @@
 
   --ink: rgb(var(--ink-rgb));
   --accent: rgb(var(--accent-rgb));
-  --accent-strong: #F26A00;           /* hover state */
-  --accent-ink: #B84A00;              /* accent as small text on paper (4.7:1) */
-  --accent-display: #DE5F00;          /* accent for LARGE display type on paper (3.3:1) */
+  --accent-strong: #E64016;           /* hover state */
+  --accent-ink: #B93614;              /* accent as small text on paper (4.7:1) */
+  --accent-display: #E9431B;          /* accent for LARGE display type on paper (3.3:1) */
   --sun: rgb(var(--sun-rgb));
   --on-accent: var(--ink);            /* text/icons on any accent or tint fill */
   --dark-muted: #A8A298;              /* muted text on ink */
@@ -695,6 +695,7 @@ body .site-header.is-scrolled {
   width: 100%;
   overflow: hidden;
   padding-block: 14px;
+  background: #D6D3D1;
   border-top: 1px solid var(--line-strong);
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
