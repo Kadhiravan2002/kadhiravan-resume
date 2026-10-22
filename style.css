@@ -2335,3 +2335,35 @@ body .site-header.is-scrolled {
     transform: none;
   }
 }
+
+
+/* ============================================================
+   18. SERVICES — TOUCH DEVICES (no hover)
+   Phones and tablets can't hover, so the image reveal is shown
+   permanently: the photo sits behind each card with a dark scrim
+   and the text switches to light, matching the desktop hover state.
+============================================================ */
+@media (hover: none), (pointer: coarse) {
+  .service-media {
+    clip-path: circle(150% at 50% 50%);
+  }
+
+  .service-media img {
+    transform: scale(1.02);
+  }
+
+  .service-card {
+    color: var(--paper);
+    --fg: var(--paper);
+    --fg-muted: rgba(246, 243, 236, 0.84);
+    --accent-fg: rgb(var(--tint));
+  }
+
+  .service-card:active .service-media img {
+    transform: scale(1.08);
+  }
+
+  .theme-light .service-card::before {
+    width: 100%;
+  }
+}
