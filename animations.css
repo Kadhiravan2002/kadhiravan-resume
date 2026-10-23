@@ -15,7 +15,7 @@
    08. Projects(3D letter flip, side-in cards, image wipe + parallax)
    09. Services(tracking-in title, flip-up cards, icon spin)
    10. Experience (wipe title, scroll-filled timeline, counters)
-   11. Contact (scramble title, pulsing button)
+   11. Contact (word-rise title, pulsing button)
    12. Hover micro-interactions
    13. Pointer effects: custom cursor, spotlight, tilt, magnetic
    14. Mobile menu stagger
@@ -537,10 +537,6 @@ i.sw, i.sc, i.mk, i.mk-i, i.sl, i.lw {
 /* ============================================================
    11. CONTACT
 ============================================================ */
-.contact-title.scrambling {
-  white-space: nowrap;
-}
-
 /* Email button sends out a soft ping to invite the click */
 .js .contact-email {
   position: relative;
@@ -783,3 +779,4 @@ html.has-cursor button {
     transform: none;
   }
 }
+

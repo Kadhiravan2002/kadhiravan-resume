@@ -1,0 +1,113 @@
+/* ============================================================
+   HERO DECOR  (load AFTER style.css and animations.css)
+   Small line-art icons (browser, database, git, code, layers, gear,
+   cursor + tiny sparkles) placed ONLY in free space: the left and
+   right edges, and thin strips along the top and bottom. They never
+   sit behind the headline, description, buttons or portrait.
+
+   They are inline SVG, so there is no image file to add. They stay
+   sharp at any size and use your palette variables.
+============================================================ */
+.hero-stage {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-stage > .hero-layout {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-decor {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* ---------- shared icon style ---------- */
+.deco {
+  position: absolute;
+  display: block;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 6px 10px rgba(var(--ink-rgb), 0.12));
+  animation: deco-float var(--t, 8s) ease-in-out var(--dl, 0s) infinite;
+}
+
+.deco .l {                              /* outline */
+  fill: none;
+  stroke: rgba(var(--ink-rgb), 0.85);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.deco .p  { fill: #FFFDF8; }
+.deco .a  { fill: var(--accent); }
+.deco .s  { fill: var(--sun); }
+.deco .t  { fill: rgb(var(--teal-rgb)); }
+.deco .v  { fill: rgb(var(--violet-rgb)); }
+.deco .as { fill: rgba(var(--accent-rgb), 0.18); }
+.deco .vs { fill: rgba(var(--violet-rgb), 0.25); }
+
+.deco .teeth {                          /* gear teeth */
+  fill: none;
+  stroke: rgb(var(--teal-rgb));
+  stroke-width: 8;
+  stroke-dasharray: 8 8.49;
+}
+
+@keyframes deco-float {
+  0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
+  50%      { transform: translateY(-8px) rotate(var(--r, 0deg)); }
+}
+
+/* ---------- placement (percentages of the hero area) ---------- */
+
+/* right edge */
+.deco-browser { right: 2.2%; top: 7%;     width: clamp(96px, 8.2vw, 132px); --r: 3deg;  --t: 9s; }
+.deco-git     { right: 1.4%; top: 47%;    width: clamp(36px, 3.2vw, 48px);  --r: -3deg; --t: 8s; --dl: -2s; }
+.deco-db      { right: 3%;   bottom: 9%;  width: clamp(40px, 3.8vw, 58px);  --r: -4deg; --t: 10s; --dl: -4s; }
+
+/* left edge */
+.deco-code    { left: 1.6%;  top: 10%;    width: clamp(40px, 3.8vw, 56px);  --r: -6deg; --t: 9s; --dl: -1s; }
+.deco-layers  { left: 2.4%;  bottom: 10%; width: clamp(40px, 3.8vw, 56px);  --r: 4deg;  --t: 11s; --dl: -3s; }
+
+/* top and bottom strips, clear of the text */
+.deco-gear    { left: 56%;   top: 5%;     width: clamp(34px, 3.2vw, 46px);  --t: 12s; }
+.deco-cursor  { left: 57.5%; bottom: 10%; width: clamp(24px, 2.4vw, 34px);  --r: -8deg; --t: 7s; --dl: -2s; }
+
+.deco-tiny { width: clamp(12px, 1.3vw, 20px); filter: none; }
+.tiny-1 { left: 24%; top: 3%;     --t: 6s; }
+.tiny-2 { left: 44%; top: 4%;     --t: 8s; --dl: -3s; }
+.tiny-3 { left: 68%; top: 2.5%;   --t: 7s; --dl: -1s; }
+.tiny-4 { left: 80%; top: 4%;     --t: 9s; --dl: -5s; }
+.tiny-5 { left: 30%; bottom: 3%;  --t: 7s; --dl: -2s; }
+.tiny-6 { left: 52%; bottom: 4%;  --t: 9s; --dl: -4s; }
+.tiny-7 { left: 74%; bottom: 3%;  --t: 6s; --dl: -3s; }
+.tiny-8 { left: 88%; bottom: 4%;  --t: 8s; --dl: -1s; }
+
+/* ---------- responsive: hide whatever could crowd the content ---------- */
+@media (max-width: 1279px) {
+  .deco-code, .deco-layers { display: none; }
+}
+
+@media (max-width: 1099px) {
+  .deco-browser, .deco-git, .deco-db, .deco-gear, .deco-cursor { display: none; }
+}
+
+@media (max-height: 560px) {
+  .deco-tiny { display: none; }
+}
+
+@media (max-width: 680px) {
+  .hero-decor { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .deco { animation: none; }
+}

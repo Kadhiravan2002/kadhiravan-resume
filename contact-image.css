@@ -1,0 +1,113 @@
+/* ============================================================
+   CONTACT SECTION BACKGROUND IMAGE  (load AFTER style.css)
+   Replaces the plain paper background of the last section with a
+   photo / illustration. A paper-coloured veil sits on top so the
+   dark text and the link cards stay easy to read.
+
+   Image file:  images/contact/contact-bg.webp   (2400 x 1350)
+
+   TUNE IT: change --contact-veil on .contact-bg
+     1   = strong veil (image is soft, text is very readable)
+     0.6 = lighter veil (image shows more)
+============================================================ */
+.contact-bg {
+  --contact-veil: 1;
+
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.contact-bg img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Veil: strongest behind the text on the left, lighter on the right */
+.contact-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: var(--contact-veil);
+  background: linear-gradient(
+    90deg,
+    rgba(246, 243, 236, 0.92) 0%,
+    rgba(246, 243, 236, 0.74) 50%,
+    rgba(246, 243, 236, 0.5) 100%
+  );
+}
+
+/* When an image is present, drop the old colour blobs and gradients */
+.theme-light.contact:has(.contact-bg) {
+  background: var(--paper);
+}
+
+.theme-light.contact:has(.contact-bg)::after {
+  display: none;
+}
+
+/* Gives the light theme a real hover colour. style.css defines
+   --card-hover in terms of itself, which makes it invalid. */
+.theme-light.contact {
+  --card-hover: #FFF7EA;
+}
+
+/* Link cards and phone button: frosted paper so they read on any image */
+.theme-light.contact .contact-option {
+  background:
+    linear-gradient(90deg, rgba(var(--tint), 0.24), rgba(var(--tint), 0.24)) no-repeat left center / 0% 100%,
+    rgba(255, 253, 248, 0.82);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.theme-light.contact .contact-option:hover {
+  background-size: 100% 100%;
+}
+
+.theme-light.contact .contact-phone {
+  background: rgba(255, 253, 248, 0.72);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.theme-light.contact .contact-phone:hover {
+  background: rgba(var(--accent-rgb), 0.16);
+}
+
+/* Phones: text spans the whole width, so use an even, stronger veil */
+@media (max-width: 680px) {
+  .contact-bg::after {
+    background: linear-gradient(
+      180deg,
+      rgba(246, 243, 236, 0.9) 0%,
+      rgba(246, 243, 236, 0.8) 100%
+    );
+  }
+}
+
+/* Tablet only (681px to 900px): the section is a tall single column, so the
+   wide image is cropped to a narrow slice. Slide the image left so the
+   laptop on the right side of the photo stays visible.
+   ADJUST: 0% = left edge of the image, 50% = centre, 100% = right edge.
+   Raise the number to show more of the right side. */
+@media (min-width: 681px) and (max-width: 900px) {
+  .contact-bg img {
+    object-position: 90% center;
+  }
+}
+
+/* Phone (680px and below): same idea as tablet. The phone shows an even
+   narrower slice of the wide photo, so slide it further left to keep the
+   laptop in view.
+   ADJUST: 0% = left edge, 50% = centre, 100% = right edge. */
+@media (max-width: 680px) {
+  .contact-bg img {
+    object-position: 92% center;
+  }
+}

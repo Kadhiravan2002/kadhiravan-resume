@@ -1,0 +1,78 @@
+/* ============================================================
+   HERO BACKGROUND IMAGE  (load AFTER style.css)
+   A full image behind the hero content, covering only the area
+   between the header and the marquee. No overlay: the image is
+   shown exactly as it is, so choose one with a calm, light area
+   behind the text (left side) for readability.
+
+   Image file:  images/hero/hero-bg.webp   (2560 x 1440)
+============================================================ */
+.hero-stage {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-stage > .hero-layout {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hero-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+
+/* ============================================================
+   LIGHT TEXT FOR A DARK HERO IMAGE
+   Applies only while a hero image is present (the layer removes
+   itself if the file is missing, and the text returns to normal).
+   Scoped to the stage, so the marquee below is not affected.
+============================================================ */
+.hero:has(.hero-image) .hero-stage {
+  --fg: var(--paper);
+  --fg-muted: rgba(246, 243, 236, 0.86);
+  --line-strong: rgba(246, 243, 236, 0.5);
+  --accent-fg: var(--accent);
+}
+
+/* "I AM": outline switches from dark ink to paper */
+.hero:has(.hero-image) .hero-title {
+  -webkit-text-stroke-color: var(--paper);
+  text-shadow: 0 4px 28px rgba(0, 0, 0, 0.45);
+}
+
+/* The name: the full, brighter brand orange on dark */
+.hero:has(.hero-image) .hero-title .accent-text {
+  color: var(--accent);
+}
+
+/* Small text gets a soft dark halo so it stays crisp over the screen glow */
+.hero:has(.hero-image) .eyebrow,
+.hero:has(.hero-image) .hero-description {
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.6);
+}
+
+/* Secondary button: light outline, light text */
+.hero:has(.hero-image) .button-secondary {
+  border-color: rgba(246, 243, 236, 0.55);
+  color: var(--paper);
+}
+
+.hero:has(.hero-image) .button-secondary:hover {
+  border-color: var(--accent);
+  background: rgba(var(--accent-rgb), 0.2);
+}

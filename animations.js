@@ -2,7 +2,7 @@
    ANIMATIONS v2 — load with `defer`, after script.js
    No HTML changes needed: elements are tagged and split from here.
    Effects: split-text titles, scroll-linked word fill, scroll-filled
-   timeline, count-up numbers, text scramble, image parallax,
+   timeline, count-up numbers, living contact backdrop, image parallax,
    scroll-speed marquee, custom cursor, card spotlight/tilt,
    magnetic buttons.
 ============================================================ */
@@ -108,42 +108,6 @@
         mark(n);
       }
     });
-  }
-
-  // Letters decode from random glyphs into the real text (contact title)
-  function scramble(el) {
-    if (el.classList.contains("scrambling")) return;   // already running
-    const nodes = textNodes(el);
-    const originals = nodes.map((n) => n.textContent);
-    const total = originals.reduce((s, t) => s + t.length, 0);
-    const glyphs = "abcdefghijklmnopqrstuvwxyz!<>-_/[]{}=+*^?#";
-    const start = performance.now();
-    const duration = 1400;
-
-    el.setAttribute("aria-label", plainText(el));
-    el.classList.add("scrambling");
-
-    (function step(now) {
-      const p = clamp((now - start) / duration, 0, 1);
-      const resolved = Math.floor(p * total);
-      let idx = 0;
-      nodes.forEach((n, k) => {
-        let out = "";
-        for (const ch of originals[k]) {
-          out += /\s/.test(ch) || idx < resolved
-            ? ch
-            : glyphs[Math.floor(Math.random() * glyphs.length)];
-          idx++;
-        }
-        n.textContent = out;
-      });
-      if (p < 1) {
-        requestAnimationFrame(step);
-      } else {
-        nodes.forEach((n, k) => (n.textContent = originals[k]));
-        el.classList.remove("scrambling");
-      }
-    })(start);
   }
 
   // Numbers count up from zero
@@ -284,7 +248,6 @@
     [".credentials-grid .credential-card", "right", "col"],
 
     // Contact + footer
-    [".contact-title", "fade", "none"],
     [".contact-email, .contact-phone", "up", "list"],
     [".contact-option", "right", "list"],
     [".footer-layout", "fade", "none"],
@@ -361,8 +324,13 @@
     scrubFirst = false;
   }
 
+  /* Contact title: words rise out of masks, the same calm effect as About */
   const contactTitle = $(".contact-title");
-  if (contactTitle) contactTitle.dataset.scramble = "1";
+  if (contactTitle) {
+    splitWords(contactTitle);
+    contactTitle.classList.add("t-words");
+    observe(contactTitle);
+  }
 
   /* ---------- One observer for everything ---------- */
   let io = null;
@@ -379,7 +347,6 @@
               if (!el._run) countUp(el);
             } else if (!el.classList.contains("in-view")) {
               el.classList.add("in-view");
-              if (el.dataset.scramble) scramble(el);
             }
             return;
           }
@@ -649,6 +616,7 @@
       });
     });
   }
+
 
   if (canHover) initPointer();
 })();

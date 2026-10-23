@@ -57,7 +57,7 @@
   --fs-1: clamp(3.5rem, 7vw, 6.5rem);   /* Hero title      */
   --fs-2: clamp(2.2rem, 4.5vw, 3.5rem); /* Section titles  */
   --fs-3: 1.25rem;                      /* Card headings   */
-  --fs-4: 0.95rem;                      /* Body and UI     */
+  --fs-4: 1rem;                         /* Body and UI = 16px everywhere */
 
   /* Layout */
   --header-height: 76px;
@@ -73,7 +73,7 @@
 .theme-light {
   --bg: var(--paper);
   --fg: var(--ink);
-  --fg-muted: #5E5A52;
+  --fg-muted: var(--ink);             /* same as --fg: one text colour on light sections */
   --card: #FFFDF8;
   --card-hover: var(--card-hover);
   --line: rgba(var(--ink-rgb), 0.1);
@@ -87,7 +87,7 @@
 .theme-dark {
   --bg: var(--ink);
   --fg: var(--paper);
-  --fg-muted: var(--dark-muted);
+  --fg-muted: var(--paper);           /* same as --fg: one text colour on dark sections */
   --card: #1D1A16;
   --card-hover: #27231D;
   --line: rgba(255, 255, 255, 0.1);
@@ -792,6 +792,17 @@ body .site-header.is-scrolled {
   min-width: 0;
 }
 
+/* ALIGNMENT RULE (all screen sizes above phone):
+   both columns stretch to the same height. In each column the top block
+   (heading / intro text) stays at the top and the bottom block
+   (How I work list / feature cards) is pushed to the bottom with
+   margin-top:auto, so the two columns always start and end together,
+   however much content either side gets. The gap / divider margins set
+   the minimum space between the top and bottom block. */
+.about-left {
+  gap: 2.5rem;
+}
+
 .about-title {
   max-width: 560px;
 }
@@ -889,7 +900,7 @@ body .site-header.is-scrolled {
 
 /* How I work */
 .about-approach {
-  margin-top: 2.5rem;
+  margin-top: auto;
   max-width: 520px;
 }
 
@@ -1291,12 +1302,46 @@ body .site-header.is-scrolled {
   transition: transform 1100ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
+/* DARK OVERLAY on the service images (laptop hover + phone/tablet).
+   ADJUST HERE: 0 = no overlay, 1 = solid black.
+   --service-dark-top is the darkness at the top of the card, and
+   --service-dark-bottom at the bottom. Raise both if the text is hard
+   to read, lower them if you want more of the photo to show. */
+.service-card {
+  --service-dark-top: 0.68;
+  --service-dark-bottom: 0.92;
+}
+
 /* scrim keeps the light text readable on any image */
 .service-media::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(var(--ink-rgb), 0.5), rgba(var(--ink-rgb), 0.88));
+  background: linear-gradient(
+    180deg,
+    rgba(var(--ink-rgb), var(--service-dark-top)),
+    rgba(var(--ink-rgb), var(--service-dark-bottom))
+  );
+}
+
+/* soft dark halo behind the text (same trick as the hero banner), so it
+   stays crisp even over the brightest part of a photo */
+@media (hover: hover) and (pointer: fine) {
+  .service-card:hover h3,
+  .service-card:hover > p,
+  .service-card:hover .service-number,
+  .service-card:hover .service-link {
+    text-shadow: 0 1px 14px rgba(0, 0, 0, 0.6);
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .service-card h3,
+  .service-card > p,
+  .service-card .service-number,
+  .service-card .service-link {
+    text-shadow: 0 1px 14px rgba(0, 0, 0, 0.6);
+  }
 }
 
 /* content sits above the image layer */
@@ -1332,7 +1377,7 @@ body .site-header.is-scrolled {
   .service-card:hover {
     color: var(--paper);
     --fg: var(--paper);
-    --fg-muted: rgba(246, 243, 236, 0.84);
+    --fg-muted: var(--paper);
     --accent-fg: rgb(var(--tint));
   }
 }
@@ -1667,6 +1712,47 @@ body .site-header.is-scrolled {
 }
 
 
+/* Tablet only (681px to 900px): About title on one line
+   ("Hand-built sites. Built to hold up."). If the screen is too narrow
+   for one line it wraps normally instead of overflowing. */
+@media (min-width: 681px) and (max-width: 900px) {
+  .about-title {
+    max-width: none;
+  }
+
+  .about-title span {
+    display: inline;
+  }
+}
+
+/* Laptop only (1101px and up): the email and phone buttons sit side by side
+   (email on the left, phone on the right) instead of stacked. The left
+   column is a little wider so both buttons fit on one row. */
+@media (min-width: 1101px) {
+  .contact-layout {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  }
+
+  .contact-actions {
+    flex-wrap: nowrap;
+    gap: 12px;
+  }
+
+  .contact-email,
+  .contact-phone {
+    white-space: nowrap;
+  }
+}
+
+/* Tablet only (681px to 900px): the four contact buttons sit in a 2 x 2 grid
+   (Email, WhatsApp / LinkedIn, GitHub). Laptop and phone are unchanged. */
+@media (min-width: 681px) and (max-width: 900px) {
+  .contact-panel {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
 /* ============================================================
    13. FOOTER AND BACK-TO-TOP
 ============================================================ */
@@ -1675,33 +1761,32 @@ body .site-header.is-scrolled {
   border-top: 1px solid var(--rule);
 }
 
+/* Laptop: brand on the left, copy exactly centred, one line.
+   The 1fr / auto / 1fr grid keeps the middle column in the true centre. */
 .footer-layout {
-  position: relative;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
   gap: 20px;
 }
 
 .footer-brand {
+  justify-self: start;
   font-family: var(--font-heading);
   font-weight: 700;
   letter-spacing: 0.06em;
 }
 
 .footer-copy {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  width: max-content;
-  max-width: 70%;
+  justify-self: center;
   color: var(--fg-muted);
   line-height: 1.7;
   text-align: center;
+  white-space: nowrap;
 }
 
 .footer-copy span {
-  display: block;
+  display: inline;
 }
 
 /* Fixed to the viewport, a direct child of <body> (NOT inside the footer,
@@ -2046,6 +2131,15 @@ body .site-header.is-scrolled {
     --header-height: 70px;
   }
 
+  /* Footer: copy wraps to two lines, still centred */
+  .footer-copy {
+    white-space: normal;
+  }
+
+  .footer-copy span {
+    display: block;
+  }
+
   .hero {
     min-height: auto;
   }
@@ -2062,19 +2156,24 @@ body .site-header.is-scrolled {
     right: -6%;
   }
 
+  /* About: one column, like the other sections. The heading and
+     "How I work" list come first, then the intro text and the two cards
+     side by side. */
   .about-layout {
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-    gap: clamp(28px, 4vw, 48px);
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
   }
 
   .about-content {
     padding-top: 0;
   }
 
+  .about-approach {
+    max-width: none;
+  }
+
   .about-features {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    margin-top: 0;
+    gap: 16px;
   }
 
   .experience-layout {
@@ -2102,7 +2201,7 @@ body .site-header.is-scrolled {
     --fs-1: clamp(2.1rem, 11.5vw, 2.9rem);  /* Heading     */
     --fs-2: var(--fs-1);                    /* same tier   */
     --fs-3: 1.15rem;                        /* Sub-heading */
-    --fs-4: 0.9rem;                         /* Body        */
+    --fs-4: 1rem;                         /* Body = 16px, same as desktop */
   }
 
   /* Header / drawer */
@@ -2233,14 +2332,21 @@ body .site-header.is-scrolled {
 
   .about-content {
     display: block;
+    padding-top: 0;
+  }
+
+  .about-left {
+    gap: 2rem;
   }
 
   .about-features {
+    grid-template-columns: 1fr;
+    gap: 12px;
     margin-top: 0;
   }
 
   .about-approach {
-    margin-top: 2rem;
+    margin-top: 0;
   }
 
   .approach-item {
@@ -2274,18 +2380,22 @@ body .site-header.is-scrolled {
     grid-column: 2;
   }
 
-  /* Footer */
+  /* Footer: stacked and centred */
   .footer-layout {
+    display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 14px;
   }
 
+  .footer-brand {
+    justify-self: auto;
+  }
+
   .footer-copy {
-    position: static;
-    transform: none;
     width: 100%;
-    max-width: 100%;
     order: 3;
+    text-align: center;
   }
 
   /* Back-to-top */
@@ -2356,7 +2466,7 @@ body .site-header.is-scrolled {
   .service-card {
     color: var(--paper);
     --fg: var(--paper);
-    --fg-muted: rgba(246, 243, 236, 0.84);
+    --fg-muted: var(--paper);
     --accent-fg: rgb(var(--tint));
   }
 

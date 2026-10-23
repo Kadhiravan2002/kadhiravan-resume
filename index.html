@@ -25,6 +25,10 @@
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
   <link rel="stylesheet" href="animations.css">
+  <link rel="stylesheet" href="contact-image.css">
+  <link rel="stylesheet" href="hero-decor.css">
+  <link rel="stylesheet" href="hero-art.css">
+  <link rel="stylesheet" href="hero-bg.css">
   <script src="animations.js" defer></script>
 </head>
 
@@ -69,6 +73,52 @@
     <!-- 1 · HERO — WHITE -->
     <section class="hero theme-light" aria-labelledby="hero-title">
       <div class="hero-glow" aria-hidden="true"></div>
+
+      <!-- HERO STAGE: everything between the header and the marquee.
+           The decor icons fill exactly this area. -->
+      <div class="hero-stage">
+
+        <!-- HERO BACKGROUND IMAGE: save your image as
+             images/hero/hero-bg.webp (recommended 2560 x 1000).
+             If the file is missing, this layer removes itself. -->
+        <div class="hero-image" aria-hidden="true">
+          <img
+            src="images/hero/hero-bg.webp"
+            alt=""
+            width="2560"
+            height="1000"
+            decoding="async"
+            onerror="this.parentElement.remove()"
+          >
+        </div>
+
+        <!-- HERO ART: quiet background shapes (blobs, grid, corner rings,
+             playful shapes, wave). Sits behind everything, in free space only.
+             Styles: hero-art.css -->
+        <div class="hero-art" aria-hidden="true">
+          <span class="art-blob art-blob-teal"></span>
+          <span class="art-blob art-blob-violet"></span>
+          <span class="art-blob art-blob-sun"></span>
+
+          <!-- corner rings -->
+          <svg class="art art-rings art-rings-tl" viewBox="0 0 120 120">
+            <circle cx="0" cy="0" r="30"/><circle cx="0" cy="0" r="55"/>
+            <circle cx="0" cy="0" r="80"/><circle cx="0" cy="0" r="105"/>
+          </svg>
+          <svg class="art art-rings art-rings-br" viewBox="0 0 200 200">
+            <circle cx="200" cy="200" r="50"/><circle cx="200" cy="200" r="95"/>
+            <circle cx="200" cy="200" r="140"/><circle cx="200" cy="200" r="185"/>
+          </svg>
+
+          <!-- wave ribbon above the marquee -->
+          <svg class="art-wave" viewBox="0 0 1440 60" preserveAspectRatio="none">
+            <path d="M0 34C160 8 320 8 480 30s320 24 480 0 320-22 480 4V60H0z"/>
+            <path d="M0 44C200 22 360 24 540 42s300 12 480-8 280-12 420 6V60H0z"/>
+            <path d="M0 52C220 38 420 36 640 50s380 4 560-8 160-2 240 4V60H0z"/>
+          </svg>
+        </div>
+
+
 
       <div class="hero-layout container">
 
@@ -135,6 +185,8 @@
 
         </div>
       </div>
+
+      </div><!-- /hero-stage -->
 
       <!-- MARQUEE: slim chip ticker. 8 identical groups so the loop never runs dry on wide screens -->
       <div class="hero-marquee" aria-label="Areas of interest">
@@ -251,6 +303,7 @@
             I work mostly with WordPress, HTML, CSS, and
             JavaScript. Most of what I know came from building things,
             breaking them, and rebuilding. I care about the small details, spacing, type, and code.
+            Right now I'm adding Flutter and Firebase to that, so a project can run from the page to the data behind it.
           </p>
 
           <div class="about-divider"></div>
@@ -1134,6 +1187,22 @@
 
     <!-- 7 · CONTACT — WHITE -->
     <section class="contact section theme-light" id="contact">
+      <!-- CONTACT BACKGROUND IMAGE: save your image as
+           images/contact/contact-bg.webp (recommended 2400 x 1350, 16:9).
+           If the file is missing this layer removes itself and the
+           section looks exactly as before. -->
+      <div class="contact-bg" aria-hidden="true">
+        <img
+          src="images/contact/contact-bg.webp"
+          alt=""
+          width="2400"
+          height="1350"
+          loading="lazy"
+          decoding="async"
+          onerror="this.parentElement.remove()"
+        >
+      </div>
+
       <div class="container">
 
         <div class="contact-layout">

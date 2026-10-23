@@ -1,0 +1,182 @@
+/* ============================================================
+   HERO ART  (load AFTER style.css and hero-decor.css)
+   Fills the plain paper background of the hero with a quiet layer
+   of shapes. Everything sits BEHIND the content and only in free
+   space: corners, the gap between text and portrait, and the strip
+   above the marquee. Nothing crosses the headline, the buttons or
+   the portrait.
+
+   Layers (back to front):
+   1. soft colour blobs      teal + violet washes
+   2. diagonal bands         slanted gradient bands + fine stripes in two corners
+   3. corner rings           top-left (teal), bottom-right (orange)
+   4. playful shapes         dot grid, squiggle, half-circle,
+                             triangle, hatched pill
+   5. wave ribbon            layered waves above the marquee
+
+   Palette variables only, so it follows any re-colour of the site.
+============================================================ */
+.hero-art {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* ---------- 1. colour blobs ---------- */
+.art-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+}
+
+.art-blob-teal {
+  left: -8%;
+  top: -22%;
+  width: 34vw;
+  height: 34vw;
+  background: rgba(var(--teal-rgb), 0.16);
+}
+
+.art-blob-violet {
+  left: 56%;
+  top: -30%;
+  width: 28vw;
+  height: 28vw;
+  background: rgba(var(--violet-rgb), 0.13);
+}
+
+.art-blob-sun {
+  left: 40%;
+  bottom: -30%;
+  width: 26vw;
+  height: 26vw;
+  background: rgba(var(--sun-rgb), 0.16);
+}
+
+/* ---------- 2. diagonal bands (replaces the grid) ----------
+   Two corner pieces: slanted gradient bands that fade out, plus a set
+   of fine stripes. Top-right is orange + sun, bottom-left is teal + violet.
+   Sizes are capped so they stay in the corners, clear of text + portrait. */
+.art-corner {
+  position: absolute;
+  display: block;
+  height: auto;
+  overflow: visible;
+}
+
+.art-corner-tr { top: 0;    right: 0; width: clamp(180px, 22vw, 300px); }
+.art-corner-bl { bottom: 0; left: 0;  width: clamp(150px, 16vw, 230px); }
+
+.art-corner .stripes path {
+  fill: none;
+  stroke: rgba(var(--accent-rgb), 0.45);
+  stroke-width: 1.6;
+}
+
+/* ---------- shared shape style ---------- */
+.art {
+  position: absolute;
+  display: block;
+  height: auto;
+  overflow: visible;
+  animation: deco-float var(--t, 9s) ease-in-out var(--dl, 0s) infinite;
+}
+
+.art .l {
+  fill: none;
+  stroke: rgba(var(--ink-rgb), 0.85);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.art .t  { fill: rgb(var(--teal-rgb)); }
+.art .s  { fill: var(--sun); }
+.art .a  { fill: var(--accent); }
+
+/* ---------- 3. corner rings (static, no float) ---------- */
+.art-rings {
+  animation: none;
+  fill: none;
+  stroke-width: 1.4;
+}
+
+.art-rings-tl {
+  left: 0;
+  top: 0;
+  width: clamp(90px, 8vw, 120px);
+  stroke: rgba(var(--teal-rgb), 0.55);
+}
+
+.art-rings-br {
+  right: 0;
+  bottom: 0;
+  width: clamp(130px, 13vw, 190px);
+  stroke: rgba(var(--accent-rgb), 0.45);
+}
+
+/* ---------- 4. playful shapes (only in free space) ---------- */
+.art-dots {
+  left: 55.5%;
+  top: 36%;
+  width: 64px;
+  height: 64px;
+  background-image: radial-gradient(circle, rgba(var(--ink-rgb), 0.5) 1.6px, transparent 2px);
+  background-size: 16px 16px;
+  animation: none;
+}
+
+.art-squiggle  { left: 53%;   top: 68%; width: 78px;  --r: -4deg; --t: 10s; }
+.art-half      { left: 58%;   top: 20%; width: 44px;  --r: 8deg;  --t: 11s; --dl: -3s; }
+.art-triangle  { left: 50.5%; top: 11%; width: 38px;  --r: -10deg; --t: 8s; --dl: -2s; }
+
+.art-hatch {
+  left: 72%;
+  top: 7%;
+  width: 88px;
+  height: 24px;
+  border: 1.6px solid rgba(var(--ink-rgb), 0.85);
+  border-radius: 999px;
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(var(--accent-rgb), 0.55) 0 3px,
+    transparent 3px 8px
+  );
+  --t: 12s;
+  --dl: -5s;
+}
+
+/* ---------- 5. wave ribbon above the marquee ---------- */
+.art-wave {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: clamp(30px, 5vh, 48px);
+  /* fades out behind the buttons on the left, full strength to the right */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 28%, #000 55%);
+  mask-image: linear-gradient(90deg, transparent 0%, transparent 28%, #000 55%);
+}
+
+.art-wave path:nth-child(1) { fill: rgba(var(--teal-rgb), 0.18); }
+.art-wave path:nth-child(2) { fill: rgba(var(--sun-rgb), 0.22); }
+.art-wave path:nth-child(3) { fill: rgba(var(--accent-rgb), 0.16); }
+
+/* ---------- responsive: same breakpoints as hero-decor.css ---------- */
+@media (max-width: 1099px) {
+  .art,
+  .art-corner,
+  .art-wave {
+    display: none;
+  }
+}
+
+@media (max-width: 680px) {
+  .art-blob { filter: blur(40px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .art { animation: none; }
+}
