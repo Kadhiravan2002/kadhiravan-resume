@@ -447,8 +447,6 @@
     });
   }
 
-  // Cursor state (filled in by initPointer on desktop)
-  const cursor = { on: false, x: 0, y: 0, rx: 0, ry: 0, dot: null, ring: null };
 
   function loop(now = performance.now()) {
     scrubWork(now);
@@ -467,14 +465,7 @@
       }
     }
 
-    // Custom cursor follows with a little lag on the ring
-    // Custom cursor follows with a little lag on the ring
-    if (cursor.on) {
-      cursor.rx = lerp(cursor.rx, cursor.x, 0.15); // Slower lerp for premium elastic feel
-      cursor.ry = lerp(cursor.ry, cursor.y, 0.15);
-      cursor.dot.style.transform = `translate3d(${cursor.x}px, ${cursor.y}px, 0) translate(-50%, -50%)`;
-      cursor.ring.style.transform = `translate3d(${cursor.rx}px, ${cursor.ry}px, 0) translate(-50%, -50%)`;
-    }
+
 
     requestAnimationFrame(loop);
   }
@@ -510,48 +501,6 @@
      5. DESKTOP-ONLY POINTER EFFECTS
   ============================================================ */
   function initPointer() {
-    // Custom cursor: dot + trailing ring
-    // Custom cursor: dot + trailing ring
-    cursor.dot = document.createElement("div");
-    cursor.dot.className = "cursor-dot";
-    cursor.ring = document.createElement("div");
-    cursor.ring.className = "cursor-ring";
-
-    [cursor.dot, cursor.ring].forEach((n) => n.setAttribute("aria-hidden", "true"));
-    document.body.append(cursor.dot, cursor.ring);
-
-    window.addEventListener(
-      "pointermove",
-      (e) => {
-        if (e.pointerType && e.pointerType !== "mouse") return;
-        cursor.x = e.clientX;
-        cursor.y = e.clientY;
-        if (!cursor.on) {
-          cursor.on = true;
-          cursor.rx = cursor.x;
-          cursor.ry = cursor.y;
-        }
-        root.classList.add("has-cursor");
-      },
-      { passive: true }
-    );
-
-    root.addEventListener("mouseleave", () => root.classList.remove("has-cursor"));
-    root.addEventListener("mouseenter", () => {
-      if (cursor.on) root.classList.add("has-cursor");
-    });
-
-    document.addEventListener("pointerover", (e) => {
-      if (!(e.target instanceof Element)) return; 
-      const link = e.target.closest("a, button");
-
-      // Ring grows only over real links and buttons; project cards
-      // are not clickable, so they keep the normal cursor.
-      cursor.ring.classList.toggle("is-link", Boolean(link));
-    });
-    document.addEventListener("pointerdown", () => cursor.ring.classList.add("is-down"));
-    document.addEventListener("pointerup", () => cursor.ring.classList.remove("is-down"));
-
     // Hero mouse parallax (glow, orbit, abstract shape)
     if (hero) {
       hero.addEventListener("pointermove", (e) => {
@@ -565,41 +514,31 @@
       });
     }
 
-    // Card spotlight follows the cursor; project cards also tilt in 3D
-    $$(".skill-card, .about-card, .service-card, .project-card").forEach((card) => {
-      const isProject = card.classList.contains("project-card");
-
+    // 3D tilt on project cards
+    $$(".project-card").forEach((card) => {
       card.addEventListener("pointermove", (e) => {
         const r = card.getBoundingClientRect();
         const x = e.clientX - r.left;
         const y = e.clientY - r.top;
-        card.style.setProperty("--mx", `${x}px`);
-        card.style.setProperty("--my", `${y}px`);
-
-        if (isProject) {
-          card.style.setProperty("--ry", `${(x / r.width - 0.5) * 7}deg`);
-          card.style.setProperty("--rx", `${(y / r.height - 0.5) * -7}deg`);
-        }
+        card.style.setProperty("--ry", `${(x / r.width - 0.5) * 7}deg`);
+        card.style.setProperty("--rx", `${(y / r.height - 0.5) * -7}deg`);
       });
-
-      // Services: remember where the pointer enters and leaves, so the image
-      // reveal opens from (and closes towards) that exact point.
-      if (card.classList.contains("service-card")) {
-        const mark = (e) => {
-          const r = card.getBoundingClientRect();
-          card.style.setProperty("--ex", `${e.clientX - r.left}px`);
-          card.style.setProperty("--ey", `${e.clientY - r.top}px`);
-        };
-        card.addEventListener("pointerenter", mark);
-        card.addEventListener("pointerleave", mark);
-      }
 
       card.addEventListener("pointerleave", () => {
-        if (isProject) {
-          card.style.setProperty("--rx", "0deg");
-          card.style.setProperty("--ry", "0deg");
-        }
+        card.style.setProperty("--rx", "0deg");
+        card.style.setProperty("--ry", "0deg");
       });
+    });
+
+    // Services: remember where the pointer enters and leaves for image reveal
+    $$(".service-card").forEach((card) => {
+      const mark = (e) => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty("--ex", `${e.clientX - r.left}px`);
+        card.style.setProperty("--ey", `${e.clientY - r.top}px`);
+      };
+      card.addEventListener("pointerenter", mark);
+      card.addEventListener("pointerleave", mark);
     });
 
     // Magnetic buttons
