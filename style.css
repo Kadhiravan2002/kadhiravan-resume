@@ -216,7 +216,6 @@ small, strong {
 .contact-title span,
 .projects-title span,
 .about-title .accent-text,
-.hero-title .accent-text,
 .accent-text {
   display: block;
   color: var(--accent);      /* solid #FFA500 original orange */
@@ -544,10 +543,10 @@ body .site-header.is-scrolled {
   position: relative;
   flex: 1;
   display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+  grid-template-columns: minmax(0, 1.24fr) minmax(0, 0.76fr);
   align-items: center;
-  gap: clamp(20px, 4vw, 50px);
-  padding-block: clamp(1.5rem, 6vh, 4.5rem);   /* same space above and below the content */
+  gap: clamp(36px, 5.5vw, 72px);
+  padding-block: clamp(2rem, 5vh, 4rem);   /* balanced vertical centering */
 }
 
 .hero-content {
@@ -560,7 +559,7 @@ body .site-header.is-scrolled {
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
-  margin: 0 0 1.75rem;
+  margin: 0 0 1.25rem;
   color: var(--fg-muted);
   font-weight: 500;
   letter-spacing: 0.14em;
@@ -580,51 +579,74 @@ body .site-header.is-scrolled {
   color: var(--accent-fg);
 }
 
-/* Tier 1 — both lines at full size. "I AM" is outlined (quiet); the name is
-   solid accent (loud). Same solid / outline language as the marquee below. */
+/* Tier 1 — Editorial outline-vs-solid hierarchy:
+   "I AM" is outlined (hollow stroke, no fill) — quiet, airy lead-in.
+   "KADHIRAVAN." is solid black, bold — the commanding focal point.
+   Both elements share exact zeroed left margins and padding for flawless left alignment. */
 .hero-title {
   display: block;
   margin: 0;
+  padding: 0;
+  text-align: left;
   font-family: var(--font-heading);
-  font-weight: 700;
-  line-height: 0.95;
-  letter-spacing: -0.05em;
   text-transform: uppercase;
-  color: transparent;
-  -webkit-text-stroke: 1.5px var(--ink);
 }
 
-@supports not (-webkit-text-stroke: 1px red) {
-  .hero-title { color: var(--fg-muted); }
+.hero-title .hero-lead,
+.hero-title .hero-name {
+  margin-left: 0;
+  padding-left: 0;
+  text-align: left;
 }
 
-.hero-title span {
+.hero-title .hero-lead {
   display: block;
+  margin: 0 0 0.25rem 0;
+  padding: 0;
+  font-size: clamp(1.35rem, 2.8vw, 2rem);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  line-height: 1.1;
+  color: transparent;
+  -webkit-text-stroke: 1px #000000;
 }
 
-.hero-title span:empty {
-  display: none;
+/* Fallback for browsers without text-stroke */
+@supports not (-webkit-text-stroke: 1px red) {
+  .hero-title .hero-lead {
+    color: rgba(0, 0, 0, 0.35);
+    -webkit-text-stroke: 0;
+  }
 }
 
+.hero-title .hero-name,
 .hero-title .accent-text {
-  color: var(--accent);
+  display: block;
+  margin: 0;
+  padding: 0;
+  font-size: clamp(1.95rem, 6.8vw, 5.45rem);
+  font-weight: 700;
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+  color: #000000;
   -webkit-text-stroke: 0;
   text-shadow: none;
+  white-space: nowrap;
 }
 
 .hero-description {
-  max-width: 500px;
-  margin-top: 1.75rem;
+  max-width: 480px;
+  margin-top: 1.35rem;
   color: var(--fg);
-  line-height: 1.8;
+  line-height: 1.7;
 }
 
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 14px;
-  margin-top: 2rem;
+  gap: 16px;
+  margin-top: 1.65rem;
 }
 
 .button {
@@ -633,7 +655,7 @@ body .site-header.is-scrolled {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  padding: 13px 24px;
+  padding: 13px 26px;
   border: 1px solid transparent;
   border-radius: 999px;
   font-weight: 600;
@@ -649,12 +671,14 @@ body .site-header.is-scrolled {
 }
 
 .button-primary {
+  border-color: var(--accent);
   background: var(--accent);
   color: var(--on-accent);
   box-shadow: 0 8px 28px rgba(var(--accent-rgb), 0.32);
 }
 
 .button-primary:hover {
+  border-color: var(--accent);
   background: var(--accent);
   box-shadow: 0 10px 34px rgba(var(--accent-rgb), 0.45);
 }
@@ -720,14 +744,15 @@ body .site-header.is-scrolled {
   object-position: center 20%;
 }
 
-/* Ring hugging the photo: a faint full circle plus a bright arc that sweeps around it */
+/* Outer ring: whisper-quiet subtle framing so the inner orange border remains the primary frame */
 .portrait-orbit {
   position: absolute;
-  inset: -16px;
+  inset: -12px;
   z-index: 0;
   border-radius: 50%;
-  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
-  animation: orbit-spin 6s linear infinite;
+  border: 1px solid rgba(var(--accent-rgb), 0.16);
+  opacity: 0.35;
+  animation: orbit-spin 8s linear infinite;
 }
 
 .portrait-orbit::before {
@@ -735,8 +760,8 @@ body .site-header.is-scrolled {
   position: absolute;
   inset: -2px;
   border-radius: 50%;
-  padding: 2px;
-  background: conic-gradient(from 0deg, transparent 0 62%, var(--accent) 100%);
+  padding: 1.5px;
+  background: conic-gradient(from 0deg, transparent 0 72%, rgba(var(--accent-rgb), 0.75) 100%);
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
