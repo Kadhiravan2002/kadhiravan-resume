@@ -601,30 +601,33 @@ body .site-header.is-scrolled {
   color: #FFFFFF;
   box-shadow: none;
   transition:
-    transform 220ms ease,
-    background 220ms ease,
-    border-color 220ms ease,
-    box-shadow 220ms ease;
+    transform 250ms ease,
+    background 250ms ease,
+    border-color 250ms ease,
+    color 250ms ease;
 }
 
 .nav-cta:hover,
 .nav-cta:active,
 .nav-cta:focus {
-  background: var(--accent-strong);
-  border-color: var(--accent-strong);
-  color: #FFFFFF;
+  background: #FFFFFF;
+  border-color: var(--accent);
+  color: var(--accent);
   transform: translateY(-2px);
   box-shadow: none;
 }
 
 .nav-cta span,
 .nav-cta:visited span {
-  color: #FFFFFF;
+  color: inherit;
   display: inline-block;
-  transition: transform 220ms ease;
+  transition: transform 250ms ease, color 250ms ease;
 }
 
-.nav-cta:hover span {
+.nav-cta:hover span,
+.nav-cta:active span,
+.nav-cta:focus span {
+  color: var(--accent);
   transform: translate(2px, -2px);
 }
 
@@ -832,10 +835,10 @@ body .site-header.is-scrolled {
   line-height: 1.2;
   text-align: center;
   transition:
-    transform 220ms ease,
-    background 220ms ease,
-    border-color 220ms ease,
-    box-shadow 220ms ease;
+    transform 250ms ease,
+    background 250ms ease,
+    border-color 250ms ease,
+    color 250ms ease;
 }
 
 .button:hover {
@@ -853,20 +856,23 @@ body .site-header.is-scrolled {
 .button-primary:hover,
 .button-primary:active,
 .button-primary:focus {
-  border-color: var(--accent-secondary);
-  background: var(--accent-secondary);
-  color: #FFFFFF;
+  border-color: var(--accent);
+  background: #FFFFFF;
+  color: var(--accent);
   box-shadow: none;
 }
 
 .button-primary span,
 .button-primary:visited span {
-  color: #FFFFFF;
+  color: inherit;
   display: inline-block;
-  transition: transform 220ms ease;
+  transition: transform 250ms ease, color 250ms ease;
 }
 
-.button-primary:hover span {
+.button-primary:hover span,
+.button-primary:active span,
+.button-primary:focus span {
+  color: var(--accent);
   transform: translate(3px, -2px);
 }
 
@@ -881,9 +887,9 @@ body .site-header.is-scrolled {
 .button-secondary:hover,
 .button-secondary:active,
 .button-secondary:focus {
-  background: #FFFFFF;
-  border-color: var(--accent-secondary);
-  color: var(--accent-secondary);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #FFFFFF;
   box-shadow: none;
 }
 
@@ -1984,31 +1990,40 @@ body .site-header.is-scrolled {
   overflow-wrap: anywhere;
   box-shadow: none;
   transition:
-    background 220ms ease,
-    border-color 220ms ease,
-    transform 220ms ease,
-    box-shadow 220ms ease;
+    transform 250ms ease,
+    background 250ms ease,
+    border-color 250ms ease,
+    color 250ms ease;
 }
 
 .contact-email:hover,
 .contact-email:active,
 .contact-email:focus {
-  background: var(--accent-secondary);
-  border-color: var(--accent-secondary);
-  color: #FFFFFF;
+  background: #FFFFFF;
+  border-color: var(--accent);
+  color: var(--accent);
   transform: translateY(-2px);
   box-shadow: none;
 }
 
 .contact-email span,
-.contact-email:visited span {
+.contact-email:visited span,
+.contact-phone span,
+.contact-phone:visited span {
   flex-shrink: 0;
   display: inline-block;
-  transition: transform 200ms ease;
+  color: inherit;
+  transition: transform 250ms ease, color 250ms ease;
 }
 
-.contact-email:hover span {
-  transform: translate(3px, -3px);
+.contact-email:hover span,
+.contact-email:active span,
+.contact-email:focus span,
+.contact-phone:hover span,
+.contact-phone:active span,
+.contact-phone:focus span {
+  color: inherit;
+  transform: translate(2px, -2px);
 }
 
 .contact-phone,
@@ -2031,19 +2046,18 @@ body .site-header.is-scrolled {
   overflow-wrap: anywhere;
   box-shadow: none;
   transition:
-    border-color 220ms ease,
-    background 220ms ease,
-    color 220ms ease,
-    transform 220ms ease,
-    box-shadow 220ms ease;
+    transform 250ms ease,
+    background 250ms ease,
+    border-color 250ms ease,
+    color 250ms ease;
 }
 
 .contact-phone:hover,
 .contact-phone:active,
 .contact-phone:focus {
-  border-color: var(--accent-secondary);
-  background: #FFFFFF;
-  color: var(--accent-secondary);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #FFFFFF;
   transform: translateY(-2px);
   box-shadow: none;
 }

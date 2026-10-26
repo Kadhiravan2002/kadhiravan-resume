@@ -567,34 +567,37 @@ i.sw, i.sc, i.mk, i.mk-i, i.sl, i.lw {
 /* Magnetic buttons (transition lists re-declared to add `translate`) */
 .button {
   transition:
-    transform 220ms ease,
-    background 220ms ease,
-    border-color 220ms ease,
-    box-shadow 220ms ease,
+    transform 250ms ease,
+    background 250ms ease,
+    border-color 250ms ease,
+    color 250ms ease,
     translate 300ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 .nav-cta {
   transition:
-    border-color 220ms ease,
-    background 220ms ease,
-    transform 220ms ease,
+    border-color 250ms ease,
+    background 250ms ease,
+    color 250ms ease,
+    transform 250ms ease,
     translate 300ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 .contact-email {
   transition:
-    background 220ms ease,
-    transform 220ms ease,
-    box-shadow 220ms ease,
+    transform 250ms ease,
+    background 250ms ease,
+    border-color 250ms ease,
+    color 250ms ease,
     translate 300ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 .contact-phone {
   transition:
-    border-color 220ms ease,
-    background 220ms ease,
-    transform 220ms ease,
+    transform 250ms ease,
+    background 250ms ease,
+    border-color 250ms ease,
+    color 250ms ease,
     translate 300ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
