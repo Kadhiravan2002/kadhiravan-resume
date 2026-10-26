@@ -1,24 +1,10 @@
 /* ============================================================
    HERO BACKGROUND IMAGE  (load AFTER style.css and hero-art.css)
-   Light-theme version: shows your image behind the hero content,
-   between the header and the marquee. Text keeps its normal dark colours,
-   so use an image with a pale / calm area behind the text (left side).
-
-   Image file:  images/hero/hero-bg.webp
-   Recommended: 2560 x 1000 (wide). It is scaled to cover the hero,
-   so keep the busy details near the edges and the middle calm.
-   If the file is missing, this layer removes itself.
-
-   TUNE IT:
-     object-position  - which part of the image stays visible when cropped
-     --hero-dark      - DARK OVERLAY over the image (0 = none, 0.2 = slight,
-                        0.4 = medium, 0.6 = heavy). Change the number below.
-     --hero-veil      - paper-coloured wash over the image (0 = none, 1 = full)
+   Light-theme single color-based theme with cohesive mint & warm cream palette.
+   - Left side: brighter, luminous clean wash for effortless text contrast.
+   - Right side: gentle calming wash to soften geometric dominance behind portrait.
 ============================================================ */
 .hero-image {
-  --hero-dark: 0.2;       /* 0.2 dark overlay to reduce banner brightness */
-  --hero-veil: 0;
-
   position: absolute;
   inset: 0;
   z-index: 0;
@@ -34,39 +20,55 @@
   object-position: center;
 }
 
-/* dark overlay: ink-coloured layer above the image */
+/* Directional ambient wash:
+   - Left: brighter warm-cream and white wash for maximum text clarity.
+   - Middle: clean transition with subtle mint undertones.
+   - Right: soft calming wash that softens the geometric pattern's visual dominance. */
 .hero-image::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: rgb(var(--ink-rgb));
-  opacity: var(--hero-dark);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.72) 0%,
+    rgba(254, 243, 226, 0.48) 36%,
+    rgba(235, 247, 244, 0.22) 64%,
+    rgba(15, 23, 42, 0.16) 100%
+  );
 }
 
+/* Targeted soft scrim over the right pattern to keep the portrait in focus */
 .hero-image::after {
-  z-index: 1;
   content: "";
   position: absolute;
   inset: 0;
-  background: var(--paper);
-  opacity: var(--hero-veil);
+  z-index: 1;
+  background: radial-gradient(
+    ellipse at 82% 46%,
+    rgba(15, 23, 42, 0.14) 0%,
+    transparent 65%
+  );
+  pointer-events: none;
 }
 
-/* Phones: the hero is a tall single column, so the wide image is cropped
-   to a narrow slice. Pick which slice stays visible with object-position
-   (0% = left edge, 50% = centre, 100% = right edge).
-   The paper veil is OFF here so the image and the dark overlay above look
-   the same as on laptop. Raise --hero-veil (e.g. 0.3) only if text gets hard to read. */
+/* Mobile: vertical stack gradient (bright on top for text, calm below for portrait) */
 @media (max-width: 680px) {
-  .hero-image { --hero-veil: 0; }
-  .hero-image img { object-position: 75% center; }
+  .hero-image img {
+    object-position: 70% center;
+  }
+
+  .hero-image::before {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.78) 0%,
+      rgba(254, 243, 226, 0.52) 42%,
+      rgba(15, 23, 42, 0.15) 100%
+    );
+  }
 }
 
-/* While the image is present it replaces the generated shapes.
-   If the image file is missing, the layer above removes itself and the
-   shapes come back automatically. To keep the rings / waves on top of the
-   image, delete this rule. */
+/* While the image is present it replaces the generated shapes. */
 .hero:has(.hero-image) .hero-art {
   display: none;
 }

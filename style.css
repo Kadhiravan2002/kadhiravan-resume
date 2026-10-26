@@ -516,8 +516,8 @@ body .site-header.is-scrolled {
   overflow-x: clip;
   overflow-y: visible;
   background:
-    radial-gradient(ellipse at 78% 42%, rgba(var(--accent-rgb), 0.16), transparent 46%),
-    radial-gradient(ellipse at 8% 100%, rgba(var(--sun-rgb), 0.2), transparent 40%),
+    radial-gradient(ellipse at 18% 44%, rgba(254, 243, 226, 0.9), transparent 60%),
+    radial-gradient(ellipse at 85% 38%, rgba(var(--teal-rgb), 0.08), transparent 50%),
     var(--bg);
 }
 
@@ -526,17 +526,17 @@ body .site-header.is-scrolled {
   z-index: -1;
   top: 5%;
   right: -10%;
-  width: min(60vw, 750px);
+  width: min(55vw, 680px);
   aspect-ratio: 1;
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(var(--accent-rgb), 0.18) 0%,
-    rgba(var(--accent-rgb), 0.06) 38%,
+    rgba(var(--teal-rgb), 0.12) 0%,
+    rgba(254, 243, 226, 0.1) 40%,
     transparent 70%
   );
   pointer-events: none;
-  animation: hero-glow-pulse 8s ease-in-out infinite;
+  opacity: 0.65;
 }
 
 .hero-layout {
@@ -579,59 +579,54 @@ body .site-header.is-scrolled {
   color: var(--accent-fg);
 }
 
-/* Tier 1 — Editorial outline-vs-solid hierarchy:
-   "I AM" is outlined (hollow stroke, no fill) — quiet, airy lead-in.
-   "KADHIRAVAN." is solid black, bold — the commanding focal point.
-   Both elements share exact zeroed left margins and padding for flawless left alignment. */
+/* Tier 1 — Symmetrical headline: both lines at identical size & typography.
+   "I AM" is outlined (1px hollow stroke, no fill) — clean & light.
+   "KADHIRAVAN." is solid pure black — bold & commanding. */
 .hero-title {
   display: block;
   margin: 0;
   padding: 0;
   text-align: left;
   font-family: var(--font-heading);
+  font-size: clamp(1.95rem, 6.8vw, 5.45rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
   text-transform: uppercase;
 }
 
 .hero-title .hero-lead,
 .hero-title .hero-name {
-  margin-left: 0;
-  padding-left: 0;
+  display: block;
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
   text-align: left;
+  white-space: nowrap;
 }
 
 .hero-title .hero-lead {
-  display: block;
-  margin: 0 0 0.25rem 0;
-  padding: 0;
-  font-size: clamp(1.35rem, 2.8vw, 2rem);
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  line-height: 1.1;
   color: transparent;
   -webkit-text-stroke: 1px #000000;
+  margin-bottom: 0.15rem;
 }
 
 /* Fallback for browsers without text-stroke */
 @supports not (-webkit-text-stroke: 1px red) {
   .hero-title .hero-lead {
-    color: rgba(0, 0, 0, 0.35);
+    color: rgba(0, 0, 0, 0.4);
     -webkit-text-stroke: 0;
   }
 }
 
 .hero-title .hero-name,
 .hero-title .accent-text {
-  display: block;
-  margin: 0;
-  padding: 0;
-  font-size: clamp(1.95rem, 6.8vw, 5.45rem);
-  font-weight: 700;
-  line-height: 0.96;
-  letter-spacing: -0.04em;
   color: #000000;
   -webkit-text-stroke: 0;
   text-shadow: none;
-  white-space: nowrap;
 }
 
 .hero-description {
