@@ -1,11 +1,9 @@
 /* ============================================================
    HERO BACKGROUND IMAGE  (load AFTER style.css and hero-art.css)
    Shows your image behind the hero content, between the header and marquee.
-   Original image colors (warm orange on left and right) show through fully.
+   Original apricot and burnt-orange artwork remains fully luminous.
 ============================================================ */
 .hero-image {
-  --hero-dark: 0.2;       /* 0.2 dark overlay to reduce banner brightness */
-
   position: absolute;
   inset: 0;
   z-index: 0;
@@ -21,24 +19,40 @@
   object-position: center;
 }
 
-/* 0.2 dark overlay: ink-coloured layer above the image without any white wash */
+/* Subtle gradient distribution:
+   - Gentle 0.10 touch on the left preserves black headline contrast.
+   - Smoothly tapers to transparent across the right so original apricot
+     and burnt-orange colors remain 100% vivid and unmuddied. */
 .hero-image::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: rgb(var(--ink-rgb));
-  opacity: var(--hero-dark);
+  background: linear-gradient(
+    90deg,
+    rgba(var(--ink-rgb), 0.10) 0%,
+    rgba(var(--ink-rgb), 0.05) 45%,
+    transparent 85%
+  );
 }
 
 .hero-image::after {
   display: none;
 }
 
-/* Phones: the hero is a tall single column */
+/* Phones: subtle vertical taper (gentle touch on top for text, transparent below) */
 @media (max-width: 680px) {
   .hero-image img {
     object-position: 70% center;
+  }
+
+  .hero-image::before {
+    background: linear-gradient(
+      180deg,
+      rgba(var(--ink-rgb), 0.10) 0%,
+      rgba(var(--ink-rgb), 0.04) 50%,
+      transparent 90%
+    );
   }
 }
 
