@@ -1,10 +1,11 @@
 /* ============================================================
    HERO BACKGROUND IMAGE  (load AFTER style.css and hero-art.css)
-   Light-theme single color-based theme with cohesive mint & warm cream palette.
-   - Left side: brighter, luminous clean wash for effortless text contrast.
-   - Right side: gentle calming wash to soften geometric dominance behind portrait.
+   Shows your image behind the hero content, between the header and marquee.
+   Original image colors (warm orange on left and right) show through fully.
 ============================================================ */
 .hero-image {
+  --hero-dark: 0.2;       /* 0.2 dark overlay to reduce banner brightness */
+
   position: absolute;
   inset: 0;
   z-index: 0;
@@ -20,51 +21,24 @@
   object-position: center;
 }
 
-/* Directional ambient wash:
-   - Left: brighter warm-cream and white wash for maximum text clarity.
-   - Middle: clean transition with subtle mint undertones.
-   - Right: soft calming wash that softens the geometric pattern's visual dominance. */
+/* 0.2 dark overlay: ink-coloured layer above the image without any white wash */
 .hero-image::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.72) 0%,
-    rgba(254, 243, 226, 0.48) 36%,
-    rgba(235, 247, 244, 0.22) 64%,
-    rgba(15, 23, 42, 0.16) 100%
-  );
+  background: rgb(var(--ink-rgb));
+  opacity: var(--hero-dark);
 }
 
-/* Targeted soft scrim over the right pattern to keep the portrait in focus */
 .hero-image::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: radial-gradient(
-    ellipse at 82% 46%,
-    rgba(15, 23, 42, 0.14) 0%,
-    transparent 65%
-  );
-  pointer-events: none;
+  display: none;
 }
 
-/* Mobile: vertical stack gradient (bright on top for text, calm below for portrait) */
+/* Phones: the hero is a tall single column */
 @media (max-width: 680px) {
   .hero-image img {
     object-position: 70% center;
-  }
-
-  .hero-image::before {
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.78) 0%,
-      rgba(254, 243, 226, 0.52) 42%,
-      rgba(15, 23, 42, 0.15) 100%
-    );
   }
 }
 
