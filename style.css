@@ -25,51 +25,59 @@
    01. DESIGN TOKENS AND SECTION THEMES
 ============================================================ */
 :root {
-  /* ---------- PALETTE: Purple Rebrand & Section System ----------
-     Primary brand accent: #5D2FDF (modern tech purple).
-     Alternate section palette: #F0F4E9 (soft sage / mint cream neutral).
-     Primary sections: Pure White #FFFFFF.
-     Text: Pure black on white & #F0F4E9 sections with #5D2FDF accents. */
+  /* ---------- PALETTE: Standardized Two-Violet System ----------
+     Primary Violet:   #5D2FDF (brand accent, headings, subheadings, active navigation, icons)
+     Secondary Violet: #4B24B8 (buttons, hover states, card hover borders, interactive highlights)
+     Alternate Section: #F0F4E9 (preserved Warm Sage / Mint Cream neutral)
+     Primary Sections: #FFFFFF (Pure White)
+     Typography:       #000000 (Pure Black) & #4B5563 (Slate Grey) */
   --ink-rgb: 0, 0, 0;                 /* pure black */
   --paper: #FFFFFF;                   /* pure white */
 
-  /* Primary brand purple tokens */
-  --brand-purple: #5D2FDF;
-  --brand-purple-rgb: 93, 47, 223;
-  --accent-rgb: 93, 47, 223;          /* brand purple #5D2FDF */
-  --sun-rgb: 167, 139, 250;            /* soft lavender */
-  --teal-rgb: 124, 58, 237;            /* deep vibrant violet */
-  --violet-rgb: 192, 132, 252;         /* luminous lilac */
+  /* The Two Primary Violet Tokens */
+  --accent: #5D2FDF;                     /* Primary Violet: #5D2FDF */
+  --accent-rgb: 93, 47, 223;
+  --accent-secondary: #4B24B8;           /* Secondary Violet: #4B24B8 */
+  --accent-secondary-rgb: 75, 36, 184;
+
+  /* Aliases mapped strictly to the two approved violets */
+  --brand-purple: var(--accent);
+  --brand-purple-rgb: var(--accent-rgb);
+  --accent-strong: var(--accent-secondary);
+  --accent-hover: var(--accent-secondary);
+  --accent-light: var(--accent);
+  --accent-ink: var(--accent);
+  --accent-display: var(--accent);
+  --accent-fg: var(--accent);
+  --on-accent: #FFFFFF;               /* pure white text on violet buttons */
+
+  /* Supporting vector triples strictly mapped to the two approved violets */
+  --sun-rgb: 93, 47, 223;             /* Primary Violet for hero artwork */
+  --teal-rgb: 75, 36, 184;            /* Secondary Violet for hero artwork */
+  --violet-rgb: 93, 47, 223;          /* Primary Violet for hero artwork */
   --mail-rgb: 234, 67, 53;
   --linkedin-rgb: 10, 102, 194;
 
-  /* Purple tints & alternate section palette (#F0F4E9) */
-  --purple-tint-1: #F0F4E9;           /* alternate section base */
+  /* Translucent opacity variations of the two approved violets */
+  --purple-subtle: rgba(var(--accent-rgb), 0.08);
+  --purple-subtle-hover: rgba(var(--accent-secondary-rgb), 0.14);
+  --purple-glow: rgba(var(--accent-rgb), 0.28);
+  --purple-tint-1: #F0F4E9;           /* preserved alternate section base */
   --purple-tint-2: #F0F4E9;
   --purple-tint-3: #F0F4E9;
   --purple-tint-4: #F0F4E9;
-  --purple-tint-5: #A78BFA;           /* luminous companion purple */
-  --purple-subtle: #F5F3FF;           /* ultra-soft lavender wash for badges/chips */
-  --purple-glow: rgba(93, 47, 223, 0.28);
+  --purple-tint-5: var(--accent-secondary);
 
-  /* Alternate section tokens */
+  /* Alternate section tokens (#F0F4E9) */
   --alt-section-bg: #F0F4E9;
   --alt-section-fg: #000000;
   --alt-section-muted: #4B5563;
-  --alt-accent-fg: #5D2FDF;           /* brand purple accent on #F0F4E9 */
-  --alt-accent-display: #5D2FDF;      /* brand purple title highlight on #F0F4E9 */
+  --alt-accent-fg: var(--accent);
+  --alt-accent-display: var(--accent);
   --alt-line: rgba(0, 0, 0, 0.08);
 
   --ink: #000000;
-  --accent: #5D2FDF;                  /* primary brand purple #5D2FDF */
-  --accent-strong: #4B24B8;           /* deeper purple for active/press/hover */
-  --accent-hover: #4D23C2;            /* rich hover state */
-  --accent-light: #7952F5;            /* vibrant mid-light purple */
-  --accent-ink: #5D2FDF;
-  --accent-display: #5D2FDF;
-  --accent-fg: #5D2FDF;
   --sun: rgb(var(--sun-rgb));
-  --on-accent: #FFFFFF;               /* pure white on #5D2FDF for WCAG AAA 7.2:1 contrast */
   --dark-muted: #666666;
 
   --font-heading: "Space Grotesk", sans-serif;
@@ -251,9 +259,7 @@ h4 {
 p,
 .eyebrow,
 .section-eyebrow,
-.button,
 .nav-links a,
-.nav-cta,
 .footer-copy {
   font-size: var(--fs-4);
 }
@@ -395,8 +401,8 @@ p,
 .theme-mid .learning-note:hover,
 .theme-mid .cert-card:hover {
   transform: translateY(-5px);
-  border-color: var(--accent);
-  box-shadow: 0 16px 36px rgba(93, 47, 223, 0.12);
+  border-color: var(--accent-secondary); /* #4B24B8 for card hover borders */
+  box-shadow: 0 16px 36px rgba(var(--accent-secondary-rgb), 0.15);
 }
 
 .theme-mid .about-card-top h3,
@@ -408,7 +414,7 @@ p,
 
 .theme-mid .project-card:hover .project-title-row h3,
 .theme-mid .cert-card:hover h4 {
-  color: var(--accent);
+  color: var(--accent-secondary); /* #4B24B8 for hover indicator */
 }
 
 .theme-mid .about-card p,
@@ -427,14 +433,15 @@ p,
 }
 
 .theme-mid .project-tags span {
-  background: #F5F3FF;
+  background: rgba(var(--accent-rgb), 0.08);
   color: var(--accent);
   border: 1px solid rgba(var(--accent-rgb), 0.2);
 }
 
 .theme-mid .project-tags span:hover {
-  background: #EDE9FE;
-  border-color: var(--accent);
+  background: rgba(var(--accent-secondary-rgb), 0.14);
+  border-color: var(--accent-secondary);
+  color: var(--accent-secondary);
 }
 
 /* Timeline on #F0F4E9 */
@@ -523,9 +530,10 @@ body .site-header.is-scrolled {
 .brand {
   flex-shrink: 0;
   font-family: var(--font-heading);
-  font-size: 1.125rem; /* ~18px — visually balanced with nav links */
+  font-size: 1.25rem; /* ~20px — prominent, confident brand identity */
   font-weight: 700;
   letter-spacing: 0.06em;
+  line-height: 1.2;
   color: #000000;
 }
 
@@ -579,13 +587,13 @@ body .site-header.is-scrolled {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 52px;
-  gap: 10px;
-  padding: 14px 26px;
+  min-height: 40px;
+  gap: 8px;
+  padding: 9px 20px;
   border: 1px solid var(--accent);
   border-radius: 999px;
   font-family: var(--font-body);
-  font-size: var(--fs-4); /* 16px — standardized across all buttons */
+  font-size: 0.9375rem; /* ~15px — compact header button proportion */
   font-weight: 600;
   line-height: 1.2;
   text-align: center;
@@ -813,13 +821,13 @@ body .site-header.is-scrolled {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 52px;
-  gap: 10px;
-  padding: 14px 26px;
+  min-height: 40px;
+  gap: 8px;
+  padding: 9px 20px;
   border: 1px solid transparent;
   border-radius: 999px;
   font-family: var(--font-body);
-  font-size: var(--fs-4);
+  font-size: 0.9375rem; /* 15px — matching header CTA */
   font-weight: 600;
   line-height: 1.2;
   text-align: center;
@@ -839,16 +847,16 @@ body .site-header.is-scrolled {
   border-color: var(--accent);
   background: var(--accent);
   color: #FFFFFF;
-  box-shadow: 0 8px 28px rgba(var(--accent-rgb), 0.32);
+  box-shadow: 0 8px 24px rgba(var(--accent-rgb), 0.32);
 }
 
 .button-primary:hover,
 .button-primary:active,
 .button-primary:focus {
-  border-color: var(--accent-strong);
-  background: var(--accent-strong);
+  border-color: var(--accent-secondary);
+  background: var(--accent-secondary);
   color: #FFFFFF;
-  box-shadow: 0 10px 34px rgba(var(--accent-rgb), 0.45);
+  box-shadow: 0 10px 30px rgba(var(--accent-secondary-rgb), 0.45);
 }
 
 .button-primary span,
@@ -867,16 +875,16 @@ body .site-header.is-scrolled {
   border: 1px solid rgba(0, 0, 0, 0.1);
   color: #000000;
   background: #FFFFFF;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
 }
 
 .button-secondary:hover,
 .button-secondary:active,
 .button-secondary:focus {
   background: #FFFFFF;
-  border-color: var(--accent);
-  color: var(--accent);
-  box-shadow: 0 8px 26px rgba(var(--accent-rgb), 0.18);
+  border-color: var(--accent-secondary);
+  color: var(--accent-secondary);
+  box-shadow: 0 8px 22px rgba(var(--accent-secondary-rgb), 0.18);
 }
 
 /* Portrait */
@@ -1022,9 +1030,9 @@ body .site-header.is-scrolled {
 /* All chips use the single accent colour — no multi-colour dots */
 
 .marquee-group span:hover {
-  border-color: var(--accent);
-  background: #F5F3FF;
-  color: var(--accent);
+  border-color: var(--accent-secondary);
+  background: rgba(var(--accent-rgb), 0.08);
+  color: var(--accent-secondary);
 }
 
 .hero-marquee:hover .marquee-track {
@@ -1121,9 +1129,9 @@ body .site-header.is-scrolled {
 
 .about-card:hover {
   transform: translateY(-5px);
-  border-color: var(--accent);
+  border-color: var(--accent-secondary);
   background: #FFFFFF;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 16px 36px rgba(var(--accent-secondary-rgb), 0.15);
 }
 
 .about-card-top {
@@ -1340,8 +1348,8 @@ body .site-header.is-scrolled {
 
 .project-card:hover {
   transform: translateY(-5px);
-  border-color: var(--accent);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
+  border-color: var(--accent-secondary);
+  box-shadow: 0 16px 36px rgba(var(--accent-secondary-rgb), 0.15);
 }
 
 .project-title-row {
@@ -1358,7 +1366,7 @@ body .site-header.is-scrolled {
 }
 
 .project-card:hover .project-title-row h3 {
-  color: var(--accent);
+  color: var(--accent-secondary);
 }
 
 .project-card-arrow {
@@ -1394,15 +1402,15 @@ body .site-header.is-scrolled {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 42px;
-  gap: 8px;
-  padding: 10px 22px;
+  min-height: 38px;
+  gap: 6px;
+  padding: 9px 20px;
   border: 1px solid transparent;
   border-radius: 999px;
   background: #FFFFFF;
   color: #000000;
   font-family: var(--font-body);
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: 0.02em;
@@ -1960,21 +1968,21 @@ body .site-header.is-scrolled {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 52px;
-  gap: 10px;
+  min-height: 40px;
+  gap: 8px;
   max-width: 100%;
-  padding: 14px 26px;
+  padding: 9px 20px;
   border: 1px solid var(--accent);
   border-radius: 999px;
   background: var(--accent);
   color: #FFFFFF;
   font-family: var(--font-body);
-  font-size: var(--fs-4);
+  font-size: 0.9375rem; /* 15px — matching header CTA */
   font-weight: 600;
   line-height: 1.2;
   text-align: center;
   overflow-wrap: anywhere;
-  box-shadow: 0 8px 28px rgba(var(--accent-rgb), 0.32);
+  box-shadow: 0 4px 14px rgba(var(--accent-rgb), 0.32);
   transition:
     background 220ms ease,
     border-color 220ms ease,
@@ -1985,11 +1993,11 @@ body .site-header.is-scrolled {
 .contact-email:hover,
 .contact-email:active,
 .contact-email:focus {
-  background: var(--accent-strong);
-  border-color: var(--accent-strong);
+  background: var(--accent-secondary);
+  border-color: var(--accent-secondary);
   color: #FFFFFF;
   transform: translateY(-2px);
-  box-shadow: 0 12px 34px rgba(var(--accent-rgb), 0.45);
+  box-shadow: 0 6px 20px rgba(var(--accent-secondary-rgb), 0.45);
 }
 
 .contact-email span,
@@ -2008,20 +2016,20 @@ body .site-header.is-scrolled {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 52px;
-  gap: 10px;
-  padding: 14px 26px;
+  min-height: 40px;
+  gap: 8px;
+  padding: 9px 20px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 999px;
   background: #FFFFFF;
   color: var(--fg);
   font-family: var(--font-body);
-  font-size: var(--fs-4);
+  font-size: 0.9375rem; /* 15px — matching header CTA */
   font-weight: 600;
   line-height: 1.2;
   text-align: center;
   overflow-wrap: anywhere;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
   transition:
     border-color 220ms ease,
     background 220ms ease,
@@ -2033,11 +2041,11 @@ body .site-header.is-scrolled {
 .contact-phone:hover,
 .contact-phone:active,
 .contact-phone:focus {
-  border-color: var(--accent);
+  border-color: var(--accent-secondary);
   background: #FFFFFF;
-  color: var(--accent);
+  color: var(--accent-secondary);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(var(--accent-rgb), 0.16);
+  box-shadow: 0 8px 22px rgba(var(--accent-secondary-rgb), 0.16);
 }
 
 .contact-panel {
@@ -2174,9 +2182,10 @@ body .site-header.is-scrolled {
 .footer-brand {
   justify-self: start;
   font-family: var(--font-heading);
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   font-weight: 700;
   letter-spacing: 0.06em;
+  line-height: 1.2;
 }
 
 .footer-copy {
@@ -2200,8 +2209,9 @@ body .site-header.is-scrolled {
   z-index: 999;
   display: grid;
   place-items: center;
-  width: 52px;
-  height: 52px;
+  width: 48px;
+  height: 48px;
+  min-height: 48px;
   padding: 0;
   border: 0;
   border-radius: 50%;
@@ -2209,7 +2219,7 @@ body .site-header.is-scrolled {
   color: var(--on-accent);
   cursor: pointer;
   box-shadow:
-    0 8px 24px rgba(var(--accent-rgb), 0.4),
+    0 8px 24px rgba(var(--accent-rgb), 0.35),
     0 0 0 1px rgba(var(--ink-rgb), 0.1);
   opacity: 0;
   visibility: hidden;
@@ -2322,8 +2332,8 @@ body .site-header.is-scrolled {
 .theme-light .skill-card:hover,
 .theme-light .service-card:hover {
   transform: translateY(-5px);
-  border-color: var(--accent);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
+  border-color: var(--accent-secondary);
+  box-shadow: 0 16px 36px rgba(var(--accent-secondary-rgb), 0.14);
 }
 
 /* Spinning gradient border on skill cards */
@@ -2398,9 +2408,9 @@ body .site-header.is-scrolled {
 }
 
 .theme-light .skill-tags span:hover {
-  border-color: var(--accent);
-  background: #F5F3FF;
-  color: var(--accent);
+  border-color: var(--accent-secondary);
+  background: rgba(var(--accent-rgb), 0.08);
+  color: var(--accent-secondary);
 }
 
 .theme-light .skill-index,
@@ -2420,8 +2430,8 @@ body .site-header.is-scrolled {
 
 .theme-light .contact-option:hover {
   transform: translateY(-3px);
-  border-color: var(--accent);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  border-color: var(--accent-secondary);
+  box-shadow: 0 12px 28px rgba(var(--accent-secondary-rgb), 0.15);
 }
 
 /* Call-to-action strip */
@@ -2601,8 +2611,9 @@ body .site-header.is-scrolled {
   }
 
   .nav-cta {
-    padding: 8px 18px;
-    font-size: 0.9rem;
+    min-height: 36px;
+    padding: 7px 16px;
+    font-size: 0.875rem;
   }
 
   .nav-links {
@@ -2704,11 +2715,16 @@ body .site-header.is-scrolled {
     gap: 10px;
   }
 
+  .brand {
+    font-size: 1.2rem;
+  }
+
   .button,
   .contact-email,
   .contact-phone {
-    min-height: 48px;
-    padding: 12px 20px;
+    min-height: 38px;
+    padding: 8px 16px;
+    font-size: 0.875rem;
   }
 
   .hero-visual {
