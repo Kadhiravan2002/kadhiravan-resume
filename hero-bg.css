@@ -1,7 +1,7 @@
 /* ============================================================
    HERO BACKGROUND IMAGE  (load AFTER style.css and hero-art.css)
    Shows your image behind the hero content, between the header and marquee.
-   Original apricot and burnt-orange artwork remains fully luminous.
+   Hero background artwork harmonised in brand purple (#5D2FDF).
 ============================================================ */
 .hero-image {
   position: absolute;
@@ -22,7 +22,7 @@
 /* Subtle gradient distribution:
    - Gentle 0.10 touch on the left preserves black headline contrast.
    - Smoothly tapers to transparent across the right so original apricot
-     and burnt-orange colors remain 100% vivid and unmuddied. */
+     and background tones remain fully luminous. */
 .hero-image::before {
   content: "";
   position: absolute;

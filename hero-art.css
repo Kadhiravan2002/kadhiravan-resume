@@ -9,7 +9,7 @@
    Layers (back to front):
    1. soft colour blobs      teal + violet washes
    2. diagonal bands         slanted gradient bands + fine stripes in two corners
-   3. corner rings           top-left (teal), bottom-right (orange)
+   3. corner rings           top-left (teal), bottom-right (purple)
    4. playful shapes         dot grid, squiggle, half-circle,
                              triangle, hatched pill
    5. wave ribbon            layered waves above the marquee
@@ -57,7 +57,7 @@
 
 /* ---------- 2. diagonal bands (replaces the grid) ----------
    Two corner pieces: slanted gradient bands that fade out, plus a set
-   of fine stripes. Top-right is orange + sun, bottom-left is teal + violet.
+   of fine stripes. Top-right is purple + lavender, bottom-left is violet + lilac.
    Sizes are capped so they stay in the corners, clear of text + portrait. */
 .art-corner {
   position: absolute;

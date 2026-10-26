@@ -25,34 +25,51 @@
    01. DESIGN TOKENS AND SECTION THEMES
 ============================================================ */
 :root {
-  /* ---------- PALETTE: the one place the whole site's colour lives ----------
-     Pure white + #FEF3E2 tint alternating rhythm. Pure black for text.
-     #FFA500 is the single solid brand accent hue. */
+  /* ---------- PALETTE: Purple Rebrand & Section System ----------
+     Primary brand accent: #5D2FDF (modern tech purple).
+     Alternate section palette: #F0F4E9 (soft sage / mint cream neutral).
+     Primary sections: Pure White #FFFFFF.
+     Text: Pure black on white & #F0F4E9 sections with #5D2FDF accents. */
   --ink-rgb: 0, 0, 0;                 /* pure black */
   --paper: #FFFFFF;                   /* pure white */
 
-  --accent-rgb: 255, 165, 0;          /* orange #FFA500 — the one true accent */
-  --sun-rgb: 255, 197, 61;            /* supporting sun */
-  --teal-rgb: 20, 184, 166;
-  --violet-rgb: 124, 108, 255;
+  /* Primary brand purple tokens */
+  --brand-purple: #5D2FDF;
+  --brand-purple-rgb: 93, 47, 223;
+  --accent-rgb: 93, 47, 223;          /* brand purple #5D2FDF */
+  --sun-rgb: 167, 139, 250;            /* soft lavender */
+  --teal-rgb: 124, 58, 237;            /* deep vibrant violet */
+  --violet-rgb: 192, 132, 252;         /* luminous lilac */
   --mail-rgb: 234, 67, 53;
   --linkedin-rgb: 10, 102, 194;
 
-  /* Orange tint — subtle warm section background (#FEF3E2) */
-  --orange-tint-1: #FEF3E2;           /* subtle warm tint, just distinct from pure white */
-  --orange-tint-2: #FEF3E2;
-  --orange-tint-3: #FEF3E2;
-  --orange-tint-4: #FEF3E2;
-  --orange-tint-5: #FAC571;
+  /* Purple tints & alternate section palette (#F0F4E9) */
+  --purple-tint-1: #F0F4E9;           /* alternate section base */
+  --purple-tint-2: #F0F4E9;
+  --purple-tint-3: #F0F4E9;
+  --purple-tint-4: #F0F4E9;
+  --purple-tint-5: #A78BFA;           /* luminous companion purple */
+  --purple-subtle: #F5F3FF;           /* ultra-soft lavender wash for badges/chips */
+  --purple-glow: rgba(93, 47, 223, 0.28);
+
+  /* Alternate section tokens */
+  --alt-section-bg: #F0F4E9;
+  --alt-section-fg: #000000;
+  --alt-section-muted: #4B5563;
+  --alt-accent-fg: #5D2FDF;           /* brand purple accent on #F0F4E9 */
+  --alt-accent-display: #5D2FDF;      /* brand purple title highlight on #F0F4E9 */
+  --alt-line: rgba(0, 0, 0, 0.08);
 
   --ink: #000000;
-  --accent: #FFA500;                  /* solid #FFA500 — never a gradient */
-  --accent-strong: #FFA500;           /* exact #FFA500 (RGB 255, 165, 0) only */
-  --accent-ink: #FFA500;              /* original orange */
-  --accent-display: #FFA500;          /* original orange */
-  --accent-fg: #FFA500;
+  --accent: #5D2FDF;                  /* primary brand purple #5D2FDF */
+  --accent-strong: #4B24B8;           /* deeper purple for active/press/hover */
+  --accent-hover: #4D23C2;            /* rich hover state */
+  --accent-light: #7952F5;            /* vibrant mid-light purple */
+  --accent-ink: #5D2FDF;
+  --accent-display: #5D2FDF;
+  --accent-fg: #5D2FDF;
   --sun: rgb(var(--sun-rgb));
-  --on-accent: #000000;               /* pure black on orange buttons/badges */
+  --on-accent: #FFFFFF;               /* pure white on #5D2FDF for WCAG AAA 7.2:1 contrast */
   --dark-muted: #666666;
 
   --font-heading: "Space Grotesk", sans-serif;
@@ -78,27 +95,28 @@
 .theme-light {
   --bg: #FFFFFF;
   --fg: #000000;
-  --fg-muted: #2b2b2b;
+  --fg-muted: #4B5563;
   --card: #FFFFFF;
-  --card-hover: #FFFFFF;              /* Pure white — no warm orange hover on cards */
+  --card-hover: #FFFFFF;
   --line: rgba(0, 0, 0, 0.08);
   --line-strong: rgba(0, 0, 0, 0.16);
-  --accent-fg: #FFA500;
+  --accent-fg: #5D2FDF;
   --edge: rgba(var(--accent-rgb), 0.04);
   --shadow: 0 16px 36px rgba(0, 0, 0, 0.05);
 }
 
-/* MID sections (about, projects, experience, footer) — #FEF3E2 TINT */
+/* MID sections (about, projects, experience, footer) — #F0F4E9 ALTERNATE */
 .theme-mid {
-  --bg: #FEF3E2;
+  --bg: #F0F4E9;
   --fg: #000000;
-  --fg-muted: #2b2b2b;
+  --fg-muted: #4B5563;
   --card: #FFFFFF;
-  --card-hover: #FFFFFF;              /* Pure white — no warm orange hover on cards */
+  --card-hover: #FFFFFF;
   --line: rgba(0, 0, 0, 0.08);
   --line-strong: rgba(0, 0, 0, 0.16);
-  --accent-fg: #FFA500;
-  --edge: rgba(var(--accent-rgb), 0.06);
+  --accent-fg: #5D2FDF;
+  --accent-display: #5D2FDF;
+  --edge: rgba(var(--accent-rgb), 0.05);
   --shadow: 0 16px 36px rgba(0, 0, 0, 0.05);
 }
 
@@ -219,7 +237,7 @@ small, strong {
 .about-title .accent-text,
 .accent-text {
   display: block;
-  color: var(--accent);      /* solid #FFA500 original orange */
+  color: var(--accent);      /* solid #5D2FDF brand purple */
 }
 
 h3,
@@ -312,9 +330,9 @@ p,
 
 
 /* ============================================================
-   04b. SECTION ALTERNATION (Pure White ⇄ #FEF3E2 Tint)
+   04b. SECTION ALTERNATION (Pure White ⇄ #F0F4E9 Alternate)
    One section complete white (#FFFFFF), next section subtle
-   #FEF3E2 tint — just enough to tell the difference from white.
+   #F0F4E9 alternate section palette with pure black and #5D2FDF accents.
 ============================================================ */
 /* White sections (Hero, Skills, Services, Contact) */
 .hero.theme-light       { --bg: #FFFFFF; }
@@ -322,17 +340,159 @@ p,
 .services.theme-light   { --bg: #FFFFFF; }
 .contact.theme-light    { --bg: #FFFFFF; }
 
-/* Tinted sections (About, Projects, Experience, Footer) */
-.about.theme-mid        { --bg: #FEF3E2; }
-.projects.theme-mid     { --bg: #FEF3E2; }
-.experience.theme-mid   { --bg: #FEF3E2; }
-.site-footer            { background: #FEF3E2; color: #000000; }
+/* Alternate sections (About, Projects, Experience, Footer) */
+.about.theme-mid        { --bg: #F0F4E9; }
+.projects.theme-mid     { --bg: #F0F4E9; }
+.experience.theme-mid   { --bg: #F0F4E9; }
+.site-footer            { background: #F0F4E9; color: #000000; }
+
+/* ============================================================
+   04c. ALTERNATE SECTION THEME STYLING (#F0F4E9 Theme-Mid)
+   Guarantees pristine contrast, readable dark text, vibrant #5D2FDF purple
+   accents and crisp elevated white cards across About, Projects & Experience.
+============================================================ */
+.theme-mid .about-title,
+.theme-mid .projects-title,
+.theme-mid .experience-title {
+  color: #000000;
+}
+
+.theme-mid .about-title span,
+.theme-mid .projects-title span,
+.theme-mid .experience-title span,
+.theme-mid .about-title .accent-text {
+  color: var(--accent);
+}
+
+.theme-mid .section-eyebrow {
+  color: var(--accent);
+}
+
+.theme-mid .section-eyebrow > span:first-child {
+  color: var(--fg-muted);
+}
+
+.theme-mid .about-lead,
+.theme-mid .projects-intro,
+.theme-mid .experience-intro {
+  color: var(--fg-muted);
+}
+
+.theme-mid .about-divider {
+  background: var(--line);
+}
+
+/* Crisp elevated white cards on #F0F4E9 backdrop */
+.theme-mid .about-card,
+.theme-mid .project-card,
+.theme-mid .learning-note,
+.theme-mid .cert-card {
+  background: #FFFFFF;
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+}
+
+.theme-mid .about-card:hover,
+.theme-mid .project-card:hover,
+.theme-mid .learning-note:hover,
+.theme-mid .cert-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent);
+  box-shadow: 0 16px 36px rgba(93, 47, 223, 0.12);
+}
+
+.theme-mid .about-card-top h3,
+.theme-mid .project-title-row h3,
+.theme-mid .cert-card h4,
+.theme-mid .learning-note strong {
+  color: #000000;
+}
+
+.theme-mid .project-card:hover .project-title-row h3,
+.theme-mid .cert-card:hover h4 {
+  color: var(--accent);
+}
+
+.theme-mid .about-card p,
+.theme-mid .project-summary,
+.theme-mid .cert-issuer,
+.theme-mid .learning-note p {
+  color: #4B5563;
+}
+
+.theme-mid .about-metric {
+  color: var(--accent);
+}
+
+.theme-mid .project-card-arrow {
+  color: var(--accent);
+}
+
+.theme-mid .project-tags span {
+  background: #F5F3FF;
+  color: var(--accent);
+  border: 1px solid rgba(var(--accent-rgb), 0.2);
+}
+
+.theme-mid .project-tags span:hover {
+  background: #EDE9FE;
+  border-color: var(--accent);
+}
+
+/* Timeline on #F0F4E9 */
+.theme-mid .experience-column-title {
+  color: #000000;
+}
+
+.theme-mid .experience-dot {
+  background: var(--accent);
+  box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.5);
+}
+
+.theme-mid .timeline-item:not(:last-child)::before {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.theme-mid .timeline-marker {
+  border: 2px solid var(--accent);
+  background: #F0F4E9;
+}
+
+.theme-mid .timeline-date {
+  color: var(--accent);
+}
+
+.theme-mid .timeline-content h4 {
+  color: #000000;
+}
+
+.theme-mid .timeline-company {
+  color: var(--fg-muted);
+}
+
+.theme-mid .timeline-description {
+  color: #1F2937;
+}
+
+/* Footer styling */
+.site-footer {
+  border-top-color: rgba(0, 0, 0, 0.08);
+}
+
+.site-footer .footer-brand {
+  color: #000000;
+}
+
+.site-footer .footer-copy {
+  color: var(--fg-muted);
+}
+
 
 
 /* ============================================================
    05. HEADER AND NAVIGATION
    Clean white header — seamlessly merges with the white hero below.
-   Pure black text with solid #FFA500 orange accent on active/hover.
+   Pure black text with brand purple #5D2FDF accent on active/hover.
 ============================================================ */
 .site-header {
   position: sticky;
@@ -425,7 +585,7 @@ body .site-header.is-scrolled {
   border-radius: 999px;
   font-weight: 600;
   background: var(--accent);
-  color: #000000;
+  color: var(--on-accent);
   box-shadow: 0 4px 14px rgba(var(--accent-rgb), 0.35);
   transition:
     transform 220ms ease,
@@ -435,16 +595,16 @@ body .site-header.is-scrolled {
 }
 
 .nav-cta:hover {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #000000;
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+  color: var(--on-accent);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(var(--accent-rgb), 0.45);
 }
 
 .nav-cta span,
 .nav-cta:visited span {
-  color: #000000;
+  color: var(--on-accent);
   display: inline-block;
   transition: transform 220ms ease;
 }
@@ -663,20 +823,26 @@ body .site-header.is-scrolled {
   transform: translateY(-3px);
 }
 
-.button-primary {
+.button-primary,
+.button-primary:visited {
   border-color: var(--accent);
   background: var(--accent);
-  color: var(--on-accent);
+  color: #FFFFFF;
   box-shadow: 0 8px 28px rgba(var(--accent-rgb), 0.32);
 }
 
-.button-primary:hover {
-  border-color: var(--accent);
-  background: var(--accent);
+.button-primary:hover,
+.button-primary:active,
+.button-primary:focus {
+  border-color: var(--accent-strong);
+  background: var(--accent-strong);
+  color: #FFFFFF;
   box-shadow: 0 10px 34px rgba(var(--accent-rgb), 0.45);
 }
 
-.button-primary span {
+.button-primary span,
+.button-primary:visited span {
+  color: #FFFFFF;
   transition: transform 220ms ease;
 }
 
@@ -693,9 +859,9 @@ body .site-header.is-scrolled {
 
 .button-secondary:hover {
   background: #FFFFFF;
-  border-color: #FFFFFF;
-  color: #000000;
-  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.14);
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 8px 26px rgba(var(--accent-rgb), 0.18);
 }
 
 /* Portrait */
@@ -737,7 +903,7 @@ body .site-header.is-scrolled {
   object-position: center 20%;
 }
 
-/* Outer ring: whisper-quiet subtle framing so the inner orange border remains the primary frame */
+/* Outer ring: subtle purple framing so the inner purple border remains the primary frame */
 .portrait-orbit {
   position: absolute;
   inset: -12px;
@@ -778,7 +944,7 @@ body .site-header.is-scrolled {
 }
 
 /* Marquee — slim ticker. Each skill is a pill chip with one dot from the palette
-   (orange / teal / sun / violet), so the strip previews the colours used further
+   (purple / violet / lavender), so the strip previews the colours used further
    down the page. Edges fade out instead of hard-cutting. Pauses on hover. */
 .hero-marquee {
   position: relative;
@@ -787,8 +953,9 @@ body .site-header.is-scrolled {
   width: 100%;
   overflow: hidden;
   padding-block: 14px;
-  background: var(--orange-tint-1);
-  border-top: 1px solid rgba(var(--accent-rgb), 0.25);
+  background: #F0F4E9;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
 }
@@ -840,8 +1007,9 @@ body .site-header.is-scrolled {
 /* All chips use the single accent colour — no multi-colour dots */
 
 .marquee-group span:hover {
-  border-color: rgb(var(--chip));
-  background: rgba(var(--chip), 0.14);
+  border-color: var(--accent);
+  background: #F5F3FF;
+  color: var(--accent);
 }
 
 .hero-marquee:hover .marquee-track {
@@ -866,7 +1034,7 @@ body .site-header.is-scrolled {
 
 
 /* ============================================================
-   07. ABOUT  (orange tint-2 / theme-mid)
+   07. ABOUT  (#F0F4E9 alternate / theme-mid)
 ============================================================ */
 .about-layout {
   display: grid;
@@ -1130,7 +1298,7 @@ body .site-header.is-scrolled {
 
 
 /* ============================================================
-   09. PROJECTS  (orange tint-3 / theme-mid)
+   09. PROJECTS  (#F0F4E9 alternate / theme-mid)
 ============================================================ */
 .projects-grid {
   display: grid;
@@ -1546,7 +1714,7 @@ body .site-header.is-scrolled {
 
 
 /* ============================================================
-   11. EXPERIENCE AND CREDENTIALS  (orange tint-4 / theme-mid)
+   11. EXPERIENCE AND CREDENTIALS  (#F0F4E9 alternate / theme-mid)
    Deliberately sparse: one sentence per role, no certificate blurbs.
 ============================================================ */
 .experience-layout {
@@ -2014,7 +2182,7 @@ body .site-header.is-scrolled {
 }
 
 .back-to-top.is-visible:hover {
-  background: var(--accent);
+  background: var(--accent-strong);
   transform: translateY(-4px);
 }
 
@@ -2046,17 +2214,17 @@ body .site-header.is-scrolled {
 @property --blob { syntax: "<percentage>"; inherits: false; initial-value: 34%; }
 
 /* One tint per card, repeating. In the 2x2 grids this lays out as a warm / cool
-   checkerboard: orange, teal / sun, violet. */
-/* All cards share the single accent tint — monochrome orange scheme */
+   checkerboard in purple, violet, lavender. */
+/* All cards share the single accent tint — monochrome brand purple scheme */
 .skill-card, .service-card, .contact-option { --tint: var(--accent-rgb); }
 
-/* Contact options: all use the orange accent — monochrome icon scheme */
+/* Contact options: all use the brand purple accent — monochrome icon scheme */
 .contact-option.is-email,
 .contact-option.is-whatsapp,
 .contact-option.is-linkedin,
 .contact-option.is-github { --tint: var(--accent-rgb); }
 
-/* Soft orange glow blobs drifting behind the light sections */
+/* Soft purple glow blobs drifting behind the light sections */
 .theme-light.section {
   overflow: hidden;
   background:
@@ -2090,7 +2258,7 @@ body .site-header.is-scrolled {
     var(--bg);
 }
 
-/* Clean white cards on white sections with refined orange hover */
+/* Clean white cards on white sections with refined brand purple hover */
 .theme-light .skill-card,
 .theme-light .service-card {
   position: relative;
@@ -2183,6 +2351,8 @@ body .site-header.is-scrolled {
 
 .theme-light .skill-tags span:hover {
   border-color: var(--accent);
+  background: #F5F3FF;
+  color: var(--accent);
 }
 
 .theme-light .skill-index,
@@ -2190,7 +2360,7 @@ body .site-header.is-scrolled {
   color: var(--fg-muted);
 }
 
-/* Contact options: clean white cards with orange accent outline on hover */
+/* Contact options: clean white cards with brand purple accent outline on hover */
 .theme-light .contact-option {
   border: 1px solid rgba(0, 0, 0, 0.08);
   background: #FFFFFF;
@@ -2209,7 +2379,7 @@ body .site-header.is-scrolled {
 /* Call-to-action strip */
 .theme-light .services-cta {
   border-color: rgba(var(--accent-rgb), 0.45);
-  background: linear-gradient(100deg, rgba(var(--accent-rgb), 0.18), rgba(var(--accent-rgb), 0.1), rgba(var(--accent-rgb), 0.06));
+  background: linear-gradient(100deg, rgba(var(--accent-rgb), 0.14), rgba(var(--accent-rgb), 0.08), rgba(var(--accent-rgb), 0.03));
   background-size: 200% 100%;
   animation: cta-shift 8s ease-in-out infinite alternate;
 }

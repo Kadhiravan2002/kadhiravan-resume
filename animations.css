@@ -32,7 +32,7 @@
   z-index: 1100;
   width: 100%;
   height: 3px;
-  background: linear-gradient(90deg, var(--accent), var(--orange-tint-5));
+  background: linear-gradient(90deg, var(--accent), var(--purple-tint-5));
   transform: scaleX(0);
   transform-origin: left;
   pointer-events: none;
@@ -490,7 +490,7 @@ i.sw, i.sc, i.mk, i.mk-i, i.sl, i.lw {
   bottom: 0;
   left: 5px;
   width: 1px;
-  background: linear-gradient(var(--accent), var(--orange-tint-5));
+  background: linear-gradient(var(--accent), var(--purple-tint-5));
   transform-origin: top;
   transform: scaleY(var(--fill, 0));
 }
