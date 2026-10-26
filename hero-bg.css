@@ -16,7 +16,7 @@
      --hero-veil      - paper-coloured wash over the image (0 = none, 1 = full)
 ============================================================ */
 .hero-image {
-  --hero-dark: 0.2;     /* <-- ADJUST THE DARK OVERLAY HERE (0 to 1) */
+  --hero-dark: 0.2;       /* 0.2 dark overlay to reduce banner brightness */
   --hero-veil: 0;
 
   position: absolute;

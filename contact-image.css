@@ -54,7 +54,7 @@
 /* Gives the light theme a real hover colour. style.css defines
    --card-hover in terms of itself, which makes it invalid. */
 .theme-light.contact {
-  --card-hover: #FFF7EA;
+  --card-hover: #FEF3E2;
 }
 
 /* Link cards and phone button: frosted paper so they read on any image */

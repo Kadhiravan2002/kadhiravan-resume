@@ -1,0 +1,8 @@
+# Local assistant & backup folders
+.agents/
+.gemini/
+_backup_orange_checkpoint/
+
+# OS generated files
+.DS_Store
+Thumbs.db

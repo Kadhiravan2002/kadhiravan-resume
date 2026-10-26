@@ -26,29 +26,34 @@
 ============================================================ */
 :root {
   /* ---------- PALETTE: the one place the whole site's colour lives ----------
-     Ink + paper give the light/dark rhythm. Orange is the brand accent.
-     Sun, teal and violet are supporting hues: they tint the cards and the
-     marquee so the page reads as a palette, not a single colour.
-     Components never use raw colour values, only these tokens. To re-colour
-     the site, change the RGB triples below. */
-  --ink-rgb: 20, 18, 15;              /* warm near-black   #14120F */
-  --paper: #F6F3EC;                   /* warm off-white */
+     Pure white + #FEF3E2 tint alternating rhythm. Pure black for text.
+     #FFA500 is the single solid brand accent hue. */
+  --ink-rgb: 0, 0, 0;                 /* pure black */
+  --paper: #FFFFFF;                   /* pure white */
 
-  --accent-rgb: 253, 76, 31;         /* orange            #FF7A1A */
-  --sun-rgb: 255, 197, 61;            /* sun yellow        #FFC53D */
-  --teal-rgb: 20, 184, 166;           /* teal              #14B8A6 */
-  --violet-rgb: 124, 108, 255;        /* violet            #7C6CFF */
-  --mail-rgb: 234, 67, 53;            /* email red         #EA4335 */
-  --linkedin-rgb: 10, 102, 194;       /* LinkedIn blue     #0A66C2 */
+  --accent-rgb: 255, 165, 0;          /* orange #FFA500 — the one true accent */
+  --sun-rgb: 255, 197, 61;            /* supporting sun */
+  --teal-rgb: 20, 184, 166;
+  --violet-rgb: 124, 108, 255;
+  --mail-rgb: 234, 67, 53;
+  --linkedin-rgb: 10, 102, 194;
 
-  --ink: rgb(var(--ink-rgb));
-  --accent: rgb(var(--accent-rgb));
-  --accent-strong: #E64016;           /* hover state */
-  --accent-ink: #B93614;              /* accent as small text on paper (4.7:1) */
-  --accent-display: #E9431B;          /* accent for LARGE display type on paper (3.3:1) */
+  /* Orange tint — subtle warm section background (#FEF3E2) */
+  --orange-tint-1: #FEF3E2;           /* subtle warm tint, just distinct from pure white */
+  --orange-tint-2: #FEF3E2;
+  --orange-tint-3: #FEF3E2;
+  --orange-tint-4: #FEF3E2;
+  --orange-tint-5: #FAC571;
+
+  --ink: #000000;
+  --accent: #FFA500;                  /* solid #FFA500 — never a gradient */
+  --accent-strong: #FFA500;           /* exact #FFA500 (RGB 255, 165, 0) only */
+  --accent-ink: #FFA500;              /* original orange */
+  --accent-display: #FFA500;          /* original orange */
+  --accent-fg: #FFA500;
   --sun: rgb(var(--sun-rgb));
-  --on-accent: var(--ink);            /* text/icons on any accent or tint fill */
-  --dark-muted: #A8A298;              /* muted text on ink */
+  --on-accent: #000000;               /* pure black on orange buttons/badges */
+  --dark-muted: #666666;
 
   --font-heading: "Space Grotesk", sans-serif;
   --font-body: "Inter", sans-serif;
@@ -66,39 +71,39 @@
   --section-pad: clamp(5rem, 8vw, 8rem);
   --heading-gap: clamp(2.5rem, 4vw, 3.5rem);
 
-  --rule: rgba(var(--accent-rgb), 0.3);
+  --rule: rgba(0, 0, 0, 0.06);
 }
 
-/* LIGHT sections (hero, skills, services, contact) */
+/* LIGHT sections (hero, skills, services, contact) — PURE WHITE */
 .theme-light {
-  --bg: var(--paper);
-  --fg: var(--ink);
-  --fg-muted: var(--ink);             /* same as --fg: one text colour on light sections */
-  --card: #FFFDF8;
-  --card-hover: var(--card-hover);
-  --line: rgba(var(--ink-rgb), 0.1);
-  --line-strong: rgba(var(--ink-rgb), 0.24);
-  --accent-fg: var(--accent-ink);
-  --edge: rgba(var(--ink-rgb), 0.05);
-  --shadow: 0 16px 36px rgba(var(--ink-rgb), 0.1);
+  --bg: #FFFFFF;
+  --fg: #000000;
+  --fg-muted: #2b2b2b;
+  --card: #FFFFFF;
+  --card-hover: #FFFFFF;              /* Pure white — no warm orange hover on cards */
+  --line: rgba(0, 0, 0, 0.08);
+  --line-strong: rgba(0, 0, 0, 0.16);
+  --accent-fg: #FFA500;
+  --edge: rgba(var(--accent-rgb), 0.04);
+  --shadow: 0 16px 36px rgba(0, 0, 0, 0.05);
 }
 
-/* DARK sections (about, projects, experience, footer) */
-.theme-dark {
-  --bg: var(--ink);
-  --fg: var(--paper);
-  --fg-muted: var(--paper);           /* same as --fg: one text colour on dark sections */
-  --card: #1D1A16;
-  --card-hover: #27231D;
-  --line: rgba(255, 255, 255, 0.1);
-  --line-strong: rgba(255, 255, 255, 0.26);
-  --accent-fg: var(--accent);
-  --edge: rgba(var(--accent-rgb), 0.14);
-  --shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+/* MID sections (about, projects, experience, footer) — #FEF3E2 TINT */
+.theme-mid {
+  --bg: #FEF3E2;
+  --fg: #000000;
+  --fg-muted: #2b2b2b;
+  --card: #FFFFFF;
+  --card-hover: #FFFFFF;              /* Pure white — no warm orange hover on cards */
+  --line: rgba(0, 0, 0, 0.08);
+  --line-strong: rgba(0, 0, 0, 0.16);
+  --accent-fg: #FFA500;
+  --edge: rgba(var(--accent-rgb), 0.06);
+  --shadow: 0 16px 36px rgba(0, 0, 0, 0.05);
 }
 
 .theme-light,
-.theme-dark {
+.theme-mid {
   background: var(--bg);
   color: var(--fg);
 }
@@ -117,6 +122,7 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: var(--header-height);
   -webkit-text-size-adjust: 100%;
+  overflow-x: clip;
 }
 
 body {
@@ -128,6 +134,8 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
+  overflow-x: clip;
+  max-width: 100%;
 }
 
 body,
@@ -145,7 +153,8 @@ img {
   max-width: 100%;
 }
 
-a {
+a,
+a:visited {
   color: inherit;
   text-decoration: none;
 }
@@ -197,19 +206,20 @@ small, strong {
   line-height: 1.08;
   letter-spacing: -0.05em;   /* matches the end frame of the tracking-in animation */
   text-wrap: balance;
+  color: #000000;            /* pure black base heading text */
 }
 
 .about-title span,
 .skills-title span,
 .services-title span,
 .experience-title span,
-.contact-title span {
+.contact-title span,
+.projects-title span,
+.about-title .accent-text,
+.hero-title .accent-text,
+.accent-text {
   display: block;
-  color: var(--accent-fg);
-}
-
-.projects-title span {
-  color: var(--accent-fg);
+  color: var(--accent);      /* solid #FFA500 original orange */
 }
 
 h3,
@@ -247,6 +257,7 @@ p,
   position: relative;
   padding-block: var(--section-pad);
   border-top: 1px solid var(--rule);
+  overflow-x: clip;
 }
 
 /* Soft gradient at the top edge of every section so the
@@ -301,25 +312,46 @@ p,
 
 
 /* ============================================================
+   04b. SECTION ALTERNATION (Pure White ⇄ #FEF3E2 Tint)
+   One section complete white (#FFFFFF), next section subtle
+   #FEF3E2 tint — just enough to tell the difference from white.
+============================================================ */
+/* White sections (Hero, Skills, Services, Contact) */
+.hero.theme-light       { --bg: #FFFFFF; }
+.skills.theme-light     { --bg: #FFFFFF; }
+.services.theme-light   { --bg: #FFFFFF; }
+.contact.theme-light    { --bg: #FFFFFF; }
+
+/* Tinted sections (About, Projects, Experience, Footer) */
+.about.theme-mid        { --bg: #FEF3E2; }
+.projects.theme-mid     { --bg: #FEF3E2; }
+.experience.theme-mid   { --bg: #FEF3E2; }
+.site-footer            { background: #FEF3E2; color: #000000; }
+
+
+/* ============================================================
    05. HEADER AND NAVIGATION
-   Always dark glass: it sits above both white and black sections.
+   Clean white header — seamlessly merges with the white hero below.
+   Pure black text with solid #FFA500 orange accent on active/hover.
 ============================================================ */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 1000;
+  width: 100%;
+  max-width: 100%;
   height: var(--header-height);
-  background: rgba(var(--ink-rgb), 0.97);
-  color: var(--paper);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: #FFFFFF;
+  color: #000000;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
 
-/* scrolled state: slightly denser dark glass */
+/* scrolled state: very faint warm shadow — still clean white */
 body .site-header.is-scrolled {
-  background: rgba(var(--ink-rgb), 0.94);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 }
 
 .nav {
@@ -335,6 +367,7 @@ body .site-header.is-scrolled {
   font-family: var(--font-heading);
   font-weight: 700;
   letter-spacing: 0.06em;
+  color: #000000;
 }
 
 .nav-links {
@@ -347,7 +380,8 @@ body .site-header.is-scrolled {
 
 .nav-links a {
   position: relative;
-  color: var(--dark-muted);
+  color: #000000;
+  font-weight: 500;
   transition: color 220ms ease;
 }
 
@@ -357,7 +391,7 @@ body .site-header.is-scrolled {
   left: 0;
   bottom: -6px;
   width: 100%;
-  height: 1px;
+  height: 2px;
   background: var(--accent);
   transform: scaleX(0);
   transform-origin: right;
@@ -365,37 +399,58 @@ body .site-header.is-scrolled {
 }
 
 .nav-links a:hover {
-  color: var(--paper);
+  color: var(--accent);
 }
 
-.nav-links a:hover::after {
+.nav-links a:hover::after,
+.nav-links a.is-active::after {
   transform: scaleX(1);
   transform-origin: left;
 }
 
-.nav-cta {
+.nav-links a.is-active {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* Solid accent pill button — matching reference template */
+.nav-cta,
+.nav-cta:visited {
   flex-shrink: 0;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 18px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  gap: 8px;
+  padding: 10px 22px;
+  border: 1px solid var(--accent);
   border-radius: 999px;
   font-weight: 600;
+  background: var(--accent);
+  color: #000000;
+  box-shadow: 0 4px 14px rgba(var(--accent-rgb), 0.35);
   transition:
-    border-color 220ms ease,
+    transform 220ms ease,
     background 220ms ease,
-    transform 220ms ease;
+    border-color 220ms ease,
+    box-shadow 220ms ease;
 }
 
 .nav-cta:hover {
+  background: var(--accent);
   border-color: var(--accent);
-  background: rgba(var(--accent-rgb), 0.14);
+  color: #000000;
   transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(var(--accent-rgb), 0.45);
 }
 
-.nav-cta span {
-  color: var(--accent);
+.nav-cta span,
+.nav-cta:visited span {
+  color: #000000;
+  display: inline-block;
+  transition: transform 220ms ease;
+}
+
+.nav-cta:hover span {
+  transform: translate(2px, -2px);
 }
 
 /* Mobile menu button (hidden on desktop) */
@@ -404,7 +459,7 @@ body .site-header.is-scrolled {
   width: 42px;
   height: 42px;
   padding: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 50%;
   background: transparent;
   cursor: pointer;
@@ -414,6 +469,10 @@ body .site-header.is-scrolled {
   display: block;
   width: 100%;
   height: 2px;
+  margin-block: 5px;
+  background: #000000;
+  transition: transform 220ms ease;
+}
   margin-block: 5px;
   background: var(--paper);
   transition: transform 220ms ease;
@@ -532,8 +591,9 @@ body .site-header.is-scrolled {
 }
 
 .hero-title .accent-text {
-  color: var(--accent-display);
+  color: var(--accent);
   -webkit-text-stroke: 0;
+  text-shadow: none;
 }
 
 .hero-description {
@@ -579,7 +639,7 @@ body .site-header.is-scrolled {
 }
 
 .button-primary:hover {
-  background: var(--accent-strong);
+  background: var(--accent);
   box-shadow: 0 10px 34px rgba(var(--accent-rgb), 0.45);
 }
 
@@ -592,14 +652,17 @@ body .site-header.is-scrolled {
 }
 
 .button-secondary {
-  border-color: var(--line-strong);
-  color: var(--fg);
-  background: transparent;
+  border-color: #FFFFFF;
+  color: #000000;
+  background: #FFFFFF;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
 .button-secondary:hover {
-  border-color: var(--accent);
-  background: rgba(var(--accent-rgb), 0.1);
+  background: #FFFFFF;
+  border-color: #FFFFFF;
+  color: #000000;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.14);
 }
 
 /* Portrait */
@@ -632,11 +695,6 @@ body .site-header.is-scrolled {
   border: 4px solid var(--accent);
   background: rgba(var(--ink-rgb), 0.12);
   box-shadow: 0 20px 50px rgba(var(--ink-rgb), 0.22);
-  transition: box-shadow 400ms ease;
-}
-
-.portrait-frame:hover {
-  box-shadow: 0 25px 60px rgba(var(--accent-rgb), 0.4);
 }
 
 .hero-portrait {
@@ -695,8 +753,8 @@ body .site-header.is-scrolled {
   width: 100%;
   overflow: hidden;
   padding-block: 14px;
-  background: #D6D3D1;
-  border-top: 1px solid var(--line-strong);
+  background: var(--orange-tint-1);
+  border-top: 1px solid rgba(var(--accent-rgb), 0.25);
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
 }
@@ -728,10 +786,10 @@ body .site-header.is-scrolled {
   align-items: center;
   gap: 10px;
   padding: 8px 16px 8px 12px;
-  border: 1px solid var(--line-strong);
+  border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 999px;
-  background: var(--card-hover);
-  color: var(--ink);
+  background: #FFFFFF;
+  color: #000000;
   transition: border-color 200ms ease, background 200ms ease;
 }
 
@@ -741,13 +799,11 @@ body .site-header.is-scrolled {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: rgb(var(--chip));
-  box-shadow: 0 0 0 3px rgba(var(--chip), 0.22);
+  background: var(--accent);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.22);
 }
 
-.marquee-group span:nth-of-type(4n+2) { --chip: var(--teal-rgb); }
-.marquee-group span:nth-of-type(4n+3) { --chip: var(--sun-rgb); }
-.marquee-group span:nth-of-type(4n+4) { --chip: var(--violet-rgb); }
+/* All chips use the single accent colour — no multi-colour dots */
 
 .marquee-group span:hover {
   border-color: rgb(var(--chip));
@@ -776,7 +832,7 @@ body .site-header.is-scrolled {
 
 
 /* ============================================================
-   07. ABOUT  (black)
+   07. ABOUT  (orange tint-2 / theme-mid)
 ============================================================ */
 .about-layout {
   display: grid;
@@ -838,17 +894,19 @@ body .site-header.is-scrolled {
   padding: clamp(18px, 2vw, 24px);
   border: 1px solid var(--line);
   border-radius: 16px;
-  background: var(--card);
+  background: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
   transition:
-    transform 240ms ease,
+    transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
     border-color 240ms ease,
-    background 240ms ease;
+    box-shadow 240ms ease;
 }
 
 .about-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-5px);
   border-color: var(--accent);
-  background: var(--card-hover);
+  background: #FFFFFF;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
 }
 
 .about-card-top {
@@ -1038,7 +1096,7 @@ body .site-header.is-scrolled {
 
 
 /* ============================================================
-   09. PROJECTS  (black)
+   09. PROJECTS  (orange tint-3 / theme-mid)
 ============================================================ */
 .projects-grid {
   display: grid;
@@ -1048,6 +1106,11 @@ body .site-header.is-scrolled {
 
 .project-card {
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 16px;
@@ -1059,9 +1122,76 @@ body .site-header.is-scrolled {
 }
 
 .project-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-5px);
   border-color: var(--accent);
-  box-shadow: var(--shadow);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
+}
+
+.project-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.project-title-row h3 {
+  margin: 0;
+  color: var(--fg);
+  transition: color 200ms ease;
+}
+
+.project-card:hover .project-title-row h3 {
+  color: var(--accent);
+}
+
+.project-card-arrow {
+  color: var(--accent);
+  font-size: 1.15rem;
+  transition: transform 220ms ease;
+}
+
+.project-card:hover .project-card-arrow {
+  transform: translate(3px, -3px);
+}
+
+.project-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  opacity: 0;
+  transition: opacity 260ms ease;
+  pointer-events: none;
+}
+
+.project-card:hover .project-overlay {
+  opacity: 1;
+}
+
+.project-view-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 22px;
+  border-radius: 999px;
+  background: #FFFFFF;
+  color: #000000;
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  transform: translateY(8px);
+  transition: transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.project-card:hover .project-view-btn {
+  transform: translateY(0);
 }
 
 .project-card-primary {
@@ -1288,7 +1418,7 @@ body .site-header.is-scrolled {
   overflow: hidden;
   border-radius: inherit;
   pointer-events: none;
-  background: linear-gradient(135deg, rgba(var(--ink-rgb), 0.92), rgb(var(--tint)));
+  background: linear-gradient(135deg, rgba(20, 18, 15, 0.75), rgb(var(--tint)));
   clip-path: circle(0 at var(--ex, 50%) var(--ey, 50%));
   transition: clip-path 650ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
@@ -1304,12 +1434,10 @@ body .site-header.is-scrolled {
 
 /* DARK OVERLAY on the service images (laptop hover + phone/tablet).
    ADJUST HERE: 0 = no overlay, 1 = solid black.
-   --service-dark-top is the darkness at the top of the card, and
-   --service-dark-bottom at the bottom. Raise both if the text is hard
-   to read, lower them if you want more of the photo to show. */
+   Reduced from 0.68/0.92 to 0.45/0.65 — still readable, less "dark surface". */
 .service-card {
-  --service-dark-top: 0.68;
-  --service-dark-bottom: 0.92;
+  --service-dark-top: 0.45;
+  --service-dark-bottom: 0.65;
 }
 
 /* scrim keeps the light text readable on any image */
@@ -1384,7 +1512,7 @@ body .site-header.is-scrolled {
 
 
 /* ============================================================
-   11. EXPERIENCE AND CREDENTIALS  (black)
+   11. EXPERIENCE AND CREDENTIALS  (orange tint-4 / theme-mid)
    Deliberately sparse: one sentence per role, no certificate blurbs.
 ============================================================ */
 .experience-layout {
@@ -1472,30 +1600,49 @@ body .site-header.is-scrolled {
   line-height: 1.7;
 }
 
-/* Learning note */
+/* Learning note — compact elevated white card */
 .learning-note {
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  margin-top: 0.5rem;
-  padding: 0.9rem 1rem;
-  border: 1px solid rgba(var(--accent-rgb), 0.28);
-  border-radius: 12px;
-  background: rgba(var(--accent-rgb), 0.06);
+  margin-top: 1.25rem;
+  padding: 1.1rem 1.4rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #FFFFFF;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.learning-note:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
 }
 
 .learning-indicator {
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
   flex-shrink: 0;
-  margin-top: 0.55rem;
+  margin-top: 0.45rem;
   border-radius: 50%;
   background: var(--accent);
+  box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.6);
 }
 
 .learning-note p {
+  margin: 0;
   color: var(--fg);
+  font-size: 0.95rem;
   line-height: 1.6;
+}
+
+.learning-note p strong {
+  color: var(--accent);
+  font-weight: 600;
 }
 
 /* Credentials — clean rows: number, title + issuer, link */
@@ -1611,7 +1758,7 @@ body .site-header.is-scrolled {
 }
 
 .contact-email:hover {
-  background: var(--accent-strong);
+  background: var(--accent);
   transform: translateY(-2px);
   box-shadow: 0 12px 34px rgba(var(--accent-rgb), 0.45);
 }
@@ -1755,15 +1902,20 @@ body .site-header.is-scrolled {
 
 /* ============================================================
    13. FOOTER AND BACK-TO-TOP
+   Compact height matching header (~76px) for a balanced framing
 ============================================================ */
 .site-footer {
-  padding-block: 2.5rem;
+  min-height: var(--header-height);
+  padding-block: 1rem;
+  display: flex;
+  align-items: center;
   border-top: 1px solid var(--rule);
 }
 
 /* Laptop: brand on the left, copy exactly centred, one line.
    The 1fr / auto / 1fr grid keeps the middle column in the true centre. */
 .footer-layout {
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
@@ -1828,7 +1980,7 @@ body .site-header.is-scrolled {
 }
 
 .back-to-top.is-visible:hover {
-  background: var(--accent-strong);
+  background: var(--accent);
   transform: translateY(-4px);
 }
 
@@ -1861,27 +2013,26 @@ body .site-header.is-scrolled {
 
 /* One tint per card, repeating. In the 2x2 grids this lays out as a warm / cool
    checkerboard: orange, teal / sun, violet. */
-.skill-card:nth-child(4n+1), .service-card:nth-child(4n+1), .contact-option:nth-child(4n+1) { --tint: var(--accent-rgb); }
-.skill-card:nth-child(4n+2), .service-card:nth-child(4n+2), .contact-option:nth-child(4n+2) { --tint: var(--teal-rgb); }
-.skill-card:nth-child(4n+3), .service-card:nth-child(4n+3), .contact-option:nth-child(4n+3) { --tint: var(--sun-rgb); }
-.skill-card:nth-child(4n+4), .service-card:nth-child(4n+4), .contact-option:nth-child(4n+4) { --tint: var(--violet-rgb); }
+/* All cards share the single accent tint — monochrome orange scheme */
+.skill-card, .service-card, .contact-option { --tint: var(--accent-rgb); }
 
-/* Contact options: each icon wears the colour of what it links to */
-.contact-option.is-email    { --tint: var(--mail-rgb); }
-.contact-option.is-whatsapp { --tint: var(--teal-rgb); }
-.contact-option.is-linkedin { --tint: var(--linkedin-rgb); --icon-fg: var(--paper); }
-.contact-option.is-github   { --tint: var(--violet-rgb); }
+/* Contact options: all use the orange accent — monochrome icon scheme */
+.contact-option.is-email,
+.contact-option.is-whatsapp,
+.contact-option.is-linkedin,
+.contact-option.is-github { --tint: var(--accent-rgb); }
 
-/* Soft colour blobs drifting behind the white sections */
+/* Soft orange glow blobs drifting behind the light sections */
 .theme-light.section {
   overflow: hidden;
   background:
-    radial-gradient(circle at 6% 88%, rgba(var(--teal-rgb), 0.14), transparent 34%),
-    radial-gradient(circle at 96% 12%, rgba(var(--violet-rgb), 0.1), transparent 30%),
+    radial-gradient(circle at 6% 88%, rgba(var(--accent-rgb), 0.06), transparent 34%),
+    radial-gradient(circle at 96% 12%, rgba(var(--accent-rgb), 0.05), transparent 30%),
     var(--bg);
 }
 
-.theme-light.section::after {
+.theme-light.section::after,
+.theme-mid.section::after {
   content: "";
   position: absolute;
   top: 18%;
@@ -1889,35 +2040,40 @@ body .site-header.is-scrolled {
   width: 440px;
   height: 440px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(var(--accent-rgb), 0.2), transparent 68%);
+  background: radial-gradient(circle, rgba(var(--accent-rgb), 0.15), transparent 68%);
   filter: blur(40px);
   pointer-events: none;
   z-index: 0;
   animation: blob-drift 14s ease-in-out infinite alternate;
 }
 
-/* Tinted cards */
+/* mid-theme sections: also get the subtle blob treatment */
+.theme-mid.section {
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 6% 88%, rgba(var(--accent-rgb), 0.07), transparent 34%),
+    radial-gradient(circle at 96% 12%, rgba(var(--accent-rgb), 0.05), transparent 30%),
+    var(--bg);
+}
+
+/* Clean white cards on white sections with refined orange hover */
 .theme-light .skill-card,
 .theme-light .service-card {
   position: relative;
   --blob: 34%;
-  border-color: rgba(var(--tint), 0.38);
-  background:
-    radial-gradient(circle at 100% 0%, rgba(var(--tint), 0.28) var(--blob), transparent calc(var(--blob) + 44%)),
-    linear-gradient(160deg, rgba(var(--tint), 0.1), var(--card-hover) 62%);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #FFFFFF;
   transition:
     transform 260ms ease,
     border-color 260ms ease,
-    box-shadow 260ms ease,
-    --blob 700ms ease;
+    box-shadow 260ms ease;
 }
 
 .theme-light .skill-card:hover,
 .theme-light .service-card:hover {
-  --blob: 78%;
-  transform: translateY(-7px);
-  border-color: rgba(var(--tint), 0.7);
-  box-shadow: 0 22px 44px rgba(var(--tint), 0.3);
+  transform: translateY(-5px);
+  border-color: var(--accent);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
 }
 
 /* Spinning gradient border on skill cards */
@@ -1992,8 +2148,7 @@ body .site-header.is-scrolled {
 }
 
 .theme-light .skill-tags span:hover {
-  background: rgba(var(--tint), 0.22);
-  border-color: rgb(var(--tint));
+  border-color: var(--accent);
 }
 
 .theme-light .skill-index,
@@ -2001,29 +2156,26 @@ body .site-header.is-scrolled {
   color: var(--fg-muted);
 }
 
-/* Contact options: colour floods in from the left on hover */
+/* Contact options: clean white cards with orange accent outline on hover */
 .theme-light .contact-option {
-  border-color: rgba(var(--tint), 0.38);
-  background:
-    linear-gradient(90deg, rgba(var(--tint), 0.24), rgba(var(--tint), 0.24)) no-repeat left center / 0% 100%,
-    var(--card-hover);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #FFFFFF;
   transition:
     transform 240ms ease,
     border-color 240ms ease,
-    box-shadow 240ms ease,
-    background-size 500ms cubic-bezier(0.2, 0.7, 0.2, 1);
+    box-shadow 240ms ease;
 }
 
 .theme-light .contact-option:hover {
-  background-size: 100% 100%;
-  border-color: rgb(var(--tint));
-  box-shadow: 0 12px 28px rgba(var(--tint), 0.28);
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
 }
 
 /* Call-to-action strip */
 .theme-light .services-cta {
   border-color: rgba(var(--accent-rgb), 0.45);
-  background: linear-gradient(100deg, rgba(var(--accent-rgb), 0.16), rgba(var(--sun-rgb), 0.2), rgba(var(--teal-rgb), 0.14));
+  background: linear-gradient(100deg, rgba(var(--accent-rgb), 0.18), rgba(var(--accent-rgb), 0.1), rgba(var(--accent-rgb), 0.06));
   background-size: 200% 100%;
   animation: cta-shift 8s ease-in-out infinite alternate;
 }
@@ -2185,28 +2337,10 @@ body .site-header.is-scrolled {
     grid-template-columns: 1fr;
     gap: 2.5rem;
   }
-}
 
-
-/* ============================================================
-   16. MEDIA — MOBILE  (max-width: 680px)
-   Typography collapses to 3 tiers:
-     Heading (hero + every section title) / Sub-heading / Body
-   The heading size is capped so "KADHIRAVAN." fits a 320px screen.
-============================================================ */
-@media (max-width: 680px) {
-
-  :root {
-    --header-height: 68px;
-    --fs-1: clamp(2.1rem, 11.5vw, 2.9rem);  /* Heading     */
-    --fs-2: var(--fs-1);                    /* same tier   */
-    --fs-3: 1.15rem;                        /* Sub-heading */
-    --fs-4: 1rem;                         /* Body = 16px, same as desktop */
-  }
-
-  /* Header / drawer */
+  /* Header / drawer on tablet */
   .nav {
-    gap: 12px;
+    gap: 14px;
   }
 
   .menu-toggle {
@@ -2215,7 +2349,8 @@ body .site-header.is-scrolled {
   }
 
   .nav-cta {
-    display: none;
+    padding: 8px 18px;
+    font-size: 0.9rem;
   }
 
   .nav-links {
@@ -2229,8 +2364,9 @@ body .site-header.is-scrolled {
     gap: 0;
     margin: 0;
     padding: 10px var(--page-padding) 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(var(--ink-rgb), 0.98);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    background: #FFFFFF;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
     opacity: 0;
     visibility: hidden;
     transform: translateY(-8px);
@@ -2250,11 +2386,43 @@ body .site-header.is-scrolled {
 
   .nav-links a {
     padding: 13px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--paper);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    color: #000000;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.is-active {
+    color: var(--accent);
   }
 
   .nav-links a::after {
+    display: none;
+  }
+}
+
+
+/* ============================================================
+   16. MEDIA — MOBILE  (max-width: 680px)
+   Typography collapses to 3 tiers:
+     Heading (hero + every section title) / Sub-heading / Body
+   The heading size is capped so "KADHIRAVAN." fits a 320px screen.
+============================================================ */
+@media (max-width: 680px) {
+
+  :root {
+    --header-height: 68px;
+    --fs-1: clamp(2.1rem, 11.5vw, 2.9rem);  /* Heading     */
+    --fs-2: var(--fs-1);                    /* same tier   */
+    --fs-3: 1.15rem;                        /* Sub-heading */
+    --fs-4: 1rem;                         /* Body = 16px, same as desktop */
+  }
+
+  /* Header on small mobile screens */
+  .nav {
+    gap: 12px;
+  }
+
+  .nav-cta {
     display: none;
   }
 
@@ -2381,6 +2549,10 @@ body .site-header.is-scrolled {
   }
 
   /* Footer: stacked and centred */
+  .site-footer {
+    padding-block: 1.5rem;
+  }
+
   .footer-layout {
     display: flex;
     flex-direction: column;

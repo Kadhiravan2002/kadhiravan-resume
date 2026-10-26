@@ -32,7 +32,7 @@
   z-index: 1100;
   width: 100%;
   height: 3px;
-  background: linear-gradient(90deg, var(--accent), var(--sun));
+  background: linear-gradient(90deg, var(--accent), var(--orange-tint-5));
   transform: scaleX(0);
   transform-origin: left;
   pointer-events: none;
@@ -43,7 +43,8 @@
 }
 
 .nav-links a.is-active {
-  color: var(--paper);
+  color: var(--accent);
+  font-weight: 600;
 }
 
 .nav-links a.is-active::after {
@@ -120,15 +121,6 @@ i.sw, i.sc, i.mk, i.mk-i, i.sl, i.lw {
     calc(var(--ci, 0) * 50ms + 380ms);
 }
 
-/* The accent name breathes with a soft accent glow */
-.js .hero-title .accent-text {
-  animation: accent-glow 4.5s ease-in-out 2.4s infinite;
-}
-
-@keyframes accent-glow {
-  0%, 100% { text-shadow: 0 0 0 rgba(var(--accent-rgb), 0); }
-  50%      { text-shadow: 0 0 34px rgba(var(--accent-rgb), 0.4); }
-}
 
 /* Scroll parallax: text drifts up and fades, portrait lags behind */
 .js .hero-content {
@@ -498,7 +490,7 @@ i.sw, i.sc, i.mk, i.mk-i, i.sl, i.lw {
   bottom: 0;
   left: 5px;
   width: 1px;
-  background: linear-gradient(var(--accent), var(--sun));
+  background: linear-gradient(var(--accent), var(--orange-tint-5));
   transform-origin: top;
   transform: scaleY(var(--fill, 0));
 }
@@ -755,9 +747,9 @@ html.has-cursor button {
 
 
 /* ============================================================
-   14. MOBILE MENU — links slide in one by one
+   14. MOBILE & TABLET MENU — links slide in one by one
 ============================================================ */
-@media (max-width: 680px) {
+@media (max-width: 900px) {
   .nav-links.is-open a {
     animation: menu-link-in 380ms cubic-bezier(0.2, 0.7, 0.2, 1)
       calc(var(--i, 0) * 55ms + 60ms) backwards;

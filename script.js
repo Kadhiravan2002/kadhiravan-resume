@@ -38,7 +38,7 @@ document.addEventListener("keydown", (event) => {
 
 // Reset mobile menu state when switching back to desktop.
 window.addEventListener("resize", () => {
-  if (window.innerWidth > 680) {
+  if (window.innerWidth > 900) {
     closeMenu();
   }
 });
