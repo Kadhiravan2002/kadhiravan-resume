@@ -254,8 +254,6 @@ p,
 .button,
 .nav-links a,
 .nav-cta,
-.brand,
-.footer-brand,
 .footer-copy {
   font-size: var(--fs-4);
 }
@@ -525,6 +523,7 @@ body .site-header.is-scrolled {
 .brand {
   flex-shrink: 0;
   font-family: var(--font-heading);
+  font-size: 1.125rem; /* ~18px — visually balanced with nav links */
   font-weight: 700;
   letter-spacing: 0.06em;
   color: #000000;
@@ -579,13 +578,19 @@ body .site-header.is-scrolled {
   flex-shrink: 0;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  min-height: 44px;
   gap: 8px;
   padding: 10px 22px;
   border: 1px solid var(--accent);
   border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
   font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
   background: var(--accent);
-  color: var(--on-accent);
+  color: #FFFFFF;
   box-shadow: 0 4px 14px rgba(var(--accent-rgb), 0.35);
   transition:
     transform 220ms ease,
@@ -594,17 +599,19 @@ body .site-header.is-scrolled {
     box-shadow 220ms ease;
 }
 
-.nav-cta:hover {
+.nav-cta:hover,
+.nav-cta:active,
+.nav-cta:focus {
   background: var(--accent-strong);
   border-color: var(--accent-strong);
-  color: var(--on-accent);
+  color: #FFFFFF;
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(var(--accent-rgb), 0.45);
 }
 
 .nav-cta span,
 .nav-cta:visited span {
-  color: var(--on-accent);
+  color: #FFFFFF;
   display: inline-block;
   transition: transform 220ms ease;
 }
@@ -804,14 +811,18 @@ body .site-header.is-scrolled {
 
 .button {
   display: inline-flex;
-  min-height: 52px;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  padding: 13px 26px;
+  min-height: 52px;
+  gap: 10px;
+  padding: 14px 26px;
   border: 1px solid transparent;
   border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: var(--fs-4);
   font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
   transition:
     transform 220ms ease,
     background 220ms ease,
@@ -843,6 +854,7 @@ body .site-header.is-scrolled {
 .button-primary span,
 .button-primary:visited span {
   color: #FFFFFF;
+  display: inline-block;
   transition: transform 220ms ease;
 }
 
@@ -850,14 +862,17 @@ body .site-header.is-scrolled {
   transform: translate(3px, -2px);
 }
 
-.button-secondary {
-  border-color: #FFFFFF;
+.button-secondary,
+.button-secondary:visited {
+  border: 1px solid rgba(0, 0, 0, 0.1);
   color: #000000;
   background: #FFFFFF;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
-.button-secondary:hover {
+.button-secondary:hover,
+.button-secondary:active,
+.button-secondary:focus {
   background: #FFFFFF;
   border-color: var(--accent);
   color: var(--accent);
@@ -1378,15 +1393,20 @@ body .site-header.is-scrolled {
 .project-view-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  min-height: 42px;
+  gap: 8px;
   padding: 10px 22px;
+  border: 1px solid transparent;
   border-radius: 999px;
   background: #FFFFFF;
   color: #000000;
-  font-family: var(--font-heading);
+  font-family: var(--font-body);
   font-size: 0.9rem;
   font-weight: 600;
+  line-height: 1.2;
   letter-spacing: 0.02em;
+  text-align: center;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
   transform: translateY(8px);
   transition: transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -1935,62 +1955,89 @@ body .site-header.is-scrolled {
   gap: 16px 28px;
 }
 
-.contact-email {
+.contact-email,
+.contact-email:visited {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
+  min-height: 52px;
+  gap: 10px;
   max-width: 100%;
-  padding: 14px 20px;
+  padding: 14px 26px;
+  border: 1px solid var(--accent);
   border-radius: 999px;
   background: var(--accent);
-  color: var(--on-accent);
+  color: #FFFFFF;
+  font-family: var(--font-body);
   font-size: var(--fs-4);
   font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
   overflow-wrap: anywhere;
   box-shadow: 0 8px 28px rgba(var(--accent-rgb), 0.32);
   transition:
     background 220ms ease,
+    border-color 220ms ease,
     transform 220ms ease,
     box-shadow 220ms ease;
 }
 
-.contact-email span {
-  flex-shrink: 0;
-  transition: transform 200ms ease;
-}
-
-.contact-email:hover {
-  background: var(--accent);
+.contact-email:hover,
+.contact-email:active,
+.contact-email:focus {
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+  color: #FFFFFF;
   transform: translateY(-2px);
   box-shadow: 0 12px 34px rgba(var(--accent-rgb), 0.45);
+}
+
+.contact-email span,
+.contact-email:visited span {
+  flex-shrink: 0;
+  display: inline-block;
+  transition: transform 200ms ease;
 }
 
 .contact-email:hover span {
   transform: translate(3px, -3px);
 }
 
-.contact-phone {
+.contact-phone,
+.contact-phone:visited {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  padding: 13px 20px;
-  border: 1px solid var(--line-strong);
+  justify-content: center;
+  min-height: 52px;
+  gap: 10px;
+  padding: 14px 26px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 999px;
-  background: transparent;
+  background: #FFFFFF;
   color: var(--fg);
+  font-family: var(--font-body);
   font-size: var(--fs-4);
   font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
   overflow-wrap: anywhere;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
   transition:
     border-color 220ms ease,
     background 220ms ease,
-    transform 220ms ease;
+    color 220ms ease,
+    transform 220ms ease,
+    box-shadow 220ms ease;
 }
 
-.contact-phone:hover {
+.contact-phone:hover,
+.contact-phone:active,
+.contact-phone:focus {
   border-color: var(--accent);
-  background: rgba(var(--accent-rgb), 0.1);
+  background: #FFFFFF;
+  color: var(--accent);
   transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(var(--accent-rgb), 0.16);
 }
 
 .contact-panel {
@@ -2127,6 +2174,7 @@ body .site-header.is-scrolled {
 .footer-brand {
   justify-self: start;
   font-family: var(--font-heading);
+  font-size: 1.125rem;
   font-weight: 700;
   letter-spacing: 0.06em;
 }
@@ -2656,9 +2704,11 @@ body .site-header.is-scrolled {
     gap: 10px;
   }
 
-  .button {
+  .button,
+  .contact-email,
+  .contact-phone {
     min-height: 48px;
-    padding: 12px 18px;
+    padding: 12px 20px;
   }
 
   .hero-visual {
