@@ -144,8 +144,9 @@ a {
   font-family: var(--font-body);
 }
 
+/* Touch-friendly menu state without resetting scroll position */
 body.menu-open {
-  overflow: hidden;
+  touch-action: pan-y;
 }
 
 img {
@@ -2387,8 +2388,10 @@ body .site-header.is-scrolled {
   }
 
   .nav-links {
-    position: absolute;
-    top: calc(100% + 1px);
+    position: fixed;
+    top: var(--header-height);
+    max-height: calc(100dvh - var(--header-height));
+    overflow-y: auto;
     left: 0;
     right: 0;
     display: flex;

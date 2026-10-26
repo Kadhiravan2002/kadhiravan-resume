@@ -28,6 +28,17 @@ navLinks.querySelectorAll("a").forEach((link) => {
   link.addEventListener("click", closeMenu);
 });
 
+// Close the menu when clicking outside.
+document.addEventListener("click", (event) => {
+  if (
+    navLinks.classList.contains("is-open") &&
+    !navLinks.contains(event.target) &&
+    !menuToggle.contains(event.target)
+  ) {
+    closeMenu();
+  }
+});
+
 // Allow keyboard users to close the menu with Escape.
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
