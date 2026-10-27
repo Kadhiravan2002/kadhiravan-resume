@@ -2682,27 +2682,80 @@ body .site-header.is-scrolled {
 @media (max-width: 680px) {
 
   :root {
-    --header-height: 68px;
-    --fs-1: clamp(2.1rem, 11.5vw, 2.9rem);  /* Heading     */
-    --fs-2: var(--fs-1);                    /* same tier   */
-    --fs-3: 1.15rem;                        /* Sub-heading */
-    --fs-4: 1rem;                         /* Body = 16px, same as desktop */
+    --header-height: 64px;
+    --page-padding: clamp(16px, 4.5vw, 20px);
+    --fs-1: clamp(1.65rem, 7.2vw, 2.15rem); /* Hero Heading: fits 'I AM KADHIRAVAN.' on a single line */
+    --fs-2: 2rem;                          /* 32px — exactly 2px below original 34px (2.1rem) */
+    --fs-3: 1.15rem;                       /* Sub-heading */
+    --fs-4: 1rem;                          /* Body = 16px, same as desktop */
   }
 
-  /* Header on small mobile screens */
+    /* Header on mobile — comfortable screen-edge spacing and balanced alignment */
+  .site-header {
+    height: var(--header-height);
+  }
+
+  .site-header .container {
+    padding-inline: var(--page-padding);
+  }
+
   .nav {
     gap: 12px;
+  }
+
+  .brand {
+    font-size: 1.15rem;
+    line-height: 1;
+    letter-spacing: 0.06em;
+    display: flex;
+    align-items: center;
+  }
+
+  .menu-toggle {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
   }
 
   .nav-cta {
     display: none;
   }
 
-  /* Hero — single column */
+  /* Section titles — standardized compact two-line presentation across all 6 sections */
+  .about-title,
+  .skills-title,
+  .projects-title,
+  .services-title,
+  .experience-title,
+  .contact-title {
+    font-size: var(--fs-2);
+    line-height: 1.18;
+    letter-spacing: -0.03em;
+    text-wrap: normal;
+    max-width: 100%;
+  }
+
+  .about-title span,
+  .skills-title span,
+  .projects-title span,
+  .services-title span,
+  .experience-title span,
+  .contact-title span,
+  .about-title .accent-text {
+    display: block;
+    white-space: normal;
+  }
+
+  /* Hero — single column & natural content flow */
+  .hero {
+    min-height: auto;
+  }
+
   .hero-layout {
     grid-template-columns: 1fr;
-    gap: 2.25rem;
-    padding-block: 2.25rem;                     /* equal top and bottom */
+    gap: 1.75rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
   }
 
   /* Eyebrow: keep "WEB DEVELOPER · CREATIVE BUILDER" on one line */
@@ -2712,18 +2765,36 @@ body .site-header.is-scrolled {
     font-size: clamp(0.56rem, 2.9vw, 0.72rem);
     letter-spacing: 0.08em;
     white-space: nowrap;
+    margin-bottom: 0.85rem;
+  }
+
+  .hero-title {
+    font-size: var(--fs-1);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    white-space: nowrap;
+  }
+
+  .hero-title .hero-lead,
+  .hero-title .hero-name {
+    display: inline-block;
+    vertical-align: baseline;
+    margin-bottom: 0;
+    white-space: nowrap;
+  }
+
+  .hero-title .hero-lead {
+    margin-right: 0.28em;
   }
 
   .hero-description {
-    line-height: 1.75;
+    margin-top: 1rem;
+    line-height: 1.65;
   }
 
   .hero-actions {
     gap: 10px;
-  }
-
-  .brand {
-    font-size: 1.2rem;
+    margin-top: 1.25rem;
   }
 
   .button,
@@ -2734,14 +2805,18 @@ body .site-header.is-scrolled {
     font-size: 0.875rem;
   }
 
+  /* Portrait — proportional scaling and balanced gap above skills ticker */
   .hero-visual {
-    width: min(100%, 350px);
+    width: 100%;
+    max-width: 320px;
     margin-inline: auto;
-    padding-block: 12px;
+    padding-top: 0.5rem;
+    padding-bottom: 0;
   }
 
   .portrait-wrap {
-    width: 74%;
+    width: min(230px, 68vw);
+    margin-inline: auto;
   }
 
   .portrait-orbit {
